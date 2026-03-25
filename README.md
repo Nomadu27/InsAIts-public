@@ -6,6 +6,9 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://pypi.org/project/insa-its/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 [![100% Local](https://img.shields.io/badge/Data-100%25%20Local-brightgreen)](#what-insaits-does-not-do)
+[![Website](https://img.shields.io/badge/Website-Live-cyan)](https://nomadu27.github.io/InsAIts-public/)
+
+**[Website](https://nomadu27.github.io/InsAIts-public/)** | **[PyPI](https://pypi.org/project/insa-its/)** | **[YouTube](https://www.youtube.com/@insAIts1407)**
 
 ---
 
@@ -25,9 +28,9 @@ These are real numbers from real sessions, not benchmarks:
 
 | Metric | Value | Context |
 |--------|-------|---------|
-| Longest continuous session | **14 hours** | Two terminals, March 22 2026 |
-| First burst duration | **9 hours 16 minutes** | Single uninterrupted session |
-| Anomalies caught and corrected | **682** | Across that 14-hour session |
+| Longest continuous session | **8+ hours** | Two terminals, March 22 2026 |
+| First burst duration | **9 hours 16 minutes** | Single session with minimal interruptions |
+| Anomalies caught and corrected | **682** | Across multi-terminal session |
 | Anomaly types | **23** | Credential exposure, hallucination, drift, injection, and more |
 | OWASP coverage | **MCP Top 10** | ASI01-ASI10, with CVE references |
 | Data sent to cloud | **0 bytes** | Everything runs locally |
