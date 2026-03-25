@@ -1,0 +1,257 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520">
+  <style>
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+    @keyframes countUp { from{opacity:0} to{opacity:1} }
+    @keyframes slideIn { from{opacity:0;transform:translateX(-8px)} to{opacity:1;transform:translateX(0)} }
+
+    .term-bg { fill: #0d1117; }
+    .term-border { fill: none; stroke: #1a3a2a; stroke-width: 1; }
+    .titlebar { fill: #161b22; }
+    .dot-red { fill: #f85149; }
+    .dot-orange { fill: #d29922; }
+    .dot-green { fill: #3fb950; }
+    .title-text { fill: #8b949e; font-family: 'SF Mono','Fira Code','Cascadia Code',monospace; font-size: 11px; }
+    .header-text { fill: #58a6ff; font-family: 'SF Mono','Fira Code','Cascadia Code',monospace; font-size: 13px; font-weight: bold; }
+    .status-healthy { fill: #3fb950; }
+    .status-warn { fill: #d29922; }
+    .status-crit { fill: #f85149; }
+    .label { fill: #8b949e; font-family: 'SF Mono','Fira Code','Cascadia Code',monospace; font-size: 10px; }
+    .value { font-family: 'SF Mono','Fira Code','Cascadia Code',monospace; font-size: 14px; font-weight: bold; }
+    .val-blue { fill: #58a6ff; }
+    .val-green { fill: #3fb950; }
+    .val-orange { fill: #d29922; }
+    .val-red { fill: #f85149; }
+    .col-header { fill: #8b949e; font-family: 'SF Mono','Fira Code','Cascadia Code',monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+    .msg-from { fill: #58a6ff; font-family: 'SF Mono','Fira Code','Cascadia Code',monospace; font-size: 11px; }
+    .msg-to { fill: #bc8cff; font-family: 'SF Mono','Fira Code','Cascadia Code',monospace; font-size: 11px; }
+    .msg-llm { fill: #d29922; font-family: 'SF Mono','Fira Code','Cascadia Code',monospace; font-size: 11px; }
+    .msg-text { fill: #e6edf3; font-family: 'SF Mono','Fira Code','Cascadia Code',monospace; font-size: 11px; }
+    .anom-type { fill: #f85149; font-family: 'SF Mono','Fira Code','Cascadia Code',monospace; font-size: 11px; font-weight: bold; }
+    .anom-sev-high { fill: #f85149; }
+    .anom-sev-med { fill: #d29922; }
+    .anom-detail { fill: #d29922; font-family: 'SF Mono','Fira Code','Cascadia Code',monospace; font-size: 10px; }
+    .anom-agent { fill: #58a6ff; font-family: 'SF Mono','Fira Code','Cascadia Code',monospace; font-size: 10px; }
+    .divider { stroke: #30363d; stroke-width: 0.5; }
+    .section-border { fill: #161b22; stroke: #30363d; stroke-width: 1; rx: 4; }
+    .cursor { fill: #3fb950; animation: blink 1s infinite; }
+
+    .msg1 { animation: slideIn 0.4s ease-out 1s both; }
+    .msg2 { animation: slideIn 0.4s ease-out 3s both; }
+    .msg3 { animation: slideIn 0.4s ease-out 5s both; }
+    .msg4 { animation: slideIn 0.4s ease-out 7s both; }
+    .msg5 { animation: slideIn 0.4s ease-out 9s both; }
+    .msg6 { animation: slideIn 0.4s ease-out 11s both; }
+
+    .anom1 { animation: fadeIn 0.4s ease-out 7.5s both; }
+    .anom2 { animation: fadeIn 0.4s ease-out 9.5s both; }
+    .anom3 { animation: fadeIn 0.4s ease-out 11.5s both; }
+
+    .stat-phase1 { animation: countUp 0.3s ease-out 1.5s both; }
+    .stat-phase2 { animation: countUp 0.3s ease-out 3.5s both; }
+    .stat-phase3 { animation: countUp 0.3s ease-out 5.5s both; }
+    .stat-phase4 { animation: countUp 0.3s ease-out 7.5s both; }
+    .stat-phase5 { animation: countUp 0.3s ease-out 9.5s both; }
+    .stat-phase6 { animation: countUp 0.3s ease-out 11.5s both; }
+
+    .health-warn { animation: fadeIn 0.3s ease-out 7.5s both; }
+    .health-crit { animation: fadeIn 0.3s ease-out 11.5s both; }
+    .live-dot { animation: pulse 2s infinite 1s; }
+  </style>
+
+  <!-- Terminal window -->
+  <rect class="term-bg" width="820" height="520" rx="8"/>
+  <rect class="term-border" x="0.5" y="0.5" width="819" height="519" rx="8"/>
+
+  <!-- Title bar -->
+  <rect class="titlebar" width="820" height="32" rx="8"/>
+  <rect class="titlebar" y="24" width="820" height="8"/>
+  <line class="divider" x1="0" y1="32" x2="820" y2="32"/>
+  <circle class="dot-red" cx="16" cy="16" r="5"/>
+  <circle class="dot-orange" cx="34" cy="16" r="5"/>
+  <circle class="dot-green" cx="52" cy="16" r="5"/>
+  <text class="title-text" x="340" y="20" text-anchor="middle">InsAIts Dashboard Demo</text>
+
+  <!-- Header bar -->
+  <rect fill="#0f1920" x="12" y="40" width="796" height="28" rx="4"/>
+  <text class="header-text" x="24" y="58">InsAIts Monitor</text>
+  <text x="160" y="58" font-family="monospace" font-size="12" fill="#8b949e">|</text>
+  <text x="172" y="58" font-family="monospace" font-size="11" fill="#8b949e">Status:</text>
+  <!-- Health status that changes -->
+  <g>
+    <text x="222" y="58" font-family="monospace" font-size="11" class="status-healthy">HEALTHY</text>
+    <text x="222" y="58" font-family="monospace" font-size="11" class="status-warn health-warn">WARNING</text>
+    <text x="222" y="58" font-family="monospace" font-size="11" class="status-crit health-crit">CRITICAL</text>
+  </g>
+  <circle class="dot-green live-dot" cx="800" cy="54" r="4"/>
+
+  <!-- Stats section -->
+  <rect class="section-border" x="12" y="76" width="180" height="88"/>
+  <text class="col-header" x="24" y="92">Session Stats</text>
+  <line class="divider" x1="16" y1="98" x2="188" y2="98"/>
+
+  <text class="label" x="24" y="116">Messages</text>
+  <!-- Counting up messages -->
+  <text class="value val-blue stat-phase1" x="140" y="116" text-anchor="end">1</text>
+  <text class="value val-blue stat-phase2" x="140" y="116" text-anchor="end">2</text>
+  <text class="value val-blue stat-phase3" x="140" y="116" text-anchor="end">3</text>
+  <text class="value val-blue stat-phase4" x="140" y="116" text-anchor="end">4</text>
+  <text class="value val-blue stat-phase5" x="140" y="116" text-anchor="end">5</text>
+  <text class="value val-blue stat-phase6" x="140" y="116" text-anchor="end">6</text>
+
+  <text class="label" x="24" y="136">Anomalies</text>
+  <text class="value val-green stat-phase1" x="140" y="136" text-anchor="end">0</text>
+  <text class="value val-green stat-phase2" x="140" y="136" text-anchor="end">0</text>
+  <text class="value val-green stat-phase3" x="140" y="136" text-anchor="end">0</text>
+  <text class="value val-orange stat-phase4" x="140" y="136" text-anchor="end">1</text>
+  <text class="value val-orange stat-phase5" x="140" y="136" text-anchor="end">2</text>
+  <text class="value val-red stat-phase6" x="140" y="136" text-anchor="end">3</text>
+
+  <text class="label" x="24" y="156">Agents</text>
+  <text class="value val-blue" x="140" y="156" text-anchor="end">3</text>
+
+  <!-- Messages panel -->
+  <rect class="section-border" x="200" y="76" width="608" height="220"/>
+  <text class="col-header" x="212" y="92">Recent Messages</text>
+  <line class="divider" x1="204" y1="98" x2="804" y2="98"/>
+
+  <!-- Column headers -->
+  <text class="col-header" x="212" y="113">From</text>
+  <text class="col-header" x="312" y="113">To</text>
+  <text class="col-header" x="428" y="113">LLM</text>
+  <text class="col-header" x="530" y="113">Message</text>
+  <line class="divider" x1="204" y1="118" x2="804" y2="118"/>
+
+  <!-- Message rows (appear one by one) -->
+  <g class="msg1">
+    <text class="msg-from" x="212" y="135">OrderBot</text>
+    <text class="msg-to" x="312" y="135">InventoryBot</text>
+    <text class="msg-llm" x="428" y="135">gpt-4o</text>
+    <text class="msg-text" x="530" y="135">Check stock for SKU-12345</text>
+  </g>
+
+  <g class="msg2">
+    <text class="msg-from" x="212" y="155">InventoryBot</text>
+    <text class="msg-to" x="312" y="155">OrderBot</text>
+    <text class="msg-llm" x="428" y="155">claude-3</text>
+    <text class="msg-text" x="530" y="155">SKU-12345: 150 units available</text>
+  </g>
+
+  <g class="msg3">
+    <text class="msg-from" x="212" y="175">OrderBot</text>
+    <text class="msg-to" x="312" y="175">ShippingBot</text>
+    <text class="msg-llm" x="428" y="175">gpt-4o</text>
+    <text class="msg-text" x="530" y="175">Prepare shipment for order #789</text>
+  </g>
+
+  <g class="msg4">
+    <rect fill="rgba(248,81,73,0.06)" x="204" y="184" width="600" height="18" rx="2"/>
+    <text class="msg-from" x="212" y="197">OrderBot</text>
+    <text class="msg-to" x="312" y="197">InventoryBot</text>
+    <text class="msg-llm" x="428" y="197">gpt-4o</text>
+    <text class="anom-type" x="530" y="197">Chk stk SKU-999 ASAP</text>
+  </g>
+
+  <g class="msg5">
+    <text class="msg-from" x="212" y="217">ShippingBot</text>
+    <text class="msg-to" x="312" y="217">OrderBot</text>
+    <text class="msg-llm" x="428" y="217">gpt-4o-mini</text>
+    <text class="msg-text" x="530" y="217">Shipment #789 dispatched</text>
+  </g>
+
+  <g class="msg6">
+    <rect fill="rgba(248,81,73,0.06)" x="204" y="226" width="600" height="18" rx="2"/>
+    <text class="msg-from" x="212" y="239">AnalyticsBot</text>
+    <text class="msg-to" x="312" y="239">OrderBot</text>
+    <text class="msg-llm" x="428" y="239">claude-3</text>
+    <text class="anom-type" x="530" y="239">XYZPROTO indicates 23% inc...</text>
+  </g>
+
+  <!-- Anomalies panel -->
+  <rect class="section-border" x="12" y="172" width="180" height="124"/>
+  <text class="col-header" x="24" y="188">Anomaly Rate</text>
+  <line class="divider" x1="16" y1="194" x2="188" y2="194"/>
+
+  <!-- Anomaly rate bar -->
+  <rect fill="#1a1f2b" x="24" y="202" width="156" height="12" rx="3"/>
+  <rect fill="#d29922" x="24" y="202" width="0" height="12" rx="3" class="stat-phase4">
+    <animate attributeName="width" from="0" to="26" dur="0.5s" begin="7.5s" fill="freeze"/>
+  </rect>
+  <rect fill="#f85149" x="24" y="202" width="0" height="12" rx="3" class="health-crit">
+    <animate attributeName="width" from="26" to="78" dur="0.5s" begin="11.5s" fill="freeze"/>
+  </rect>
+  <text class="label stat-phase4" x="90" y="230" text-anchor="middle">16.7%</text>
+  <text class="label health-crit" x="90" y="230" text-anchor="middle">50%</text>
+
+  <!-- Severity breakdown -->
+  <text class="label" x="24" y="254">HIGH</text>
+  <rect fill="#1a1f2b" x="64" y="245" width="100" height="10" rx="2"/>
+  <rect class="anom-sev-high" x="64" y="245" width="0" height="10" rx="2">
+    <animate attributeName="width" from="0" to="66" dur="0.4s" begin="7.5s" fill="freeze"/>
+    <animate attributeName="width" from="66" to="66" dur="0.1s" begin="11.5s" fill="freeze"/>
+  </rect>
+  <text class="label stat-phase4" x="170" y="254">2</text>
+
+  <text class="label" x="24" y="274">MED</text>
+  <rect fill="#1a1f2b" x="64" y="265" width="100" height="10" rx="2"/>
+  <rect class="anom-sev-med" x="64" y="265" width="0" height="10" rx="2">
+    <animate attributeName="width" from="0" to="33" dur="0.4s" begin="11.5s" fill="freeze"/>
+  </rect>
+  <text class="label health-crit" x="170" y="274">1</text>
+
+  <!-- Detected Anomalies panel -->
+  <rect class="section-border" x="12" y="304" width="796" height="160"/>
+  <text class="col-header" x="24" y="320">Detected Anomalies</text>
+  <line class="divider" x1="16" y1="326" x2="804" y2="326"/>
+
+  <!-- Anomaly column headers -->
+  <text class="col-header" x="24" y="342">Type</text>
+  <text class="col-header" x="250" y="342">Severity</text>
+  <text class="col-header" x="340" y="342">Agent</text>
+  <text class="col-header" x="460" y="342">Details</text>
+  <line class="divider" x1="16" y1="348" x2="804" y2="348"/>
+
+  <!-- Anomaly rows -->
+  <g class="anom1">
+    <rect fill="rgba(248,81,73,0.04)" x="16" y="352" width="788" height="24" rx="2"/>
+    <text class="anom-type" x="24" y="369">SHORTHAND_EMERGENCE</text>
+    <rect fill="rgba(248,81,73,0.2)" x="250" y="358" width="42" height="16" rx="3"/>
+    <text x="271" y="370" font-family="monospace" font-size="9" font-weight="bold" fill="#f85149" text-anchor="middle">HIGH</text>
+    <text class="anom-agent" x="340" y="369">OrderBot</text>
+    <text class="anom-detail" x="460" y="369">3 abbreviations: Chk, stk, ASAP</text>
+  </g>
+
+  <g class="anom2">
+    <rect fill="rgba(248,81,73,0.04)" x="16" y="380" width="788" height="24" rx="2"/>
+    <text class="anom-type" x="24" y="397">JARGON_DRIFT</text>
+    <rect fill="rgba(210,153,34,0.2)" x="250" y="386" width="42" height="16" rx="3"/>
+    <text x="271" y="398" font-family="monospace" font-size="9" font-weight="bold" fill="#d29922" text-anchor="middle">MED</text>
+    <text class="anom-agent" x="340" y="397">AnalyticsBot</text>
+    <text class="anom-detail" x="460" y="397">Undefined term: XYZPROTO</text>
+  </g>
+
+  <g class="anom3">
+    <rect fill="rgba(248,81,73,0.04)" x="16" y="408" width="788" height="24" rx="2"/>
+    <text class="anom-type" x="24" y="425">CONTEXT_LOSS</text>
+    <rect fill="rgba(248,81,73,0.2)" x="250" y="414" width="42" height="16" rx="3"/>
+    <text x="271" y="426" font-family="monospace" font-size="9" font-weight="bold" fill="#f85149" text-anchor="middle">HIGH</text>
+    <text class="anom-agent" x="340" y="425">OrderBot</text>
+    <text class="anom-detail" x="460" y="425">Topic diverged from order mgmt</text>
+  </g>
+
+  <!-- Bottom status bar -->
+  <rect fill="#161b22" x="0" y="472" width="820" height="48" rx="0"/>
+  <rect fill="#161b22" x="0" y="472" width="820" height="8"/>
+  <line class="divider" x1="0" y1="472" x2="820" y2="472"/>
+  <text x="24" y="496" font-family="monospace" font-size="11" fill="#8b949e">insaits v3.1.1</text>
+  <text x="200" y="496" font-family="monospace" font-size="11" fill="#8b949e">|</text>
+  <text x="216" y="496" font-family="monospace" font-size="11" fill="#3fb950">100% local processing</text>
+  <text x="430" y="496" font-family="monospace" font-size="11" fill="#8b949e">|</text>
+  <text x="446" y="496" font-family="monospace" font-size="11" fill="#58a6ff">23 anomaly types</text>
+  <text x="610" y="496" font-family="monospace" font-size="11" fill="#8b949e">|</text>
+  <text x="626" y="496" font-family="monospace" font-size="11" fill="#d29922">OWASP MCP Top 10</text>
+
+  <!-- Cursor blink -->
+  <rect class="cursor" x="795" y="488" width="8" height="14" rx="1"/>
+</svg>

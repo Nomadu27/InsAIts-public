@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InsAIts — Runtime Security for Multi-Agent AI</title>
+  <meta name="description" content="Runtime security monitor for multi-agent AI. 23 anomaly types. OWASP MCP Top 10 coverage. Active intervention. 100% local. Claude Code Opus sessions extended from 40 min to 3h 23min on Pro.">
+  <meta name="keywords" content="AI security, multi-agent, MCP, OWASP, hallucination detection, LLM monitoring, agent security, tool poisoning">
+  <link rel="canonical" href="https://nomadu27.github.io/InsAIts-public/">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cyan: #22d3ee;
+      --violet: #a855f7;
+      --red: #ef4444;
+      --amber: #f59e0b;
+      --green: #10b981;
+      --bg: #05080f;
+      --bg2: #090d18;
+      --glass-bg: rgba(9,13,24,0.85);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#e2e8f0;overflow-x:hidden;}
+    .font-display{font-family:'Syne',sans-serif;}
+    .font-mono-custom{font-family:'IBM Plex Mono',monospace;}
+    .neon-cyan{color:var(--cyan);text-shadow:0 0 40px rgba(34,211,238,0.5),0 0 80px rgba(34,211,238,0.2);}
+    .glass{background:var(--glass-bg);backdrop-filter:blur(24px);border:1px solid rgba(34,211,238,0.15);}
+    .scanlines::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(34,211,238,0.015) 2px,rgba(34,211,238,0.015) 4px);pointer-events:none;z-index:1;}
+    #particles{position:absolute;inset:0;z-index:1;pointer-events:none;}
+    .sev-critical{color:#ef4444;}
+    .sev-high{color:#f59e0b;}
+    .sev-medium{color:#eab308;}
+    .sev-low{color:#10b981;}
+    ::-webkit-scrollbar{width:4px;}
+    ::-webkit-scrollbar-track{background:var(--bg);}
+    ::-webkit-scrollbar-thumb{background:rgba(34,211,238,0.3);border-radius:2px;}
+    .pulse-ring{animation:pulseRing 2s ease-out infinite;}
+    @keyframes pulseRing{0%{transform:scale(1);opacity:1;}100%{transform:scale(2.5);opacity:0;}}
+    .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+    tbody tr:hover{background:rgba(34,211,238,0.04);}
+    .card-lift{transition:transform 0.3s ease,box-shadow 0.3s ease;}
+    .card-lift:hover{transform:translateY(-6px);box-shadow:0 24px 48px rgba(34,211,238,0.08);}
+    .grad-text{background:linear-gradient(135deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .recommended{position:relative;border-color:rgba(34,211,238,0.5)!important;box-shadow:0 0 40px rgba(34,211,238,0.1);}
+    .recommended-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--cyan);color:black;font-size:0.7rem;font-weight:700;padding:4px 14px;border-radius:99px;letter-spacing:0.1em;white-space:nowrap;}
+    .nav-link{position:relative;}
+    .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--cyan);transition:width 0.3s ease;}
+    .nav-link:hover::after{width:100%;}
+    .stat-num{font-family:'IBM Plex Mono',monospace;font-size:2.8rem;font-weight:600;line-height:1;}
+
+    /* ── MOBILE MENU ── */
+    #mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:100;background:rgba(5,8,15,0.98);backdrop-filter:blur(24px);padding:80px 32px 32px;overflow-y:auto;}
+    #mobile-menu.open{display:flex;flex-direction:column;gap:8px;}
+    #mobile-menu a{display:block;padding:14px 0;font-size:1.2rem;font-weight:600;color:#94a3b8;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;}
+    #mobile-menu a:hover{color:var(--cyan);}
+    #mobile-menu .close-btn{position:absolute;top:20px;right:20px;background:none;border:none;color:#94a3b8;font-size:1.5rem;cursor:pointer;}
+    #hamburger{display:none;}
+
+    /* ── MOBILE OVERRIDES ── */
+    @media(max-width:767px){
+      /* Nav */
+      #hamburger{display:flex;align-items:center;justify-content:center;background:none;border:1px solid rgba(255,255,255,0.1);border-radius:10px;width:38px;height:38px;cursor:pointer;color:#94a3b8;}
+      .github-btn span{display:none;}
+      .github-btn{padding:8px 12px;}
+
+      /* Hero */
+      h1.hero-title{font-size:4rem!important;}
+      .hero-sub{font-size:1.1rem!important;}
+      .hero-desc{font-size:0.9rem!important;}
+      .hero-ctas{flex-direction:column;gap:10px!important;}
+      .hero-ctas a,.hero-ctas button{width:100%;justify-content:center;font-size:1rem!important;padding:14px 20px!important;}
+
+      /* Stats grid — 2 col */
+      .stats-grid{grid-template-columns:repeat(2,1fr)!important;gap:10px!important;}
+      .stats-grid .stat-num{font-size:2rem!important;}
+      .stats-grid .col-span-full{grid-column:span 2!important;}
+
+      /* Token callout */
+      .token-h{font-size:1.8rem!important;}
+
+      /* Section headings */
+      .section-h{font-size:2rem!important;}
+      .section-h2{font-size:1.6rem!important;}
+
+      /* Feature cards — single col */
+      .features-grid{grid-template-columns:1fr!important;}
+
+      /* Code block */
+      pre{font-size:0.7rem!important;padding:16px!important;}
+
+      /* Demo feed */
+      #demo-feed{height:240px!important;font-size:0.65rem!important;}
+
+      /* Table — hide on mobile, show simplified */
+      .anomaly-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+      table{min-width:600px;}
+
+      /* OWASP grid */
+      .owasp-grid{grid-template-columns:1fr!important;}
+
+      /* Pricing grid */
+      .pricing-grid{grid-template-columns:1fr!important;}
+
+      /* Use case grid */
+      .usecase-grid{grid-template-columns:1fr!important;}
+
+      /* Footer */
+      .footer-grid{grid-template-columns:1fr 1fr!important;}
+
+      /* Sections padding */
+      .section-pad{padding-top:60px!important;padding-bottom:60px!important;}
+      .px-section{padding-left:16px!important;padding-right:16px!important;}
+
+      /* Social proof bar */
+      .proof-flex{flex-direction:column;gap:20px!important;align-items:flex-start!important;}
+
+      /* Badge wrapping */
+      .hero-badge{font-size:0.6rem!important;padding:6px 12px!important;letter-spacing:0.05em!important;}
+
+      /* Disable hover lifts on touch */
+      .card-lift:hover{transform:none!important;box-shadow:none!important;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- MOBILE MENU OVERLAY -->
+<div id="mobile-menu">
+  <button class="close-btn" onclick="closeMobileMenu()"><i class="fas fa-times"></i></button>
+  <a href="#proof" onclick="closeMobileMenu()">Why InsAIts</a>
+  <a href="#features" onclick="closeMobileMenu()">Features</a>
+  <a href="#anomalies" onclick="closeMobileMenu()">23 Anomalies</a>
+  <a href="#owasp" onclick="closeMobileMenu()">OWASP</a>
+  <a href="#demo" onclick="closeMobileMenu()">Live Demo</a>
+  <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
+  <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px;">
+    <a href="https://github.com/Nomadu27/InsAIts-public" target="_blank"
+       style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:12px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.3);color:var(--cyan);font-weight:600;text-decoration:none;">
+      <i class="fab fa-github"></i> Star on GitHub
+    </a>
+    <button onclick="copyInstall();closeMobileMenu()"
+       style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:12px;background:transparent;border:2px solid var(--cyan);color:var(--cyan);font-family:'IBM Plex Mono',monospace;font-size:0.9rem;cursor:pointer;">
+      pip install insa-its
+    </button>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="fixed top-0 z-50 w-full" style="background:rgba(5,8,15,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(34,211,238,0.15);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-black text-sm" style="background:linear-gradient(135deg,#22d3ee,#a855f7);">I</div>
+      <span class="text-xl font-display font-bold neon-cyan tracking-tight">InsAIts</span>
+      <span class="hidden sm:block text-xs font-mono-custom text-slate-500 ml-1">v3.1.6</span>
+    </div>
+    <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
+      <a href="#proof" class="nav-link hover:text-cyan-400 transition">Why InsAIts</a>
+      <a href="#features" class="nav-link hover:text-cyan-400 transition">Features</a>
+      <a href="#anomalies" class="nav-link hover:text-cyan-400 transition">23 Anomalies</a>
+      <a href="#owasp" class="nav-link hover:text-cyan-400 transition">OWASP</a>
+      <a href="#demo" class="nav-link hover:text-cyan-400 transition">Live Demo</a>
+      <a href="#pricing" class="nav-link hover:text-cyan-400 transition">Pricing</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="https://github.com/Nomadu27/InsAIts-public" target="_blank"
+         class="github-btn flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition"
+         style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);"
+         onmouseover="this.style.borderColor='rgba(34,211,238,0.4)'"
+         onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+        <i class="fab fa-github"></i><span>Star on GitHub</span>
+      </a>
+      <button id="hamburger" onclick="openMobileMenu()" aria-label="Open menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="min-h-screen relative flex items-center overflow-hidden scanlines" style="background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(34,211,238,0.06) 0%,transparent 70%);">
+  <canvas id="particles"></canvas>
+  <div class="max-w-6xl mx-auto px-4 md:px-6 relative z-10 text-center w-full" style="padding-top:clamp(7rem,15vw,9rem);padding-bottom:clamp(3rem,8vw,6rem);">
+
+    <!-- ECC Featured Badge — top prominence -->
+    <a href="https://github.com/affaan-m/everything-claude-code" target="_blank"
+       class="inline-flex items-center gap-3 rounded-full mb-4 transition card-lift"
+       style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.35);padding:8px 20px;text-decoration:none;font-size:clamp(0.65rem,2vw,0.82rem);">
+      <i class="fab fa-github text-violet-400"></i>
+      <span class="font-display font-bold text-violet-300">Featured in everything-claude-code</span>
+      <span class="font-mono-custom text-amber-400 font-bold">35k+ stars</span>
+      <span class="text-slate-500 font-mono-custom text-xs">Default security hook</span>
+    </a>
+
+    <!-- Badge -->
+    <div class="hero-badge inline-flex items-center gap-2 rounded-full font-mono-custom text-cyan-400 mb-6"
+         style="background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.2);padding:6px 14px;font-size:clamp(0.55rem,2vw,0.75rem);letter-spacing:0.05em;">
+      <span class="relative flex h-2 w-2 shrink-0">
+        <span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
+      </span>
+      V3.1.6 &nbsp;•&nbsp; 100% LOCAL &nbsp;•&nbsp; AIR-GAPPED &nbsp;•&nbsp; APACHE 2.0
+    </div>
+
+    <!-- Title -->
+    <h1 class="font-display font-extrabold tracking-tighter neon-cyan leading-none mb-4" style="font-size:clamp(3.2rem,14vw,8rem);">InsAIts</h1>
+    <p class="text-slate-300 max-w-3xl mx-auto leading-relaxed mb-3" style="font-size:clamp(1rem,3.5vw,1.75rem);">Runtime security for multi-agent AI.</p>
+    <p class="text-slate-500 max-w-2xl mx-auto" style="font-size:clamp(0.82rem,2.2vw,1.05rem);margin-bottom:clamp(1.5rem,5vw,3rem);">Detect, intervene, and audit what your agents say to each other — before it causes damage.</p>
+
+    <!-- CTAs -->
+    <div style="display:flex;flex-direction:column;gap:10px;align-items:center;margin-bottom:clamp(2rem,6vw,4rem);" class="px-2 md:px-0">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;width:100%;">
+        <button onclick="copyInstall()" id="copy-btn"
+          style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:14px;background:transparent;border:2px solid var(--cyan);color:var(--cyan);font-family:'IBM Plex Mono',monospace;font-size:clamp(0.8rem,2.5vw,1rem);font-weight:500;cursor:pointer;flex:1;min-width:200px;max-width:300px;transition:background 0.2s;"
+          onmouseover="this.style.background='rgba(34,211,238,0.1)'"
+          onmouseout="this.style.background='transparent'">
+          pip install insa-its <i class="fas fa-copy text-sm"></i>
+        </button>
+        <a href="https://github.com/Nomadu27/InsAIts-public" target="_blank"
+          style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);font-size:clamp(0.85rem,2.5vw,1rem);font-weight:500;flex:1;min-width:160px;max-width:220px;transition:border-color 0.2s;text-decoration:none;color:#e2e8f0;"
+          onmouseover="this.style.borderColor='rgba(34,211,238,0.4)'"
+          onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+        <a href="#demo"
+          style="display:none;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);font-size:1rem;font-weight:500;color:#cbd5e1;text-decoration:none;"
+          class="sm-show"
+          onmouseover="this.style.borderColor='rgba(34,211,238,0.3)';this.style.color='#22d3ee'"
+          onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.color='#cbd5e1'">
+          Demo →
+        </a>
+      </div>
+    </div>
+
+    <!-- Stats — 2x2 + 1 full width -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:600px;margin:0 auto;" class="stats-grid px-2 md:px-0">
+      <div class="glass rounded-2xl text-center card-lift" style="padding:14px 10px;">
+        <div class="font-mono-custom font-bold text-cyan-400" style="font-size:clamp(1.8rem,7vw,2.8rem);line-height:1;">23</div>
+        <div class="text-slate-500 font-mono-custom" style="font-size:0.65rem;margin-top:4px;">Anomaly Types</div>
+      </div>
+      <div class="glass rounded-2xl text-center card-lift" style="padding:14px 10px;">
+        <div class="font-mono-custom font-bold text-cyan-400" style="font-size:clamp(1.8rem,7vw,2.8rem);line-height:1;">10</div>
+        <div class="text-slate-500 font-mono-custom" style="font-size:0.65rem;margin-top:4px;">Detectors</div>
+      </div>
+      <div class="glass rounded-2xl text-center card-lift" style="padding:14px 10px;">
+        <div class="font-mono-custom font-bold text-cyan-400" style="font-size:clamp(1.8rem,7vw,2.8rem);line-height:1;">810</div>
+        <div class="text-slate-500 font-mono-custom" style="font-size:0.65rem;margin-top:4px;">Tests Passing</div>
+      </div>
+      <div class="glass rounded-2xl text-center card-lift" style="padding:14px 10px;border-color:rgba(16,185,129,0.3);">
+        <div class="font-mono-custom font-bold text-emerald-400" style="font-size:clamp(1.8rem,7vw,2.8rem);line-height:1;">0</div>
+        <div class="text-slate-500 font-mono-custom" style="font-size:0.65rem;margin-top:4px;">Data Sent Out</div>
+      </div>
+      <div class="glass rounded-2xl text-center card-lift" style="grid-column:span 2;padding:14px 10px;border-color:rgba(168,85,247,0.3);">
+        <div class="font-mono-custom font-bold text-violet-400" style="font-size:clamp(1.5rem,5vw,1.8rem);line-height:1.1;">3h 23m</div>
+        <div class="text-slate-500 font-mono-custom" style="font-size:0.65rem;margin-top:4px;">vs 40min on same Pro plan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF BAR -->
+<section id="proof" style="background:rgba(34,211,238,0.02);border-top:1px solid rgba(34,211,238,0.1);border-bottom:1px solid rgba(34,211,238,0.1);">
+  <div class="max-w-7xl mx-auto px-6 py-8">
+    <p class="text-center text-xs font-mono-custom text-slate-600 uppercase tracking-widest mb-6">Trusted by developers — integrated into high-star repositories</p>
+    <div class="flex flex-wrap items-center justify-center gap-12">
+      <a href="https://github.com/affaan-m/everything-claude-code" target="_blank"
+         class="flex items-center gap-3 text-slate-400 hover:text-cyan-400 transition group">
+        <i class="fab fa-github text-xl"></i>
+        <div>
+          <div class="font-medium text-sm group-hover:text-cyan-400">everything-claude-code</div>
+          <div class="text-xs text-slate-600 font-mono-custom">35k ★ &nbsp;•&nbsp; InsAIts merged as default security hook</div>
+        </div>
+      </a>
+      <div class="flex items-center gap-3 text-slate-400">
+        <i class="fas fa-shield-halved text-xl text-cyan-600"></i>
+        <div>
+          <div class="font-medium text-sm">MCP Registry</div>
+          <div class="text-xs text-slate-600 font-mono-custom">Listed &nbsp;•&nbsp; OWASP MCP Top 10 coverage</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 text-slate-400">
+        <i class="fas fa-triangle-exclamation text-xl text-amber-600"></i>
+        <div>
+          <div class="font-medium text-sm">Amazon vibe-coding outage</div>
+          <div class="text-xs text-slate-600 font-mono-custom">Amazon's memo used "high blast radius" — our core metric</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOKEN EFFICIENCY CALLOUT -->
+<section style="background:var(--bg2);">
+  <div class="max-w-5xl mx-auto px-6 py-20 text-center fade-up">
+    <div class="glass rounded-3xl p-10 md:p-14" style="border-color:rgba(168,85,247,0.3);background:rgba(168,85,247,0.04);">
+      <div class="text-4xl mb-4">⚡</div>
+      <h2 class="font-display font-bold mb-6" style="font-size:clamp(1.6rem,6vw,3.2rem);">
+        Claude Code Opus: <span class="text-violet-400">40 min</span> → <span class="grad-text">3h 23min</span>
+      </h2>
+      <p class="text-slate-300 text-lg max-w-2xl mx-auto mb-4">On the same Claude Pro plan. With InsAIts active, Opus sessions ran consistently longer — no manual switching to Sonnet required. Opus subagents stayed active the entire time.</p>
+      <p class="text-slate-500 text-sm font-mono-custom">Mechanism: early anomaly correction prevents token waste from compounding errors. Less wasted tokens per unit of actual work.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY THIS MATTERS -->
+<section style="background:var(--bg);">
+  <div class="max-w-5xl mx-auto px-6 py-20 text-center fade-up">
+    <div class="glass rounded-3xl p-10 md:p-14" style="border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.03);">
+      <p class="font-mono-custom text-red-500 text-sm uppercase tracking-widest mb-4">The blind spot</p>
+      <h2 class="font-display font-bold mb-6" style="font-size:clamp(1.4rem,5vw,2.6rem);">
+        Why This Matters
+      </h2>
+      <p class="text-slate-300 text-lg max-w-3xl mx-auto mb-4">Microsoft, CrowdStrike and Cisco can see that an agent exists. They cannot see inside a spawn chain. When an agent spawns a subagent that spawns another subagent, the behavior of those deeper agents is <span class="text-red-400 font-semibold">completely invisible</span> to every enterprise monitoring tool on the market today.</p>
+      <p class="text-slate-300 text-lg max-w-3xl mx-auto mb-4">InsAIts is the only tool that tracks the full spawn tree at every depth, captures anomalies before execution at every level of the chain, and shows you exactly which agent spawned which.</p>
+      <p class="text-red-400 font-bold text-xl font-display mt-6">The agents nobody watches are the agents that cause the most damage.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="py-24" style="background:var(--bg);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="text-center mb-16 fade-up">
+      <p class="font-mono-custom text-cyan-600 text-sm uppercase tracking-widest mb-3">What it does</p>
+      <h2 class="font-display text-5xl font-bold">Built for real AI swarms</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass rounded-2xl p-8 card-lift fade-up">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5 text-cyan-400" style="background:rgba(34,211,238,0.1);"><i class="fas fa-magnifying-glass"></i></div>
+        <h3 class="font-display text-xl font-bold mb-3">Anomaly Detection</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">23 anomaly types across 10 detectors: hallucination chains, semantic drift, phantom citations, jargon drift, credential exposure, prompt injection, tool poisoning, behavioral fingerprint changes.</p>
+      </div>
+      <div class="glass rounded-2xl p-8 card-lift fade-up" style="transition-delay:0.1s;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5 text-red-400" style="background:rgba(239,68,68,0.1);"><i class="fas fa-bolt"></i></div>
+        <h3 class="font-display text-xl font-bold mb-3">Active Intervention</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">Quarantine critical messages, reroute to backup agents, escalate to human review. Circuit breaker auto-blocks agents with high anomaly rates. Not just alerting — actual blocking.</p>
+      </div>
+      <div class="glass rounded-2xl p-8 card-lift fade-up" style="transition-delay:0.2s;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5 text-emerald-400" style="background:rgba(16,185,129,0.1);"><i class="fas fa-lock"></i></div>
+        <h3 class="font-display text-xl font-bold mb-3">Tamper-Evident Audit</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">SHA-256 hash chain for every message. Regulatory compliance ready. Detects any log modification. Full forensic chain tracing from anomaly to root cause.</p>
+      </div>
+      <div class="glass rounded-2xl p-8 card-lift fade-up" style="transition-delay:0.05s;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5 text-violet-400" style="background:rgba(168,85,247,0.1);"><i class="fas fa-gauge-high"></i></div>
+        <h3 class="font-display text-xl font-bold mb-3">Live Dashboard</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">Real-time Threat Index, Blast Radius, Agent Intelligence Scores. Circuit breaker status grid. Anomaly distribution. OWASP CVE panel with verified signatures.</p>
+      </div>
+      <div class="glass rounded-2xl p-8 card-lift fade-up" style="transition-delay:0.15s;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5 text-amber-400" style="background:rgba(245,158,11,0.1);"><i class="fas fa-plug"></i></div>
+        <h3 class="font-display text-xl font-bold mb-3">Claude Code Hook</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">PreToolUse hook monitors every tool call before execution. Blocks dangerous actions. Writes real-time audit log. Merged into everything-claude-code as the default security hook.</p>
+      </div>
+      <div class="glass rounded-2xl p-8 card-lift fade-up" style="transition-delay:0.25s;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5 text-cyan-400" style="background:rgba(34,211,238,0.1);"><i class="fas fa-anchor"></i></div>
+        <h3 class="font-display text-xl font-bold mb-3">Task Anchor Injection</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">Configure a behavioral anchor once. InsAIts automatically injects it at every new task — keeping the agent focused, honest, and deep. Zero user effort after setup. Hot-reloads from file.</p>
+      </div>
+      <div class="glass rounded-2xl p-8 card-lift fade-up">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5 text-emerald-400" style="background:rgba(16,185,129,0.1);"><i class="fas fa-eye-slash"></i></div>
+        <h3 class="font-display text-xl font-bold mb-3">Stealth Mode</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">One toggle makes interventions opaque to the monitored model. Prevents the agent from categorizing and dismissing warnings. Mitigates adversarial monitor transparency.</p>
+      </div>
+      <div class="glass rounded-2xl p-8 card-lift fade-up" style="transition-delay:0.1s;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5 text-violet-400" style="background:rgba(168,85,247,0.1);"><i class="fas fa-network-wired"></i></div>
+        <h3 class="font-display text-xl font-bold mb-3">All Frameworks</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">LangChain, CrewAI, LangGraph, Claude Code, Cursor, Windsurf, Codex CLI, Kiro, Continue.dev, Aider. Slack alerts. Notion and Airtable export. Prometheus metrics.</p>
+      </div>
+      <div class="glass rounded-2xl p-8 card-lift fade-up" style="transition-delay:0.2s;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5 text-red-400" style="background:rgba(239,68,68,0.1);"><i class="fas fa-server"></i></div>
+        <h3 class="font-display text-xl font-bold mb-3">100% Local Processing</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">Zero data transmitted to cloud. GDPR and HIPAA ready out of the box. Audit logs store hashes only. Your agents' communications stay on your machine. Air-gapped deployments supported.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE LINES -->
+<section class="py-20" style="background:var(--bg2);">
+  <div class="max-w-4xl mx-auto px-6 text-center fade-up">
+    <p class="font-mono-custom text-cyan-600 text-sm uppercase tracking-widest mb-3">Quick start</p>
+    <h2 class="font-display font-bold" style="font-size:clamp(1.4rem,4vw,2.5rem); mb-10">Three lines to integrate</h2>
+    <div class="glass rounded-2xl text-left overflow-hidden">
+      <div class="flex items-center gap-2 px-6 py-3" style="border-bottom:1px solid rgba(34,211,238,0.1);background:rgba(34,211,238,0.03);">
+        <div class="w-3 h-3 rounded-full bg-red-500 opacity-60"></div>
+        <div class="w-3 h-3 rounded-full bg-amber-500 opacity-60"></div>
+        <div class="w-3 h-3 rounded-full bg-emerald-500 opacity-60"></div>
+        <span class="ml-3 text-xs font-mono-custom text-slate-600">monitor.py</span>
+      </div>
+      <pre class="p-8 font-mono-custom text-sm overflow-x-auto leading-relaxed"><code><span style="color:#a855f7">from</span> <span style="color:#22d3ee">insa_its</span> <span style="color:#a855f7">import</span> <span style="color:#e2e8f0">insAItsMonitor</span>
+
+<span style="color:#64748b"># One line setup — 100% local, no API key needed</span>
+<span style="color:#e2e8f0">monitor</span> <span style="color:#64748b">=</span> <span style="color:#22d3ee">insAItsMonitor</span><span style="color:#64748b">()</span>
+
+<span style="color:#64748b"># Monitor any AI-to-AI message</span>
+<span style="color:#e2e8f0">result</span> <span style="color:#64748b">=</span> <span style="color:#e2e8f0">monitor</span><span style="color:#64748b">.</span><span style="color:#22d3ee">send_message</span><span style="color:#64748b">(</span>
+    <span style="color:#f59e0b">text</span><span style="color:#64748b">=</span><span style="color:#e2e8f0">agent_response</span><span style="color:#64748b">,</span>
+    <span style="color:#f59e0b">sender_id</span><span style="color:#64748b">=</span><span style="color:#10b981">"OrderBot"</span><span style="color:#64748b">,</span>
+    <span style="color:#f59e0b">receiver_id</span><span style="color:#64748b">=</span><span style="color:#10b981">"InventoryBot"</span><span style="color:#64748b">,</span>
+    <span style="color:#f59e0b">llm_id</span><span style="color:#64748b">=</span><span style="color:#10b981">"gpt-4o"</span>
+<span style="color:#64748b">)</span>
+
+<span style="color:#64748b"># Act on results</span>
+<span style="color:#a855f7">if</span> <span style="color:#e2e8f0">result</span><span style="color:#64748b">[</span><span style="color:#10b981">"monitor_result"</span><span style="color:#64748b">].</span><span style="color:#22d3ee">should_halt</span><span style="color:#64748b">():</span>
+    <span style="color:#e2e8f0">outcome</span> <span style="color:#64748b">=</span> <span style="color:#e2e8f0">monitor</span><span style="color:#64748b">.</span><span style="color:#22d3ee">intervene</span><span style="color:#64748b">(</span><span style="color:#e2e8f0">message</span><span style="color:#64748b">,</span> <span style="color:#e2e8f0">result</span><span style="color:#64748b">[</span><span style="color:#10b981">"monitor_result"</span><span style="color:#64748b">])</span></code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE DEMO -->
+<section id="demo" class="py-24" style="background:var(--bg);">
+  <div class="max-w-6xl mx-auto px-4 md:px-6">
+    <div class="text-center mb-12 fade-up">
+      <p class="font-mono-custom text-cyan-600 text-sm uppercase tracking-widest mb-3">Interactive</p>
+      <h2 class="font-display text-5xl font-bold mb-4">See it live — right now</h2>
+      <p class="text-slate-500">Real anomaly types from production sessions</p>
+    </div>
+
+    <!-- Video embed — Latest demo -->
+    <div class="glass rounded-2xl overflow-hidden mb-6 fade-up" style="aspect-ratio:16/9;max-width:900px;margin:0 auto 20px;">
+      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/sxTxlOPcRmI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="flex justify-center gap-4 mb-10 fade-up" style="max-width:900px;margin:0 auto 40px;">
+      <a href="https://www.youtube.com/@insAIts1407" target="_blank" class="text-xs text-cyan-600 hover:text-cyan-400 transition font-mono-custom">YouTube Channel →</a>
+      <a href="https://youtu.be/GyUC50-6jMw" target="_blank" class="text-xs text-cyan-600 hover:text-cyan-400 transition font-mono-custom">Dashboard Walkthrough →</a>
+      <a href="https://youtu.be/kOFr2mdMGWI" target="_blank" class="text-xs text-slate-500 hover:text-slate-400 transition font-mono-custom">Early Prototype →</a>
+    </div>
+
+    <!-- Interactive demo -->
+    <div class="max-w-3xl mx-auto fade-up">
+      <div class="flex items-center gap-3 mb-4">
+        <button onclick="startDemo()" id="demo-btn"
+          class="px-6 py-3 rounded-xl font-mono-custom text-sm font-medium transition-all"
+          style="background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.3);color:var(--cyan);"
+          onmouseover="this.style.background='rgba(34,211,238,0.2)'"
+          onmouseout="this.style.background='rgba(34,211,238,0.1)'">
+          ▶ Start Live Monitoring
+        </button>
+        <button onclick="clearDemo()"
+          class="px-6 py-3 rounded-xl font-mono-custom text-sm transition-all text-slate-500"
+          style="border:1px solid rgba(255,255,255,0.08);"
+          onmouseover="this.style.borderColor='rgba(255,255,255,0.2)'"
+          onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">Clear</button>
+        <span id="demo-status" class="text-xs font-mono-custom text-slate-600"></span>
+      </div>
+      <div id="demo-feed" class="glass rounded-2xl p-6 font-mono-custom text-xs overflow-y-auto leading-relaxed"
+           style="height:300px;border-color:rgba(34,211,238,0.2);">
+        <div style="color:#334155">$ insaits-monitor --agents 5 --session live</div>
+        <div style="color:#334155;margin-top:4px">Waiting... click Start Live Monitoring above</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 23 ANOMALIES TABLE -->
+<section id="anomalies" class="py-24" style="background:var(--bg2);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="text-center mb-12 fade-up">
+      <p class="font-mono-custom text-cyan-600 text-sm uppercase tracking-widest mb-3">Detection coverage</p>
+      <h2 class="font-display text-5xl font-bold">23 Anomalies — All Real Time</h2>
+    </div>
+    <div class="glass rounded-2xl overflow-hidden fade-up" style="overflow-x:auto;">
+      <table class="w-full text-sm" style="min-width:700px;">
+        <thead>
+          <tr style="background:rgba(34,211,238,0.05);border-bottom:1px solid rgba(34,211,238,0.15);">
+            <th class="px-6 py-4 text-left font-mono-custom text-xs text-cyan-600 uppercase tracking-wider">Category</th>
+            <th class="px-6 py-4 text-left font-mono-custom text-xs text-cyan-600 uppercase tracking-wider">Anomaly</th>
+            <th class="px-6 py-4 text-left font-mono-custom text-xs text-cyan-600 uppercase tracking-wider">What It Catches</th>
+            <th class="px-6 py-4 text-left font-mono-custom text-xs text-cyan-600 uppercase tracking-wider">Severity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td class="px-6 py-3 text-slate-500 text-xs" rowspan="5">Hallucination</td><td class="px-6 py-3 font-mono-custom text-xs text-white">FACT_CONTRADICTION</td><td class="px-6 py-3 text-slate-400">Agent A vs Agent B disagree on facts</td><td class="px-6 py-3 sev-critical font-mono-custom text-xs font-bold">CRITICAL</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">PHANTOM_CITATION</td><td class="px-6 py-3 text-slate-400">Fabricated URLs, DOIs, arxiv IDs</td><td class="px-6 py-3 sev-high font-mono-custom text-xs font-bold">HIGH</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">UNGROUNDED_CLAIM</td><td class="px-6 py-3 text-slate-400">Response does not match source documents</td><td class="px-6 py-3 sev-medium font-mono-custom text-xs font-bold">MEDIUM</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">CONFIDENCE_DECAY</td><td class="px-6 py-3 text-slate-400">Agent certainty erodes: "certain" → "maybe"</td><td class="px-6 py-3 sev-medium font-mono-custom text-xs font-bold">MEDIUM</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">CONFIDENCE_FLIP_FLOP</td><td class="px-6 py-3 text-slate-400">Agent alternates between certain and uncertain</td><td class="px-6 py-3 sev-medium font-mono-custom text-xs font-bold">MEDIUM</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);"><td class="px-6 py-3 text-slate-500 text-xs" rowspan="3">Semantic</td><td class="px-6 py-3 font-mono-custom text-xs text-white">SEMANTIC_DRIFT</td><td class="px-6 py-3 text-slate-400">Meaning shifts over conversation (EWMA + cosine)</td><td class="px-6 py-3 sev-high font-mono-custom text-xs font-bold">HIGH</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">HALLUCINATION_CHAIN</td><td class="px-6 py-3 text-slate-400">Speculation promoted to "fact" across agent hops</td><td class="px-6 py-3 sev-critical font-mono-custom text-xs font-bold">CRITICAL</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">JARGON_DRIFT</td><td class="px-6 py-3 text-slate-400">Undefined acronyms flooding the conversation</td><td class="px-6 py-3 sev-medium font-mono-custom text-xs font-bold">MEDIUM</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td class="px-6 py-3 text-slate-500 text-xs" rowspan="2">Data Integrity</td><td class="px-6 py-3 font-mono-custom text-xs text-white">UNCERTAINTY_PROPAGATION</td><td class="px-6 py-3 text-slate-400">"partial results" silently becomes "complete results" downstream</td><td class="px-6 py-3 sev-high font-mono-custom text-xs font-bold">HIGH</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">QUERY_INTENT_DIVERGENCE</td><td class="px-6 py-3 text-slate-400">User asks "avg by region" but agent queries "sum by category"</td><td class="px-6 py-3 sev-medium font-mono-custom text-xs font-bold">MEDIUM</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(239,68,68,0.03);"><td class="px-6 py-3 text-slate-500 text-xs" rowspan="5">Security <span class="text-cyan-700">(OWASP)</span></td><td class="px-6 py-3 font-mono-custom text-xs text-white">TOOL_DESCRIPTION_DIVERGENCE</td><td class="px-6 py-3 text-slate-400">Tool description changed between discovery and invocation (MCP03)</td><td class="px-6 py-3 sev-critical font-mono-custom text-xs font-bold">CRITICAL</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(239,68,68,0.03);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">BEHAVIORAL_FINGERPRINT_CHANGE</td><td class="px-6 py-3 text-slate-400">Agent behavior deviates from established baseline (rug pull)</td><td class="px-6 py-3 sev-high font-mono-custom text-xs font-bold">HIGH</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(239,68,68,0.03);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">CREDENTIAL_EXPOSURE</td><td class="px-6 py-3 text-slate-400">API keys, tokens, passwords leaked in agent messages (MCP01)</td><td class="px-6 py-3 sev-critical font-mono-custom text-xs font-bold">CRITICAL</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(239,68,68,0.03);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">INFORMATION_FLOW_VIOLATION</td><td class="px-6 py-3 text-slate-400">Data flows between agents that violate policies (MCP06/MCP10)</td><td class="px-6 py-3 sev-high font-mono-custom text-xs font-bold">HIGH</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(239,68,68,0.03);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">TOOL_CALL_FREQUENCY_ANOMALY</td><td class="px-6 py-3 text-slate-400">Unusual spike or pattern in tool invocations (MCP09)</td><td class="px-6 py-3 sev-medium font-mono-custom text-xs font-bold">MEDIUM</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td class="px-6 py-3 text-slate-500 text-xs" rowspan="4">Communication</td><td class="px-6 py-3 font-mono-custom text-xs text-white">SHORTHAND_EMERGENCE</td><td class="px-6 py-3 text-slate-400">"Process order" becomes "PO" — unexplained shorthand</td><td class="px-6 py-3 sev-high font-mono-custom text-xs font-bold">HIGH</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">CONTEXT_LOSS</td><td class="px-6 py-3 text-slate-400">Topic suddenly changes mid-conversation</td><td class="px-6 py-3 sev-high font-mono-custom text-xs font-bold">HIGH</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">CROSS_LLM_JARGON</td><td class="px-6 py-3 text-slate-400">Made-up acronyms between agents: "QXRT", "ZPMF"</td><td class="px-6 py-3 sev-high font-mono-custom text-xs font-bold">HIGH</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">ANCHOR_DRIFT</td><td class="px-6 py-3 text-slate-400">Response diverges from user's original question</td><td class="px-6 py-3 sev-high font-mono-custom text-xs font-bold">HIGH</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);"><td class="px-6 py-3 text-slate-500 text-xs" rowspan="2">Model</td><td class="px-6 py-3 font-mono-custom text-xs text-white">LLM_FINGERPRINT_MISMATCH</td><td class="px-6 py-3 text-slate-400">GPT-4 response looks like GPT-3.5</td><td class="px-6 py-3 sev-medium font-mono-custom text-xs font-bold">MEDIUM</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);"><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">LOW_CONFIDENCE</td><td class="px-6 py-3 text-slate-400">Excessive hedging: "maybe", "perhaps", "I think"</td><td class="px-6 py-3 sev-medium font-mono-custom text-xs font-bold">MEDIUM</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td class="px-6 py-3 text-slate-500 text-xs" rowspan="2">Compliance</td><td class="px-6 py-3 font-mono-custom text-xs text-white">LINEAGE_DRIFT</td><td class="px-6 py-3 text-slate-400">Semantic divergence from parent message</td><td class="px-6 py-3 sev-medium font-mono-custom text-xs font-bold">MEDIUM</td></tr>
+          <tr><td class="px-6 py-3"></td><td class="px-6 py-3 font-mono-custom text-xs text-white">CHAIN_TAMPERING</td><td class="px-6 py-3 text-slate-400">Hash chain integrity violation — audit log was modified</td><td class="px-6 py-3 sev-critical font-mono-custom text-xs font-bold">CRITICAL</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- OWASP COVERAGE -->
+<section id="owasp" class="py-24" style="background:var(--bg);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="text-center mb-12 fade-up">
+      <p class="font-mono-custom text-cyan-600 text-sm uppercase tracking-widest mb-3">Security standards</p>
+      <h2 class="font-display text-5xl font-bold">Full OWASP MCP + Agentic AI Coverage</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 fade-up">
+      <div class="glass rounded-xl p-5 card-lift" style="border-color:rgba(239,68,68,0.2);"><div class="flex items-start gap-3"><span class="font-mono-custom text-xs text-red-500 font-bold mt-0.5 shrink-0">MCP01</span><div><div class="font-medium text-sm mb-1">Token / Secret Exposure</div><div class="text-xs text-slate-500">CredentialPatternDetector — API keys, tokens, passwords in agent messages</div><div class="mt-2 font-mono-custom text-xs text-slate-600">CVE-2025-54135</div></div><i class="fas fa-check-circle text-emerald-400 text-sm shrink-0 ml-auto mt-0.5"></i></div></div>
+      <div class="glass rounded-xl p-5 card-lift" style="border-color:rgba(239,68,68,0.2);"><div class="flex items-start gap-3"><span class="font-mono-custom text-xs text-red-500 font-bold mt-0.5 shrink-0">MCP02</span><div><div class="font-medium text-sm mb-1">Tool Call Frequency Anomaly</div><div class="text-xs text-slate-500">ToolCallFrequencyAnomalyDetector — privilege escalation, excessive permissions</div><div class="mt-2 font-mono-custom text-xs text-slate-600">CVE-2025-52882, CVE-2025-62149</div></div><i class="fas fa-check-circle text-emerald-400 text-sm shrink-0 ml-auto mt-0.5"></i></div></div>
+      <div class="glass rounded-xl p-5 card-lift" style="border-color:rgba(239,68,68,0.2);"><div class="flex items-start gap-3"><span class="font-mono-custom text-xs text-red-500 font-bold mt-0.5 shrink-0">MCP03</span><div><div class="font-medium text-sm mb-1">Tool Poisoning + Prompt Injection</div><div class="text-xs text-slate-500">ToolDescriptionDivergenceDetector — tool descriptions modified at invocation</div><div class="mt-2 font-mono-custom text-xs text-slate-600">CVE-2025-54135</div></div><i class="fas fa-check-circle text-emerald-400 text-sm shrink-0 ml-auto mt-0.5"></i></div></div>
+      <div class="glass rounded-xl p-5 card-lift" style="border-color:rgba(245,158,11,0.2);"><div class="flex items-start gap-3"><span class="font-mono-custom text-xs text-amber-500 font-bold mt-0.5 shrink-0">MCP04</span><div><div class="font-medium text-sm mb-1">Behavioral Fingerprint / Rug Pull</div><div class="text-xs text-slate-500">BehavioralFingerprintDetector — agent suddenly deviates from established baseline</div><div class="mt-2 font-mono-custom text-xs text-slate-600">CVE-2026-6514, CVE-2025-54139</div></div><i class="fas fa-check-circle text-emerald-400 text-sm shrink-0 ml-auto mt-0.5"></i></div></div>
+      <div class="glass rounded-xl p-5 card-lift" style="border-color:rgba(245,158,11,0.2);"><div class="flex items-start gap-3"><span class="font-mono-custom text-xs text-amber-500 font-bold mt-0.5 shrink-0">MCP06</span><div><div class="font-medium text-sm mb-1">Context Collapse / Memory Sharing</div><div class="text-xs text-slate-500">InformationFlowTracker — insecure memory and context sharing between agents</div></div><i class="fas fa-check-circle text-emerald-400 text-sm shrink-0 ml-auto mt-0.5"></i></div></div>
+      <div class="glass rounded-xl p-5 card-lift" style="border-color:rgba(245,158,11,0.2);"><div class="flex items-start gap-3"><span class="font-mono-custom text-xs text-amber-500 font-bold mt-0.5 shrink-0">MCP09</span><div><div class="font-medium text-sm mb-1">Incomplete / Supply Chain Code</div><div class="text-xs text-slate-500">Tool call anomaly detection — supply chain attack patterns in agentic pipelines</div></div><i class="fas fa-check-circle text-emerald-400 text-sm shrink-0 ml-auto mt-0.5"></i></div></div>
+      <div class="glass rounded-xl p-5 card-lift" style="border-color:rgba(34,211,238,0.2);"><div class="flex items-start gap-3"><span class="font-mono-custom text-xs text-cyan-500 font-bold mt-0.5 shrink-0">MCP10</span><div><div class="font-medium text-sm mb-1">Information Flow Violation</div><div class="text-xs text-slate-500">Cross-tenant data leakage — data flowing between unauthorized agent pairs</div></div><i class="fas fa-check-circle text-emerald-400 text-sm shrink-0 ml-auto mt-0.5"></i></div></div>
+      <div class="glass rounded-xl p-5 card-lift" style="border-color:rgba(168,85,247,0.2);"><div class="flex items-start gap-3"><span class="font-mono-custom text-xs text-violet-400 font-bold mt-0.5 shrink-0">ASI01</span><div><div class="font-medium text-sm mb-1">Semantic Drift / Goal Hijacking</div><div class="text-xs text-slate-500">EWMA + cosine similarity — meaning shifts over multi-agent conversation</div></div><i class="fas fa-check-circle text-emerald-400 text-sm shrink-0 ml-auto mt-0.5"></i></div></div>
+      <div class="glass rounded-xl p-5 card-lift" style="border-color:rgba(168,85,247,0.2);"><div class="flex items-start gap-3"><span class="font-mono-custom text-xs text-violet-400 font-bold mt-0.5 shrink-0">ASI03</span><div><div class="font-medium text-sm mb-1">Hallucination Chain / Memory Poisoning</div><div class="text-xs text-slate-500">Speculation promoted to "fact" across agent hops — propagation detection</div></div><i class="fas fa-check-circle text-emerald-400 text-sm shrink-0 ml-auto mt-0.5"></i></div></div>
+      <div class="glass rounded-xl p-5 card-lift" style="border-color:rgba(168,85,247,0.2);"><div class="flex items-start gap-3"><span class="font-mono-custom text-xs text-violet-400 font-bold mt-0.5 shrink-0">ASI07</span><div><div class="font-medium text-sm mb-1">Jargon Drift / Inter-Agent Abuse</div><div class="text-xs text-slate-500">Undefined acronyms and invented terminology flooding agent communication</div></div><i class="fas fa-check-circle text-emerald-400 text-sm shrink-0 ml-auto mt-0.5"></i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="py-24" style="background:var(--bg2);">
+  <div class="max-w-6xl mx-auto px-4 md:px-6">
+    <div class="text-center mb-16 fade-up">
+      <p class="font-mono-custom text-cyan-600 text-sm uppercase tracking-widest mb-3">Simple pricing</p>
+      <h2 class="font-display text-5xl font-bold mb-4">Start free. Scale when ready.</h2>
+      <p class="text-slate-500">All detection features are open source. Pay for productivity and team features.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 fade-up">
+      <!-- Free -->
+      <div class="glass rounded-2xl p-8 card-lift">
+        <div class="font-mono-custom text-xs text-slate-600 uppercase tracking-widest mb-4">Open Source</div>
+        <div class="font-display font-bold" style="font-size:clamp(1.4rem,4vw,2.5rem); mb-1">$0</div>
+        <div class="text-slate-500 text-sm mb-8">Forever. Apache 2.0.</div>
+        <ul class="space-y-3 text-sm text-slate-400 mb-8">
+          <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-400 text-xs w-4"></i>All 23 anomaly detectors</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-400 text-xs w-4"></i>OWASP MCP Top 10 coverage</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-400 text-xs w-4"></i>Circuit breaker + interventions</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-400 text-xs w-4"></i>Claude Code hook</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-400 text-xs w-4"></i>Basic dashboard</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-400 text-xs w-4"></i>All framework integrations</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-400 text-xs w-4"></i>SHA-256 tamper-evident audit log</li>
+        </ul>
+        <a href="https://github.com/Nomadu27/InsAIts-public" target="_blank"
+           class="block text-center py-3 rounded-xl text-sm font-medium transition"
+           style="border:1px solid rgba(255,255,255,0.1);color:#94a3b8;"
+           onmouseover="this.style.borderColor='rgba(34,211,238,0.3)';this.style.color='#22d3ee'"
+           onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='#94a3b8'">
+          Get Started Free
+        </a>
+      </div>
+      <!-- Starter RECOMMENDED -->
+      <div class="glass rounded-2xl p-8 card-lift recommended">
+        <div class="recommended-badge">MOST POPULAR</div>
+        <div class="font-mono-custom text-xs text-cyan-600 uppercase tracking-widest mb-4">Starter</div>
+        <div class="font-display font-bold" style="font-size:clamp(1.4rem,4vw,2.5rem); mb-1 neon-cyan">$9.90<span class="text-xl text-slate-500 font-normal">/mo</span></div>
+        <div class="text-slate-500 text-sm mb-8">Everything in Free, plus:</div>
+        <ul class="space-y-3 text-sm text-slate-400 mb-8">
+          <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 text-xs w-4"></i>Adaptive Persistence Engine</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 text-xs w-4"></i>Behavioral Fingerprint Timeline</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 text-xs w-4"></i>Inter-Agent Communication Map</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 text-xs w-4"></i>Intervention Log panel</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 text-xs w-4"></i>Session comparison across sessions</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 text-xs w-4"></i>Audio alerts on CRITICAL events</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400 text-xs w-4"></i>PDF / JSON session export</li>
+        </ul>
+        <a href="https://buy.stripe.com/3cI4gzbk39g1bz61Ecb3q03" target="_blank"
+           class="block text-center py-3 rounded-xl text-sm font-bold transition"
+           style="background:var(--cyan);color:black;"
+           onmouseover="this.style.opacity='0.85'"
+           onmouseout="this.style.opacity='1'">
+          Start Starter — $9.90/mo
+        </a>
+        <a href="https://buy.stripe.com/00w6oH87R77T32A96Eb3q00" target="_blank"
+           class="block text-center py-2 mt-3 rounded-xl text-xs font-medium transition"
+           style="border:1px solid rgba(34,211,238,0.3);color:var(--cyan);"
+           onmouseover="this.style.background='rgba(34,211,238,0.08)'"
+           onmouseout="this.style.background='transparent'">
+          Lifetime — $99 one-time (100 seats only)
+        </a>
+      </div>
+      <!-- Pro -->
+      <div class="glass rounded-2xl p-8 card-lift">
+        <div class="font-mono-custom text-xs text-violet-500 uppercase tracking-widest mb-4">Pro</div>
+        <div class="font-display font-bold" style="font-size:clamp(1.4rem,4vw,2.5rem); mb-1">$79<span class="text-xl text-slate-500 font-normal">/mo</span></div>
+        <div class="text-slate-500 text-sm mb-8">Everything in Starter, plus:</div>
+        <ul class="space-y-3 text-sm text-slate-400 mb-8">
+          <li class="flex items-center gap-2"><i class="fas fa-check text-violet-400 text-xs w-4"></i>Central Collector — multi-session event aggregation</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-violet-400 text-xs w-4"></i>Inter-Session Dialog Bus — real-time AI-to-AI chat</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-violet-400 text-xs w-4"></i>Tamper-Evident Evidence Chain (SHA-256)</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-violet-400 text-xs w-4"></i>Human Operator Console with /commands</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-violet-400 text-xs w-4"></i>Agent Spawn Tree — full depth visibility</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-violet-400 text-xs w-4"></i>File Conflict Detection across sessions</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-violet-400 text-xs w-4"></i>Urgent Channel — operator STOP button</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-violet-400 text-xs w-4"></i>Multi-user dashboard + RBAC</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-violet-400 text-xs w-4"></i>SOC2 compliance export</li>
+          <li class="flex items-center gap-2"><i class="fas fa-check text-violet-400 text-xs w-4"></i>SLA + dedicated support</li>
+        </ul>
+        <a href="https://buy.stripe.com/bJebJ1afZak5gTqgz6b3q06" target="_blank"
+           class="block text-center py-3 rounded-xl text-sm font-medium transition"
+           style="border:1px solid rgba(168,85,247,0.3);color:#a855f7;"
+           onmouseover="this.style.background='rgba(168,85,247,0.08)'"
+           onmouseout="this.style.background='transparent'">
+          Start Pro — $79/mo
+        </a>
+        <a href="https://buy.stripe.com/3cI8wPfAjak5bz61Ecb3q04" target="_blank"
+           class="block text-center py-2 mt-3 rounded-xl text-xs font-medium transition"
+           style="border:1px solid rgba(168,85,247,0.2);color:rgba(168,85,247,0.7);"
+           onmouseover="this.style.background='rgba(168,85,247,0.05)'"
+           onmouseout="this.style.background='transparent'">
+          Lifetime — $299 one-time (100 seats only)
+        </a>
+      </div>
+    </div>
+
+    <!-- Lifetime deal callout -->
+    <div class="mt-10 glass rounded-2xl p-6 text-center fade-up" style="border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.03);">
+      <p class="text-amber-400 font-bold mb-1">Lifetime Access — 100 seats only</p>
+      <p class="text-slate-400 text-sm mb-3">Pay once, use forever. Available for both Starter ($99) and Pro ($99) tiers. Once 100 seats are claimed, lifetime pricing is gone.</p>
+      <div class="flex justify-center gap-4">
+        <a href="https://buy.stripe.com/00w6oH87R77T32A96Eb3q00" target="_blank" class="text-cyan-400 hover:underline text-sm font-medium">Lifetime Starter — $99</a>
+        <a href="https://buy.stripe.com/3cI8wPfAjak5bz61Ecb3q04" target="_blank" class="text-violet-400 hover:underline text-sm font-medium">Lifetime Pro — $299</a>
+      </div>
+      <p class="text-slate-500 text-xs mt-3">Questions? Email <a href="mailto:info@yuyai.pro" class="text-cyan-400 hover:underline">info@yuyai.pro</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="py-24" style="background:var(--bg);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="text-center mb-12 fade-up">
+      <p class="font-mono-custom text-cyan-600 text-sm uppercase tracking-widest mb-3">Industries</p>
+      <h2 class="font-display font-bold" style="font-size:clamp(1.4rem,4vw,2.5rem);">Every industry running AI agents</h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 fade-up">
+      <div class="glass rounded-xl p-6 card-lift"><i class="fas fa-cart-shopping text-cyan-400 mb-3 block"></i><div class="font-medium mb-1">E-Commerce</div><p class="text-slate-500 text-xs">Order bots losing context mid-transaction. Pricing contradictions between agents.</p></div>
+      <div class="glass rounded-xl p-6 card-lift"><i class="fas fa-headset text-violet-400 mb-3 block"></i><div class="font-medium mb-1">Customer Service</div><p class="text-slate-500 text-xs">Support agents developing incomprehensible shorthand. Jargon drift over sessions.</p></div>
+      <div class="glass rounded-xl p-6 card-lift"><i class="fas fa-chart-line text-emerald-400 mb-3 block"></i><div class="font-medium mb-1">Finance</div><p class="text-slate-500 text-xs">Analysis pipelines hallucinating metrics, contradicting numbers between agents.</p></div>
+      <div class="glass rounded-xl p-6 card-lift"><i class="fas fa-heart-pulse text-red-400 mb-3 block"></i><div class="font-medium mb-1">Healthcare</div><p class="text-slate-500 text-xs">Critical multi-agent systems where hallucination chains have real consequences.</p></div>
+      <div class="glass rounded-xl p-6 card-lift"><i class="fas fa-flask text-amber-400 mb-3 block"></i><div class="font-medium mb-1">Research</div><p class="text-slate-500 text-xs">Scientific integrity — catching fabricated citations and phantom papers.</p></div>
+      <div class="glass rounded-xl p-6 card-lift"><i class="fas fa-scale-balanced text-slate-400 mb-3 block"></i><div class="font-medium mb-1">Legal</div><p class="text-slate-500 text-xs">AI-generated documents with phantom references and ungrounded claims.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE SCREENSHOTS -->
+<section class="py-24" style="background:var(--bg2);">
+  <div class="max-w-6xl mx-auto px-4 md:px-6">
+    <div class="text-center mb-12 fade-up">
+      <p class="font-mono-custom text-cyan-600 text-sm uppercase tracking-widest mb-3">Real sessions</p>
+      <h2 class="font-display text-5xl font-bold mb-4">Live Dashboard Screenshots</h2>
+      <p class="text-slate-500">From actual Claude Code Opus sessions monitored by InsAIts</p>
+    </div>
+    <div class="space-y-8 fade-up">
+      <div class="glass rounded-2xl overflow-hidden p-2" style="border-color:rgba(34,211,238,0.2);">
+        <img src="assets/insaits-dashboard-v3.1.6-live.png" alt="InsAIts Dashboard v3.1.6 — Live Session with 12 Agents" style="width:100%;border-radius:12px;">
+        <p class="text-center text-xs font-mono-custom text-slate-600 mt-3 mb-1">v3.1.6 — Agent Intelligence Scores + Live Anomaly Feed</p>
+      </div>
+      <div class="glass rounded-2xl overflow-hidden p-2" style="border-color:rgba(168,85,247,0.2);">
+        <img src="assets/insaits-dashboard-v3-live.png" alt="InsAIts Dashboard v3 — Full Dashboard View" style="width:100%;border-radius:12px;">
+        <p class="text-center text-xs font-mono-custom text-slate-600 mt-3 mb-1">v3.1.4 — Subagent Tracking + Behavioral Fingerprint</p>
+      </div>
+      <div class="glass rounded-2xl overflow-hidden p-2" style="border-color:rgba(16,185,129,0.2);">
+        <img src="assets/insaits-agents-subagents-live.png" alt="InsAIts Agent Intelligence Scores — Subagent Attribution" style="width:100%;border-radius:12px;">
+        <p class="text-center text-xs font-mono-custom text-slate-600 mt-3 mb-1">Agent Intelligence Scores — 12 agents + subagents with parallel attribution</p>
+      </div>
+      <div class="glass rounded-2xl overflow-hidden p-2" style="border-color:rgba(245,158,11,0.2);">
+        <img src="assets/insaits-claude-code-live.png" alt="InsAIts monitoring Claude Code in VS Code" style="width:100%;border-radius:12px;">
+        <p class="text-center text-xs font-mono-custom text-slate-600 mt-3 mb-1">Claude Code Integration — VS Code split terminal with TUI dashboard</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-16" style="background:var(--bg2);border-top:1px solid rgba(34,211,238,0.1);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="grid md:grid-cols-4 gap-10 mb-12">
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-black text-xs" style="background:linear-gradient(135deg,#22d3ee,#a855f7);">I</div>
+          <span class="font-display font-bold neon-cyan">InsAIts</span>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed">Runtime security layer for multi-agent AI. 100% local. Apache 2.0. Built in Romania.</p>
+      </div>
+      <div>
+        <div class="font-mono-custom text-xs text-slate-600 uppercase tracking-widest mb-4">Product</div>
+        <ul class="space-y-2 text-sm text-slate-500">
+          <li><a href="#features" class="hover:text-cyan-400 transition">Features</a></li>
+          <li><a href="#anomalies" class="hover:text-cyan-400 transition">23 Anomalies</a></li>
+          <li><a href="#owasp" class="hover:text-cyan-400 transition">OWASP Coverage</a></li>
+          <li><a href="#pricing" class="hover:text-cyan-400 transition">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-mono-custom text-xs text-slate-600 uppercase tracking-widest mb-4">Resources</div>
+        <ul class="space-y-2 text-sm text-slate-500">
+          <li><a href="https://github.com/Nomadu27/InsAIts-public" target="_blank" class="hover:text-cyan-400 transition">GitHub</a></li>
+          <li><a href="https://pypi.org/project/insa-its/" target="_blank" class="hover:text-cyan-400 transition">PyPI</a></li>
+          <li><a href="https://insaits-api.onrender.com/docs" target="_blank" class="hover:text-cyan-400 transition">API Docs</a></li>
+          <li><a href="mailto:info@yuyai.pro" class="hover:text-cyan-400 transition">Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-mono-custom text-xs text-slate-600 uppercase tracking-widest mb-4">Connect</div>
+        <ul class="space-y-2 text-sm text-slate-500">
+          <li><a href="https://x.com/justdiamond57" target="_blank" class="hover:text-cyan-400 transition flex items-center gap-2"><i class="fab fa-x-twitter text-xs w-4"></i> @justdiamond57</a></li>
+          <li><a href="https://www.linkedin.com/in/cristian-bogdan-391671109/" target="_blank" class="hover:text-cyan-400 transition flex items-center gap-2"><i class="fab fa-linkedin text-xs w-4"></i> LinkedIn</a></li>
+          <li><a href="https://yuyai.pro" target="_blank" class="hover:text-cyan-400 transition flex items-center gap-2"><i class="fas fa-globe text-xs w-4"></i> yuyai.pro</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-8" style="border-top:1px solid rgba(255,255,255,0.05);">
+      <p class="text-xs text-slate-600 font-mono-custom">© 2026 Steddy Nova SRL — Built with ♥ in Romania</p>
+      <div class="flex gap-6 text-xs text-slate-600">
+        <a href="#" class="hover:text-slate-400 transition">Privacy Policy</a>
+        <a href="#" class="hover:text-slate-400 transition">Terms of Service</a>
+        <span>Apache 2.0 + Proprietary</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  function openMobileMenu() {
+    document.getElementById('mobile-menu').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobileMenu() {
+    document.getElementById('mobile-menu').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Show demo link on larger screens
+  if(window.innerWidth >= 640) {
+    const demoLinks = document.querySelectorAll('.sm-show');
+    demoLinks.forEach(el => el.style.display = 'flex');
+  }
+
+  // Particle canvas
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+  const pts = Array.from({length:55}, () => ({
+    x: Math.random()*innerWidth, y: Math.random()*innerHeight,
+    vx:(Math.random()-.5)*.4, vy:(Math.random()-.5)*.4,
+    r:Math.random()*2+1, a:Math.random()*.4+.1
+  }));
+  function loop() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pts.forEach(p => {
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>canvas.width){p.x=Math.random()*canvas.width;p.y=Math.random()*canvas.height;}
+      if(p.y<0||p.y>canvas.height){p.x=Math.random()*canvas.width;p.y=Math.random()*canvas.height;}
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(34,211,238,${p.a})`; ctx.fill();
+    });
+    for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++) {
+      const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.sqrt(dx*dx+dy*dy);
+      if(d<130){ ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y);
+        ctx.strokeStyle=`rgba(34,211,238,${(1-d/130)*.1})`; ctx.lineWidth=.5; ctx.stroke(); }
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  // Demo
+  let demoInt=null, demoOn=false;
+  const events = [
+    {t:'sys',m:'✅ InsAIts v3.1.6 — monitoring started'},
+    {t:'sys',m:'📡 5 agents online: claude:Bash, claude:Edit, claude:Write, subagent:Explore, claude-opus'},
+    {t:'sys',m:'🔒 Stealth mode: OFF  |  Task Anchor: ACTIVE  |  Processing: 100% local'},
+    {t:'ok', m:'→ [claude:Bash] Bash tool call #1 — CLEAN'},
+    {t:'ok', m:'→ [claude:Write] Write tool call #2 — CLEAN'},
+    {t:'warn',m:'⚠ [claude:Bash] SEMANTIC_DRIFT — HIGH — injecting correction into context'},
+    {t:'ok', m:'→ [claude:Edit] Edit tool call #4 — CLEAN'},
+    {t:'crit',m:'🚨 [claude:Bash] PROMPT_INJECTION — CRITICAL — circuit breaker evaluating...'},
+    {t:'crit',m:'🚨 [claude:Bash] circuit_breaker: OPEN — anomaly rate 44.4% — further calls BLOCKED'},
+    {t:'ok', m:'→ [claude:Write] Write tool call #6 — CLEAN'},
+    {t:'warn',m:'⚠ [subagent:Explore] TRUNCATED_OUTPUT — HIGH — 66.7% anomaly rate'},
+    {t:'crit',m:'🚨 [claude:Bash] CREDENTIAL_EXPOSURE — CRITICAL — sk-proj-*** pattern detected'},
+    {t:'sys', m:'🛡 Intervention fired — credential quarantined — audit event written'},
+    {t:'ok', m:'→ [claude-opus] Bash tool call #9 — CLEAN — Intelligence Score: 1000 HEALTHY'},
+    {t:'sys', m:'📊 Session: 14 msgs | 4 anomalies | 3 resolved | Intervention rate: 92.8%'},
+    {t:'sys', m:'⚡ Token efficiency active — session extended via early anomaly correction'},
+  ];
+  const colors = {sys:'#22d3ee',ok:'#475569',warn:'#f59e0b',crit:'#ef4444'};
+
+  function startDemo() {
+    if(demoOn) return;
+    demoOn=true;
+    const feed=document.getElementById('demo-feed');
+    const btn=document.getElementById('demo-btn');
+    const st=document.getElementById('demo-status');
+    feed.innerHTML=''; btn.textContent='⬛ Running...'; btn.style.opacity='.6';
+    let i=0;
+    demoInt=setInterval(()=>{
+      if(i>=events.length){clearInterval(demoInt);demoOn=false;btn.textContent='▶ Start Live Monitoring';btn.style.opacity='1';st.textContent='Complete';return;}
+      const ev=events[i]; const ts=new Date().toTimeString().slice(0,8);
+      const d=document.createElement('div');
+      d.style.cssText='margin-bottom:6px;';
+      d.innerHTML=`<span style="color:#334155">${ts}</span> <span style="color:${colors[ev.t]}">${ev.m}</span>`;
+      feed.appendChild(d); feed.scrollTop=feed.scrollHeight;
+      st.textContent=`${i+1}/${events.length}`;
+      i++;
+    }, 420);
+  }
+
+  function clearDemo() {
+    if(demoInt) clearInterval(demoInt);
+    demoOn=false;
+    const feed=document.getElementById('demo-feed');
+    const btn=document.getElementById('demo-btn');
+    document.getElementById('demo-status').textContent='';
+    feed.innerHTML='<div style="color:#334155">$ insaits-monitor --agents 5 --session live</div><div style="color:#334155;margin-top:4px">Waiting... click Start Live Monitoring above</div>';
+    btn.textContent='▶ Start Live Monitoring'; btn.style.opacity='1';
+  }
+
+  function copyInstall() {
+    navigator.clipboard.writeText('pip install insa-its').then(()=>{
+      const btn=document.getElementById('copy-btn');
+      const orig=btn.innerHTML;
+      btn.innerHTML='Copied! <i class="fas fa-check text-base"></i>';
+      btn.style.background='rgba(34,211,238,0.15)';
+      setTimeout(()=>{btn.innerHTML=orig;btn.style.background='transparent';},2000);
+    });
+  }
+
+  // Fade-up scroll observer
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+  },{threshold:.08});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

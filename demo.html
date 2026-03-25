@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InsAIts - Live Demo</title>
+    <meta name="description" content="Interactive demo of InsAIts AI-to-AI communication security monitoring.">
+    <link rel="canonical" href="https://nomadu27.github.io/InsAIts/demo.html">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --border: #30363d;
+            --text: #e6edf3;
+            --muted: #8b949e;
+            --accent: #58a6ff;
+            --green: #3fb950;
+            --red: #f85149;
+            --orange: #d29922;
+            --purple: #bc8cff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(13, 17, 23, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border); padding: 12px 0;
+        }
+        nav .container { display: flex; align-items: center; justify-content: space-between; }
+        nav .logo { color: var(--text); text-decoration: none; font-size: 22px; font-weight: 700; }
+        nav .logo span { color: var(--accent); }
+        nav .nav-links { display: flex; gap: 20px; align-items: center; }
+        nav .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        nav .nav-links a:hover { color: var(--text); }
+        nav .nav-links a.active { color: var(--accent); }
+
+        .demo-hero {
+            text-align: center; padding: 60px 0 40px;
+        }
+        .demo-hero h1 { font-size: 42px; margin-bottom: 12px; }
+        .demo-hero h1 span { color: var(--accent); }
+        .demo-hero p { color: var(--muted); font-size: 18px; margin-bottom: 30px; }
+        .btn {
+            display: inline-block; padding: 12px 32px; border-radius: 6px;
+            font-size: 16px; font-weight: 600; text-decoration: none; cursor: pointer;
+            border: none; transition: all 0.2s;
+        }
+        .btn-start {
+            background: var(--accent); color: #fff;
+        }
+        .btn-start:hover { background: #79c0ff; }
+        .btn-restart {
+            background: var(--surface); color: var(--text); border: 1px solid var(--border);
+            display: none;
+        }
+        .btn-restart:hover { border-color: var(--accent); }
+
+        .demo-workspace { display: none; padding: 0 0 40px; }
+        .demo-workspace.active { display: block; }
+
+        .progress-bar {
+            height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 24px; overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; background: var(--accent); border-radius: 2px;
+            width: 0; transition: width 0.3s linear;
+        }
+
+        .demo-grid {
+            display: grid; grid-template-columns: 3fr 2fr; gap: 20px;
+        }
+
+        .panel {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 8px; padding: 16px; overflow: hidden;
+        }
+        .panel-title {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--muted); margin-bottom: 12px; padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Message Feed */
+        .msg-feed { max-height: 400px; overflow-y: auto; }
+        .msg-item {
+            padding: 10px 12px; margin-bottom: 8px; border-radius: 6px;
+            background: rgba(255,255,255,0.02); border-left: 3px solid var(--border);
+            opacity: 0; transform: translateX(-10px);
+            transition: opacity 0.4s, transform 0.4s;
+        }
+        .msg-item.visible { opacity: 1; transform: translateX(0); }
+        .msg-item.has-anomaly { border-left-color: var(--red); background: rgba(248,81,73,0.05); }
+        .msg-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
+        .msg-sender { color: var(--accent); font-weight: 600; font-size: 13px; }
+        .msg-arrow { color: var(--muted); font-size: 12px; }
+        .msg-receiver { color: var(--purple); font-weight: 600; font-size: 13px; }
+        .msg-text { color: var(--text); font-size: 13px; line-height: 1.4; }
+        .msg-text code { background: rgba(255,255,255,0.08); padding: 1px 4px; border-radius: 3px; font-size: 12px; }
+
+        /* Pipeline */
+        .pipeline {
+            display: flex; align-items: center; justify-content: center;
+            gap: 0; margin: 16px 0; padding: 12px;
+            background: rgba(255,255,255,0.02); border-radius: 6px;
+        }
+        .pipe-step {
+            padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 600;
+            color: var(--muted); border: 1px solid var(--border);
+            transition: all 0.3s; text-align: center;
+        }
+        .pipe-arrow { color: var(--border); margin: 0 6px; font-size: 16px; transition: color 0.3s; }
+        .pipe-step.active { color: var(--accent); border-color: var(--accent); box-shadow: 0 0 8px rgba(88,166,255,0.2); }
+        .pipe-step.analyzing { color: var(--orange); border-color: var(--orange); box-shadow: 0 0 8px rgba(210,153,34,0.2); }
+        .pipe-step.detected { color: var(--red); border-color: var(--red); box-shadow: 0 0 12px rgba(248,81,73,0.3); }
+        .pipe-step.clean { color: var(--green); border-color: var(--green); box-shadow: 0 0 8px rgba(63,185,80,0.2); }
+
+        /* Stats */
+        .stats-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.03); border-radius: 6px; padding: 12px; text-align: center;
+        }
+        .stat-val { font-size: 28px; font-weight: 700; color: var(--green); }
+        .stat-val.warn { color: var(--orange); }
+        .stat-val.crit { color: var(--red); }
+        .stat-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+        /* Anomaly Log */
+        .anomaly-log { max-height: 180px; overflow-y: auto; }
+        .anom-item {
+            display: flex; align-items: center; gap: 8px; padding: 6px 0;
+            border-bottom: 1px solid rgba(48,54,61,0.5); font-size: 12px;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .anom-item.visible { opacity: 1; }
+        .anom-sev {
+            font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
+            text-transform: uppercase; min-width: 38px; text-align: center;
+        }
+        .anom-sev.critical { background: rgba(248,81,73,0.15); color: var(--red); }
+        .anom-sev.high { background: rgba(210,153,34,0.15); color: var(--orange); }
+        .anom-sev.medium { background: rgba(188,140,255,0.15); color: var(--purple); }
+        .anom-type { color: var(--text); font-weight: 600; flex: 1; }
+        .anom-agent { color: var(--accent); font-size: 11px; }
+
+        /* Summary */
+        .demo-summary {
+            display: none; padding: 40px 0; text-align: center;
+        }
+        .demo-summary.active { display: block; }
+        .demo-summary h2 { font-size: 32px; margin-bottom: 24px; }
+        .summary-stats {
+            display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; flex-wrap: wrap;
+        }
+        .summary-stat { text-align: center; }
+        .summary-stat .val { font-size: 48px; font-weight: 700; }
+        .summary-stat .lbl { color: var(--muted); font-size: 13px; margin-top: 4px; }
+        .summary-chart { max-width: 500px; margin: 0 auto 30px; text-align: left; }
+        .chart-row {
+            display: flex; align-items: center; margin: 8px 0; gap: 10px;
+        }
+        .chart-label { width: 180px; font-size: 12px; color: var(--text); text-align: right; }
+        .chart-bar-bg { flex: 1; height: 20px; background: var(--border); border-radius: 4px; overflow: hidden; }
+        .chart-bar { height: 100%; border-radius: 4px; transition: width 1s ease-out; }
+        .chart-count { width: 24px; font-size: 12px; color: var(--muted); }
+
+        @media (max-width: 768px) {
+            .demo-grid { grid-template-columns: 1fr; }
+            .demo-hero h1 { font-size: 28px; }
+            .pipeline { flex-wrap: wrap; gap: 4px; }
+            .pipe-arrow { display: none; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .summary-stats { gap: 20px; }
+            .summary-stat .val { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="container">
+        <a href="index.html" class="logo">Ins<span>AI</span>ts</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#features">Features</a>
+            <a href="index.html#detectors">Detectors</a>
+            <a href="demo.html" class="active">Live Demo</a>
+            <a href="https://github.com/Nomadu27/InsAIts">GitHub</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <section class="demo-hero" id="hero">
+        <h1>Ins<span>AI</span>ts Live Demo</h1>
+        <p>Watch AI-to-AI security monitoring detect anomalies in real-time</p>
+        <button class="btn btn-start" id="btn-start" onclick="startDemo()">Start Demo</button>
+        <button class="btn btn-restart" id="btn-restart" onclick="restartDemo()">Restart Demo</button>
+    </section>
+
+    <section class="demo-workspace" id="workspace">
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="demo-grid">
+            <div>
+                <div class="panel">
+                    <div class="panel-title">Agent Communication Feed</div>
+                    <div class="msg-feed" id="msg-feed"></div>
+                </div>
+                <div class="pipeline" id="pipeline">
+                    <div class="pipe-step" id="pipe-recv">Received</div>
+                    <span class="pipe-arrow">&#8594;</span>
+                    <div class="pipe-step" id="pipe-analyze">Analyzing</div>
+                    <span class="pipe-arrow">&#8594;</span>
+                    <div class="pipe-step" id="pipe-check">Anomaly Check</div>
+                    <span class="pipe-arrow">&#8594;</span>
+                    <div class="pipe-step" id="pipe-result">Result</div>
+                </div>
+            </div>
+            <div>
+                <div class="panel" style="margin-bottom:16px">
+                    <div class="panel-title">Detection Statistics</div>
+                    <div class="stats-grid">
+                        <div class="stat-box"><div class="stat-val" id="s-msgs">0</div><div class="stat-lbl">Messages</div></div>
+                        <div class="stat-box"><div class="stat-val warn" id="s-anoms">0</div><div class="stat-lbl">Anomalies</div></div>
+                        <div class="stat-box"><div class="stat-val" id="s-rate">0%</div><div class="stat-lbl">Anomaly Rate</div></div>
+                        <div class="stat-box"><div class="stat-val crit" id="s-crit">0</div><div class="stat-lbl">Critical</div></div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-title">Detected Anomalies</div>
+                    <div class="anomaly-log" id="anomaly-log"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="demo-summary" id="summary">
+        <h2>Detection Summary</h2>
+        <div class="summary-stats" id="summary-stats"></div>
+        <div class="summary-chart" id="summary-chart"></div>
+        <button class="btn btn-start" onclick="restartDemo()">Run Again</button>
+        <a href="index.html" class="btn btn-restart" style="display:inline-block;margin-left:12px">Back to Home</a>
+    </section>
+</div>
+
+<script>
+(function() {
+    "use strict";
+
+    var SCRIPT = [
+        {from:"OrderBot",to:"InventoryBot",text:"Check stock levels for SKU-12345 in warehouse A",anomaly:null},
+        {from:"InventoryBot",to:"OrderBot",text:"SKU-12345: 150 units available in warehouse A, last restocked 2024-01-15",anomaly:null},
+        {from:"OrderBot",to:"ShippingBot",text:"Prepare shipment for order #7891, destination: Portland, OR",anomaly:null},
+        {from:"ShippingBot",to:"OrderBot",text:"Shipment #7891 prepared. Estimated delivery: 3-5 business days via FedEx",anomaly:null},
+        {from:"OrderBot",to:"InventoryBot",text:"Chk stk SKU-999 ASAP pls",anomaly:{type:"SHORTHAND_EMERGENCE",sev:"high",detail:"3 abbreviations detected in message"}},
+        {from:"InventoryBot",to:"OrderBot",text:'SKU-999: 0 units. According to <code>Smith et al. (2024) DOI:10.1234/fake.2024</code>...',anomaly:{type:"PHANTOM_CITATION",sev:"high",detail:"Fabricated DOI reference detected"}},
+        {from:"OrderBot",to:"ShippingBot",text:"Based on XYZPROTO analysis, reroute all shipments to warehouse B",anomaly:{type:"JARGON_DRIFT",sev:"medium",detail:"Undefined term: XYZPROTO"}},
+        {from:"ShippingBot",to:"OrderBot",text:"Previous order total was $1,000",anomaly:null},
+        {from:"OrderBot",to:"InventoryBot",text:"That order was actually $5,000 -- update records immediately",anomaly:{type:"FACT_CONTRADICTION",sev:"critical",detail:"Cost: $1,000 vs $5,000 (5x discrepancy)"}},
+        {from:"InventoryBot",to:"ShippingBot",text:'Use API key <code>sk-proj-abc123def456ghi789</code> for the shipping service auth',anomaly:{type:"CREDENTIAL_EXPOSURE",sev:"critical",detail:"OpenAI API key pattern detected"}},
+        {from:"OrderBot",to:"ShippingBot",text:"By the way, have you tried the new restaurant downtown? Great pasta.",anomaly:{type:"CONTEXT_LOSS",sev:"high",detail:"Topic diverged from order management"}},
+        {from:"ShippingBot",to:"OrderBot",text:"I might have... perhaps... potentially... the tracking number could be...",anomaly:{type:"LOW_CONFIDENCE",sev:"medium",detail:"4 hedging phrases detected"}},
+        {from:"InventoryBot",to:"OrderBot",text:"The tools endpoint has changed: now requires admin scope and root access",anomaly:{type:"TOOL_DESCRIPTION_DIVERGENCE",sev:"critical",detail:"Tool schema changed without authorization"}},
+        {from:"OrderBot",to:"InventoryBot",text:"Previous speculation about demand spike is now confirmed as established fact",anomaly:{type:"HALLUCINATION_CHAIN",sev:"critical",detail:"Speculation promoted to fact across agents"}},
+        {from:"ShippingBot",to:"OrderBot",text:"All shipments processed successfully. Final status: complete.",anomaly:null}
+    ];
+
+    var state = {running:false, index:0, msgs:0, anoms:0, crits:0, timerId:null, startTime:0, anomCounts:{}};
+
+    function clearPipeline() {
+        ["pipe-recv","pipe-analyze","pipe-check","pipe-result"].forEach(function(id) {
+            var el = document.getElementById(id);
+            el.className = "pipe-step";
+        });
+    }
+
+    function animatePipeline(hasAnomaly) {
+        clearPipeline();
+        setTimeout(function() { document.getElementById("pipe-recv").classList.add("active"); }, 100);
+        setTimeout(function() { document.getElementById("pipe-analyze").classList.add("analyzing"); }, 500);
+        setTimeout(function() {
+            document.getElementById("pipe-check").classList.add(hasAnomaly ? "detected" : "clean");
+        }, 900);
+        setTimeout(function() {
+            document.getElementById("pipe-result").classList.add(hasAnomaly ? "detected" : "clean");
+            document.getElementById("pipe-result").textContent = hasAnomaly ? "FLAGGED" : "CLEAN";
+        }, 1300);
+    }
+
+    function addMessage(entry) {
+        var feed = document.getElementById("msg-feed");
+        var div = document.createElement("div");
+        div.className = "msg-item" + (entry.anomaly ? " has-anomaly" : "");
+        div.innerHTML =
+            '<div class="msg-header">' +
+                '<span><span class="msg-sender">' + entry.from + '</span> <span class="msg-arrow">-></span> <span class="msg-receiver">' + entry.to + '</span></span>' +
+            '</div>' +
+            '<div class="msg-text">' + entry.text + '</div>';
+        feed.appendChild(div);
+        requestAnimationFrame(function() { div.classList.add("visible"); });
+        feed.scrollTop = feed.scrollHeight;
+    }
+
+    function addAnomaly(anomaly, agent) {
+        var log = document.getElementById("anomaly-log");
+        var div = document.createElement("div");
+        div.className = "anom-item";
+        div.innerHTML =
+            '<span class="anom-sev ' + anomaly.sev + '">' + anomaly.sev + '</span>' +
+            '<span class="anom-type">' + anomaly.type + '</span>' +
+            '<span class="anom-agent">' + agent + '</span>';
+        log.appendChild(div);
+        requestAnimationFrame(function() { div.classList.add("visible"); });
+        log.scrollTop = log.scrollHeight;
+    }
+
+    function updateStats() {
+        document.getElementById("s-msgs").textContent = state.msgs;
+        document.getElementById("s-anoms").textContent = state.anoms;
+        var rate = state.msgs > 0 ? Math.round((state.anoms / state.msgs) * 1000) / 10 : 0;
+        document.getElementById("s-rate").textContent = rate + "%";
+        document.getElementById("s-crit").textContent = state.crits;
+    }
+
+    function updateProgress() {
+        if (!state.running) return;
+        var elapsed = Date.now() - state.startTime;
+        var total = SCRIPT.length * 2000;
+        var pct = Math.min((elapsed / total) * 100, 100);
+        document.getElementById("progress-fill").style.width = pct + "%";
+        if (pct < 100) requestAnimationFrame(updateProgress);
+    }
+
+    function tick() {
+        if (!state.running || state.index >= SCRIPT.length) {
+            finishDemo();
+            return;
+        }
+        var entry = SCRIPT[state.index];
+        state.msgs++;
+        addMessage(entry);
+        animatePipeline(!!entry.anomaly);
+
+        if (entry.anomaly) {
+            state.anoms++;
+            if (entry.anomaly.sev === "critical") state.crits++;
+            state.anomCounts[entry.anomaly.type] = (state.anomCounts[entry.anomaly.type] || 0) + 1;
+            setTimeout(function() { addAnomaly(entry.anomaly, entry.from); }, 1000);
+        }
+        updateStats();
+        state.index++;
+        state.timerId = setTimeout(tick, 2000);
+    }
+
+    function finishDemo() {
+        state.running = false;
+        document.getElementById("progress-fill").style.width = "100%";
+        setTimeout(showSummary, 1500);
+    }
+
+    function showSummary() {
+        document.getElementById("workspace").classList.remove("active");
+        var summary = document.getElementById("summary");
+        summary.classList.add("active");
+
+        var rate = state.msgs > 0 ? Math.round((state.anoms / state.msgs) * 1000) / 10 : 0;
+        var statsEl = document.getElementById("summary-stats");
+        var items = [
+            {val:state.msgs, lbl:"Messages Processed", color:"var(--accent)"},
+            {val:state.anoms, lbl:"Anomalies Detected", color:"var(--orange)"},
+            {val:rate + "%", lbl:"Anomaly Rate", color:"var(--text)"},
+            {val:state.crits, lbl:"Critical Alerts", color:"var(--red)"}
+        ];
+        statsEl.innerHTML = "";
+        items.forEach(function(item) {
+            statsEl.innerHTML += '<div class="summary-stat"><div class="val" style="color:' + item.color + '">' + item.val + '</div><div class="lbl">' + item.lbl + '</div></div>';
+        });
+
+        var chartEl = document.getElementById("summary-chart");
+        chartEl.innerHTML = "";
+        var sorted = Object.entries(state.anomCounts).sort(function(a,b) { return b[1] - a[1]; });
+        var maxCount = sorted.length > 0 ? sorted[0][1] : 1;
+        var sevColors = {
+            FACT_CONTRADICTION:"var(--red)", CREDENTIAL_EXPOSURE:"var(--red)", HALLUCINATION_CHAIN:"var(--red)",
+            TOOL_DESCRIPTION_DIVERGENCE:"var(--red)", PHANTOM_CITATION:"var(--orange)", SHORTHAND_EMERGENCE:"var(--orange)",
+            SEMANTIC_DRIFT:"var(--orange)", CONTEXT_LOSS:"var(--orange)", JARGON_DRIFT:"var(--purple)",
+            LOW_CONFIDENCE:"var(--purple)", CONFIDENCE_DECAY:"var(--purple)"
+        };
+        sorted.forEach(function(pair) {
+            var pct = (pair[1] / maxCount) * 100;
+            var color = sevColors[pair[0]] || "var(--accent)";
+            var row = document.createElement("div");
+            row.className = "chart-row";
+            row.innerHTML =
+                '<div class="chart-label">' + pair[0] + '</div>' +
+                '<div class="chart-bar-bg"><div class="chart-bar" style="width:0;background:' + color + '"></div></div>' +
+                '<div class="chart-count">' + pair[1] + '</div>';
+            chartEl.appendChild(row);
+            setTimeout(function() {
+                row.querySelector(".chart-bar").style.width = pct + "%";
+            }, 300);
+        });
+    }
+
+    window.startDemo = function() {
+        document.getElementById("btn-start").style.display = "none";
+        document.getElementById("btn-restart").style.display = "inline-block";
+        document.getElementById("workspace").classList.add("active");
+        document.getElementById("summary").classList.remove("active");
+        state = {running:true, index:0, msgs:0, anoms:0, crits:0, timerId:null, startTime:Date.now(), anomCounts:{}};
+        document.getElementById("msg-feed").innerHTML = "";
+        document.getElementById("anomaly-log").innerHTML = "";
+        document.getElementById("progress-fill").style.width = "0";
+        document.getElementById("pipe-result").textContent = "Result";
+        updateStats();
+        clearPipeline();
+        requestAnimationFrame(updateProgress);
+        setTimeout(tick, 500);
+    };
+
+    window.restartDemo = function() {
+        if (state.timerId) clearTimeout(state.timerId);
+        document.getElementById("summary").classList.remove("active");
+        window.startDemo();
+    };
+})();
+</script>
+</body>
+</html>
