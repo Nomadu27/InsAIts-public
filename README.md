@@ -37,18 +37,56 @@ These are real numbers from real sessions, not benchmarks:
 
 ---
 
-## Key Features
+## Features & How to Use Them
 
-- **Real-time anomaly detection** -- 23 types including credential exposure, prompt injection, semantic drift, hallucination chains, and unauthorized file writes
-- **Active intervention** -- InsAIts does not just detect. It injects corrective instructions into the AI's context to fix problems before they compound
-- **OWASP MCP Top 10 coverage** -- Full mapping to ASI01-ASI10 with CVE references. Enterprise-grade security language
-- **Live dashboard** -- Threat index, blast radius, anomaly feed, agent intelligence scores, intervention log, circuit breaker controls
-- **Stealth mode** -- Toggle visibility. In stealth, InsAIts monitors without the AI knowing it is being watched
-- **Inter-session dialog** -- Send messages between terminals. Coordinate multiple AI agents working on the same project
-- **File conflict detection** -- Detects when two agents are about to modify the same file simultaneously
-- **Behavioral fingerprinting** -- Tracks how each agent's behavior changes over time. Detects drift from baseline
-- **Anchor injection** -- Periodically reinforces security context into long-running agent sessions that tend to drift
-- **Pattern learning** -- Learns from past sessions to identify project-specific anomaly patterns
+### Live Dashboard (16+ panels)
+Open your browser at `http://localhost:5001` after starting `insaits-dashboard`. You get:
+- **Threat Index** -- overall security score for your session, updated in real-time
+- **Anomaly Feed** -- live stream of detected issues with severity levels and details
+- **Agent Intelligence Scores** -- each agent scored independently (trust level, stability, anomaly rate)
+- **Blast Radius** -- how much of your session is affected by anomalies
+- **Intervention Log** -- shows when InsAIts corrected an agent and what happened next
+- **Circuit Breaker** -- manually pause/resume AI execution if things go wrong
+- **OWASP Panel** -- full MCP Top 10 + Agentic AI Top 10 compliance view with CVE references
+
+### Real-Time Anomaly Detection (23 types)
+InsAIts catches issues as they happen, not after. Categories include:
+- **Credential exposure** -- API keys, tokens, passwords appearing in AI messages
+- **Hallucination chains** -- one agent fabricates a fact, another treats it as truth
+- **Prompt injection** -- attempts to override system instructions
+- **Semantic drift** -- meaning gradually shifting across agent messages
+- **Tool poisoning** -- tool descriptions changing between calls
+- **Phantom citations** -- fabricated URLs, DOIs, paper references
+- **Data exfiltration** -- base64/hex encoded data being piped to external services
+- **Unauthorized file writes** -- agents writing to files they should not touch
+
+### Active Intervention
+InsAIts does not just alert -- it acts. When a critical anomaly is detected:
+1. The agent receives a corrective instruction injected into its context
+2. The intervention is logged with before/after details
+3. You can review all interventions in the dashboard
+
+### Stealth Mode
+Toggle stealth on/off from the dashboard. In stealth mode, InsAIts monitors without the AI knowing. Useful for security auditing where you want to observe natural agent behavior.
+
+### Inter-Session Dialog
+Run multiple AI agents in different terminals? InsAIts lets them communicate:
+- Send messages between terminals from the dashboard
+- Coordinate work across agents (file locks, task assignment)
+- See the full dialog thread in the dashboard
+
+### Session Guardian
+For long sessions (hours), InsAIts automatically:
+- Saves work snapshots every 25 tool calls
+- Detects context compression (when Claude forgets earlier work)
+- Injects a resume anchor with your progress so the AI picks up where it left off
+- Emergency-saves on crash so nothing is lost
+
+### Behavioral Fingerprinting
+Each agent gets a behavioral profile. InsAIts detects when an agent starts behaving differently from its baseline -- which can indicate a compromised tool, prompt injection, or model degradation.
+
+### Pattern Learning
+After each session, InsAIts can learn from what it saw. It identifies recurring patterns specific to your project, reducing false positives and catching real issues faster.
 
 ![Dashboard Panels](assets/dashboard-panels.png)
 
@@ -193,6 +231,8 @@ InsAIts was built during live sessions with Claude Code. The integration was con
 
 ## About
 
-InsAIts is developed by **Steddy Nova SRL**. The source code is in a private repository. The package is fully functional via PyPI.
+InsAIts is developed by **Steddy Nova SRL / YuyAI**. The source code is in a private repository. The package is fully functional via PyPI.
+
+Contact: info@yuyai.pro
 
 Licensed under [Apache 2.0](LICENSE).
