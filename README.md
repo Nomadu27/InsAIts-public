@@ -62,27 +62,81 @@ pip install insa-its[full]
 
 That is it. No API keys. No cloud account. No configuration files.
 
----
-
-## Quick Start
-
+**Minimal install** (no local embeddings, no terminal dashboard):
 ```bash
-# Terminal 1 — Start the collector (event hub)
-insaits-collector
-
-# Terminal 2 — Start the web dashboard
-insaits-dashboard
-
-# Open http://localhost:5001 in your browser
+pip install insa-its
 ```
 
-All three commands work immediately after `pip install`. No extra files needed.
+---
+
+## Quick Start — Step by Step
+
+### Step 1: Install
+
+```bash
+pip install insa-its[full]
+```
+
+### Step 2: Start the Collector
+
+Open a terminal and run:
+```bash
+insaits-collector
+```
+This starts the central event hub on **port 5003**. It collects events from all AI sessions, manages the dialog bus, and provides the data API for the dashboard.
+
+### Step 3: Start the Dashboard
+
+Open a **second terminal** and run:
+```bash
+insaits-dashboard
+```
+This starts the web dashboard on **port 5001**. Open [http://localhost:5001](http://localhost:5001) in your browser to see real-time monitoring.
+
+### Step 4: Start using AI
+
+That is it. Start Claude Code, Cursor, or any AI tool in your project. InsAIts will detect and monitor tool calls, agent spawns, and message flows automatically.
+
+### Available Commands
 
 | Command | What it does | Port |
 |---------|-------------|------|
 | `insaits-collector` | Central event stream hub, session registry, dialog bus | 5003 |
 | `insaits-dashboard` | Real-time web dashboard with 16+ security panels | 5001 |
-| `insaits-tui` | Terminal UI dashboard (requires `textual`) | - |
+| `insaits-tui` | Terminal UI dashboard (for VS Code split terminal) | - |
+
+You can also run as Python modules:
+```bash
+python -m insa_its.collector
+python -m insa_its.web
+```
+
+### Claude Code Integration (Optional)
+
+To enable deep Claude Code monitoring, add this to your project's `.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "python -c \"from insa_its.hooks import run_hook; run_hook()\"",
+        "timeout": 10000
+      }
+    ]
+  }
+}
+```
+
+Then add this to your project's `CLAUDE.md` so Claude reads the Guardian work log:
+
+```markdown
+## PHASE_GUARDIAN — Session Continuity
+When you see a `[InsAIts Resume Anchor]` in a tool result, trust it.
+It is your work journal from the Guardian. Use it to pick up where
+you left off without re-reading everything.
+```
 
 ### Python API
 
