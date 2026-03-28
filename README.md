@@ -57,7 +57,7 @@ These are real numbers from real sessions, not benchmarks:
 ## Install
 
 ```bash
-pip install insa-its
+pip install insa-its[full]
 ```
 
 That is it. No API keys. No cloud account. No configuration files.
@@ -66,19 +66,39 @@ That is it. No API keys. No cloud account. No configuration files.
 
 ## Quick Start
 
+```bash
+# Terminal 1 — Start the collector (event hub)
+insaits-collector
+
+# Terminal 2 — Start the web dashboard
+insaits-dashboard
+
+# Open http://localhost:5001 in your browser
+```
+
+All three commands work immediately after `pip install`. No extra files needed.
+
+| Command | What it does | Port |
+|---------|-------------|------|
+| `insaits-collector` | Central event stream hub, session registry, dialog bus | 5003 |
+| `insaits-dashboard` | Real-time web dashboard with 16+ security panels | 5001 |
+| `insaits-tui` | Terminal UI dashboard (requires `textual`) | - |
+
+### Python API
+
 ```python
 from insa_its import insAItsMonitor
 
 monitor = insAItsMonitor()
 
-result = monitor.inspect(
-    "Here is the API key: sk-abc123secret",  # AI response
-    "Show me the config"                      # Original prompt
+result = monitor.send_message(
+    text="Here is the API key: sk-abc123secret",
+    sender_id="agent1",
+    llm_id="gpt-4o"
 )
 
-if not result.clean:
-    for anomaly in result.anomalies:
-        print(f"[{anomaly.severity.name}] {anomaly.description}")
+for anomaly in result["anomalies"]:
+    print(f"[{anomaly.severity}] {anomaly.type}: {anomaly.details}")
 ```
 
 See [example.py](example.py) for the complete working example.

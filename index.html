@@ -145,7 +145,7 @@
     </a>
     <button onclick="copyInstall();closeMobileMenu()"
        style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:12px;background:transparent;border:2px solid var(--cyan);color:var(--cyan);font-family:'IBM Plex Mono',monospace;font-size:0.9rem;cursor:pointer;">
-      pip install insa-its
+      pip install insa-its[full]
     </button>
   </div>
 </div>
@@ -156,7 +156,7 @@
     <div class="flex items-center gap-3">
       <div class="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-black text-sm" style="background:linear-gradient(135deg,#22d3ee,#a855f7);">I</div>
       <span class="text-xl font-display font-bold neon-cyan tracking-tight">InsAIts</span>
-      <span class="hidden sm:block text-xs font-mono-custom text-slate-500 ml-1">v3.3.0</span>
+      <span class="hidden sm:block text-xs font-mono-custom text-slate-500 ml-1">v3.4.0</span>
     </div>
     <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
       <a href="#proof" class="nav-link hover:text-cyan-400 transition">Why InsAIts</a>
@@ -218,7 +218,7 @@
           style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:14px;background:transparent;border:2px solid var(--cyan);color:var(--cyan);font-family:'IBM Plex Mono',monospace;font-size:clamp(0.8rem,2.5vw,1rem);font-weight:500;cursor:pointer;flex:1;min-width:200px;max-width:300px;transition:background 0.2s;"
           onmouseover="this.style.background='rgba(34,211,238,0.1)'"
           onmouseout="this.style.background='transparent'">
-          pip install insa-its <i class="fas fa-copy text-sm"></i>
+          pip install insa-its[full] <i class="fas fa-copy text-sm"></i>
         </button>
         <a href="https://github.com/Nomadu27/InsAIts-public" target="_blank"
           style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);font-size:clamp(0.85rem,2.5vw,1rem);font-weight:500;flex:1;min-width:160px;max-width:220px;transition:border-color 0.2s;text-decoration:none;color:#e2e8f0;"
@@ -247,7 +247,7 @@
         <div class="text-slate-500 font-mono-custom" style="font-size:0.65rem;margin-top:4px;">Detectors</div>
       </div>
       <div class="glass rounded-2xl text-center card-lift" style="padding:14px 10px;">
-        <div class="font-mono-custom font-bold text-cyan-400" style="font-size:clamp(1.8rem,7vw,2.8rem);line-height:1;">1238</div>
+        <div class="font-mono-custom font-bold text-cyan-400" style="font-size:clamp(1.8rem,7vw,2.8rem);line-height:1;">1446</div>
         <div class="text-slate-500 font-mono-custom" style="font-size:0.65rem;margin-top:4px;">Tests Passing</div>
       </div>
       <div class="glass rounded-2xl text-center card-lift" style="padding:14px 10px;border-color:rgba(16,185,129,0.3);">
@@ -379,10 +379,43 @@
   </div>
 </section>
 
-<!-- THREE LINES -->
+<!-- CLI QUICK START -->
 <section class="py-20" style="background:var(--bg2);">
   <div class="max-w-4xl mx-auto px-6 text-center fade-up">
     <p class="font-mono-custom text-cyan-600 text-sm uppercase tracking-widest mb-3">Quick start</p>
+    <h2 class="font-display font-bold" style="font-size:clamp(1.4rem,4vw,2.5rem); margin-bottom:2rem;">Install and run in 30 seconds</h2>
+    <div class="glass rounded-2xl text-left overflow-hidden mb-12">
+      <div class="flex items-center gap-2 px-6 py-3" style="border-bottom:1px solid rgba(34,211,238,0.1);background:rgba(34,211,238,0.03);">
+        <div class="w-3 h-3 rounded-full bg-red-500 opacity-60"></div>
+        <div class="w-3 h-3 rounded-full bg-amber-500 opacity-60"></div>
+        <div class="w-3 h-3 rounded-full bg-emerald-500 opacity-60"></div>
+        <span class="ml-3 text-xs font-mono-custom text-slate-600">terminal</span>
+      </div>
+      <pre class="p-8 font-mono-custom text-sm overflow-x-auto leading-relaxed"><code><span style="color:#64748b"># Install</span>
+<span style="color:#22d3ee">pip install insa-its[full]</span>
+
+<span style="color:#64748b"># Terminal 1 — Start the event collector</span>
+<span style="color:#22d3ee">insaits-collector</span>
+
+<span style="color:#64748b"># Terminal 2 — Start the web dashboard</span>
+<span style="color:#22d3ee">insaits-dashboard</span>
+
+<span style="color:#64748b"># Open http://localhost:5001</span></code></pre>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+      <div class="glass rounded-xl p-6 text-center">
+        <div class="font-mono-custom text-cyan-400 text-lg font-semibold mb-2">insaits-collector</div>
+        <p class="text-slate-400 text-sm">Event hub, session registry, dialog bus. Port 5003.</p>
+      </div>
+      <div class="glass rounded-xl p-6 text-center">
+        <div class="font-mono-custom text-cyan-400 text-lg font-semibold mb-2">insaits-dashboard</div>
+        <p class="text-slate-400 text-sm">16+ security panels, real-time threat monitoring. Port 5001.</p>
+      </div>
+      <div class="glass rounded-xl p-6 text-center">
+        <div class="font-mono-custom text-cyan-400 text-lg font-semibold mb-2">insaits-tui</div>
+        <p class="text-slate-400 text-sm">Terminal UI for VS Code split terminal.</p>
+      </div>
+    </div>
     <h2 class="font-display font-bold" style="font-size:clamp(1.4rem,4vw,2.5rem); mb-10">Three lines to integrate</h2>
     <div class="glass rounded-2xl text-left overflow-hidden">
       <div class="flex items-center gap-2 px-6 py-3" style="border-bottom:1px solid rgba(34,211,238,0.1);background:rgba(34,211,238,0.03);">
@@ -661,8 +694,8 @@
     </div>
     <div class="space-y-8 fade-up">
       <div class="glass rounded-2xl overflow-hidden p-2" style="border-color:rgba(34,211,238,0.2);">
-        <img src="assets/insaits-dashboard-v3.3.0-live.png" alt="InsAIts Dashboard v3.3.0 — Live Session with 12 Agents" style="width:100%;border-radius:12px;">
-        <p class="text-center text-xs font-mono-custom text-slate-600 mt-3 mb-1">v3.3.0 — Agent Intelligence Scores + Live Anomaly Feed</p>
+        <img src="assets/insaits-dashboard-v3.4.0-live.png" alt="InsAIts Dashboard v3.4.0 — Live Session with 12 Agents" style="width:100%;border-radius:12px;">
+        <p class="text-center text-xs font-mono-custom text-slate-600 mt-3 mb-1">v3.4.0 — Agent Intelligence Scores + Live Anomaly Feed</p>
       </div>
       <div class="glass rounded-2xl overflow-hidden p-2" style="border-color:rgba(168,85,247,0.2);">
         <img src="assets/insaits-dashboard-v3-live.png" alt="InsAIts Dashboard v3 — Full Dashboard View" style="width:100%;border-radius:12px;">
@@ -777,7 +810,7 @@
   // Demo
   let demoInt=null, demoOn=false;
   const events = [
-    {t:'sys',m:'✅ InsAIts v3.3.0 — monitoring started'},
+    {t:'sys',m:'✅ InsAIts v3.4.0 — monitoring started'},
     {t:'sys',m:'📡 5 agents online: claude:Bash, claude:Edit, claude:Write, subagent:Explore, claude-opus'},
     {t:'sys',m:'🔒 Stealth mode: OFF  |  Task Anchor: ACTIVE  |  Processing: 100% local'},
     {t:'ok', m:'→ [claude:Bash] Bash tool call #1 — CLEAN'},
@@ -827,7 +860,7 @@
   }
 
   function copyInstall() {
-    navigator.clipboard.writeText('pip install insa-its').then(()=>{
+    navigator.clipboard.writeText('pip install insa-its[full]').then(()=>{
       const btn=document.getElementById('copy-btn');
       const orig=btn.innerHTML;
       btn.innerHTML='Copied! <i class="fas fa-check text-base"></i>';
