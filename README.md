@@ -20,27 +20,7 @@ InsAIts monitors AI-to-AI communication in real-time. It watches every tool call
 
 It runs as a Claude Code hook. You install it, and it works silently in the background. No configuration needed.
 
-![InsAIts Dashboard — Security tab](assets/dashboard-v4.4.3-security-hero.png)
-
-### More dashboard views
-
-![Pattern Insights](assets/dashboard-v4.4.3-pattern-insights.png)
-*Pattern Insights — 60 files, 2,926 entries, 588 anomalies mined across 11 sessions. Top dangerous combos + per-anomaly intervention effectiveness.*
-
-![OWASP MCP Top 10](assets/dashboard-v4.4.3-owasp-mcp-top10.png)
-*OWASP MCP Top 10 panel — every code with CVE references, firing counts, and live status.*
-
-![Operations tab](assets/dashboard-v4.4.3-operations-tab.png)
-*Operations tab — Tool Call Inspector, anchor injections, full message history.*
-
-![Detector toggles](assets/dashboard-v4.4.3-detector-toggles.png)
-*Detector &amp; Feature Toggles — 18/18 detectors active, individually toggleable.*
-
-![Token Budget Control](assets/dashboard-v4.4.3-token-budget.png)
-*Token Budget Control — master kill switch + 17 per-feature toggles with live byte cost per banner.*
-
-![Agent Communication Map](assets/dashboard-v4.4.3-agent-comm-map.png)
-*Agent Communication Map — spawn-tree with health-scored edges, 5/6 layers monitored.*
+![InsAIts Dashboard](assets/dashboard-v4.4.3-security-hero.png)
 
 ---
 
@@ -50,6 +30,7 @@ These are real numbers from real sessions, not benchmarks:
 
 | Metric | Value | Context |
 |--------|-------|---------|
+| **PyPI downloads** | **10,600+** | Total installs of `insa-its` |
 | SDK version | **4.5.1** | Latest release on PyPI |
 | API version | **4.4.3** | Atomic lifetime-tier, metadata-driven Stripe, license gating |
 | Longest continuous session | **8+ hours** | Two terminals, March 22 2026 |
@@ -61,6 +42,9 @@ These are real numbers from real sessions, not benchmarks:
 | API tests passing | **368+** | Auth, usage, webhooks, export, TRS |
 | Trial length | **14 days** | Full feature access, no card required |
 | Data sent to cloud | **0 bytes** | Everything runs locally |
+
+### Ecosystem adoption
+InsAIts is the security core of the **AgentShield** runtime, a fork of Anthropic's Claude Code ecosystem maintained by the community. AgentShield is our `feat/insaits-security-hook` branch of `everything-claude-code` — same codebase, rebranded downstream. If you use AgentShield, you're running InsAIts.
 
 ---
 
@@ -90,70 +74,12 @@ Enterprise: `info@yuyai.pro`.
 
 ## What's New in v4.5.1
 
-### Cold-start retry for license validation
-`validate_license_key` used a 3-second timeout. Render free-tier cold-starts take 15-30s, so the first paid-key check against a sleeping API would fall back to `trial_active` despite the user having paid. Now a two-shot retry (10s fast-fail, 30s with backoff) tolerates the cold-start. `HTTPError` (4xx/5xx) short-circuits so bad keys still fast-fail. Belt-and-braces: a GitHub Actions cron pings `/api/health` every 10 min so Render never sleeps.
+- **Monetization live** — 14-day full trial, then Starter (€10/mo) or Pro (€49/mo) to continue. Lifetime options too.
+- **First paid user is safe** — the license check now tolerates slow API cold-starts. No more silent downgrades to trial mode.
+- **Cleaner dashboard startup** — a chronic "forbidden word" warning on every collector boot is gone.
+- **New reliability detector** — flags when an AI cites a file and line number it never actually read.
 
-### Monetization live
-14-day full trial. Four Stripe Payment Links in production. Metadata-driven tier assignment. Atomic lifetime-tier creation via Supabase RPC. Per-sale email status tracking with admin resend. License gating in the collector gates **injection** while letting **detection** keep running silently.
-
-### Anchor filter — no more `AN=***`
-Safe-synonym pre-substitution for `anomaly` now runs for templates, not just the CLAUDE.md digest. Fixed a latent substring-cascade collision in the substitution map. Collector startup warning count: zero.
-
-### Phase 3G: `unverified_source_claim`
-When model text cites `file.py:LINE` for a file never Read in the current session, fires HIGH. 3rd fire escalates via `rule_violation_repeat` to CRITICAL + DENY next call.
-
----
-
-## What's New in v4.4.2
-
-### Reliability hardening — Phase 3 detectors no longer self-match
-InsAIts' Phase 3 reliability detectors (`premature_completion_claim`, `checklist_without_execution`, `unverified_assertion`, `compliance_bypass_attempt`) used to scan `response_text` for every tool call — including `Read` / `Grep` / `Glob`. For those tools, `response_text` is raw file content, not model reasoning. Any file that contained a detector's trigger phrases (the SDK's own source files do) would fire the detector on its own definitions, cascade through `rule_violation_repeat` to CRITICAL + DENY, and pin the session into an ISOLATE loop. v4.4.2 adds `_PHASE3_SKIP_TOOLS = {"Read", "Grep", "Glob"}` at the call-site plus extended `_FP_TOOL_EXEMPTIONS` so `HALLUCINATION_CHAIN` and `UNCERTAINTY_PROPAGATION` also skip these tools. Scanning still runs on `Bash` / `Edit` / `Write` / `Agent` / `Task` where content IS model-authored.
-
-### New detector: `unverified_source_claim` (3G)
-Extends the Read-before-Edit contract (C2/C4) to assertions. When model text cites a file reference like `insaits_collector.py:4327` for a file that was never Read in the current session, fires HIGH. 3rd fire escalates via `rule_violation_repeat` to CRITICAL + DENY next call. Guards against model hallucinating specific line numbers it never actually looked at.
-
-### Design B dialect migration — complete
-The last three English-only injection banners (`urgent_drain`, `dialog_drain`, `critical_feedback`) now emit Design B compressed dialect. Every user-facing injection in the hook pipeline uses `CRIT:` / `ALERT:` / `STAT:` / `RULE:` / `ACTION:` prefixes with entity codes from the canonical `insa_its.anchor.dialect` module. Reduces injection tokens ~35-40% vs plain English at the same information density.
-
-### Token-budget config — per-feature kill switches (foundation for STARTER tier)
-New `.insaits_config.json` section `token_budget` with master kill switch + 17 per-feature toggles (each with `on` + `tier` fields). First gated call-site: `dialog_drain`. Lays the groundwork for FREE / STARTER / PRO tier gating without ripping up the config format later. All defaults to enabled — existing deployments keep working without changes.
-
-### Tests
-- **29/29 Phase 3 detector tests passing** (+12 new for 3G and token-budget)
-- Full API suite: **305+ tests passing**
-- Full SDK suite: **1290+ tests passing** (336+ in the critical hooks / anchors / detectors subset)
-- **Total across API + SDK: 1595+ tests, all passing**
-
----
-
-## What's New in v4.4.0
-
-### InsAIts Compliance Rules
-A new governance layer that enforces safe AI coding practices in real-time:
-- **Read-before-Edit (C2)** -- flags any file edit where the file was not read first in the same session, preventing blind modifications
-- **Read:Edit ratio (C4)** -- monitors the ratio of reads to edits (target >= 3.0); warns at 2.0, critical below 2.0
-- **Thinking-depth correction (C3)** -- detects when an agent is editing aggressively without reading, injects a pause-and-plan anchor
-- **Compressed Anchor Dialect (C1)** -- session-specific shorthand for multi-layer anchors, reducing token overhead
-
-### TRS v2 (Threat Readiness Score)
-Completely overhauled scoring engine:
-- **30-second cooldown** -- no decay within 30s of last anomaly, preventing premature score drops
-- **Variety gate** -- Stage 3 (ISOLATE) requires 3+ distinct anomaly types, not just volume
-- **Time-weighted signals** -- sustained anomalies carry more weight than bursts
-- Rebalanced detector weights (behavioral fingerprint 0.20, tool call frequency 0.18)
-- Stage thresholds: WATCH 0.55, ALERT 0.75, ISOLATE 0.92
-
-### Export v2.1
-- JSON and PDF session reports with full anomaly timelines
-- Provenance block: InsAIts version, idle timeout, token usage notes
-- RABE (Risk-Adjusted Behavioral Entropy) analysis included in exports
-
-### Dashboard Improvements
-- **Security / Operations 2-tab split** for cleaner workflow
-- **Blast Radius** now severity-weighted -- resolved LOW/INFO anomalies excluded from the denominator
-- **OWASP MCP Security panel** with CVE-2025-xxxxx mappings for MCP01-MCP10 + Agentic AI Top 10
-- Unified Task Anchor panel (merged from two)
-- Sanitized content display for test artifacts
+Full technical notes live in [`RELEASE_NOTES_v4.5.1.md`](https://github.com/Nomadu27/InsAIts.API/blob/master/RELEASE_NOTES_v4.5.1.md) on the API repo.
 
 ---
 
@@ -222,8 +148,6 @@ Drop-in integrations for popular agent frameworks. Monitor LangChain chains, Cre
 
 ### Pattern Learning
 After each session, InsAIts can learn from what it saw. It identifies recurring patterns specific to your project, reducing false positives and catching real issues faster.
-
-![Dashboard Panels](assets/dashboard-panels.png)
 
 ---
 
