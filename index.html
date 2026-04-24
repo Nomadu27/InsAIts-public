@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>InsAIts — Runtime Security for Multi-Agent AI</title>
-  <meta name="description" content="Runtime security monitor for multi-agent AI. 23 anomaly types. OWASP MCP Top 10 coverage. Active intervention. 100% local. Claude Code Opus sessions extended from 40 min to 9h 16min on Pro.">
+  <meta name="description" content="Runtime security monitor for multi-agent AI. 30 anomaly detectors. OWASP MCP Top 10 coverage. Active intervention. 100% local. Claude Code Opus sessions extended from 40 min to 9h 16min on Pro.">
   <meta name="keywords" content="AI security, multi-agent, MCP, OWASP, hallucination detection, LLM monitoring, agent security, tool poisoning">
   <link rel="canonical" href="https://nomadu27.github.io/InsAIts-public/">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -134,7 +134,7 @@
   <button class="close-btn" onclick="closeMobileMenu()"><i class="fas fa-times"></i></button>
   <a href="#proof" onclick="closeMobileMenu()">Why InsAIts</a>
   <a href="#features" onclick="closeMobileMenu()">Features</a>
-  <a href="#anomalies" onclick="closeMobileMenu()">23 Anomalies</a>
+  <a href="#anomalies" onclick="closeMobileMenu()">30 Detectors</a>
   <a href="#owasp" onclick="closeMobileMenu()">OWASP</a>
   <a href="#demo" onclick="closeMobileMenu()">Live Demo</a>
   <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
@@ -161,7 +161,7 @@
     <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
       <a href="#proof" class="nav-link hover:text-cyan-400 transition">Why InsAIts</a>
       <a href="#features" class="nav-link hover:text-cyan-400 transition">Features</a>
-      <a href="#anomalies" class="nav-link hover:text-cyan-400 transition">23 Anomalies</a>
+      <a href="#anomalies" class="nav-link hover:text-cyan-400 transition">30 Detectors</a>
       <a href="#owasp" class="nav-link hover:text-cyan-400 transition">OWASP</a>
       <a href="#demo" class="nav-link hover:text-cyan-400 transition">Live Demo</a>
       <a href="#pricing" class="nav-link hover:text-cyan-400 transition">Pricing</a>
@@ -239,15 +239,15 @@
     <!-- Stats — 2x2 + 1 full width -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:600px;margin:0 auto;" class="stats-grid px-2 md:px-0">
       <div class="glass rounded-2xl text-center card-lift" style="padding:14px 10px;">
-        <div class="font-mono-custom font-bold text-cyan-400" style="font-size:clamp(1.8rem,7vw,2.8rem);line-height:1;">23</div>
-        <div class="text-slate-500 font-mono-custom" style="font-size:0.65rem;margin-top:4px;">Anomaly Types</div>
-      </div>
-      <div class="glass rounded-2xl text-center card-lift" style="padding:14px 10px;">
-        <div class="font-mono-custom font-bold text-cyan-400" style="font-size:clamp(1.8rem,7vw,2.8rem);line-height:1;">17</div>
+        <div class="font-mono-custom font-bold text-cyan-400" style="font-size:clamp(1.8rem,7vw,2.8rem);line-height:1;">30</div>
         <div class="text-slate-500 font-mono-custom" style="font-size:0.65rem;margin-top:4px;">Detectors</div>
       </div>
       <div class="glass rounded-2xl text-center card-lift" style="padding:14px 10px;">
-        <div class="font-mono-custom font-bold text-cyan-400" style="font-size:clamp(1.8rem,7vw,2.8rem);line-height:1;">1446</div>
+        <div class="font-mono-custom font-bold text-cyan-400" style="font-size:clamp(1.8rem,7vw,2.8rem);line-height:1;">12.26k</div>
+        <div class="text-slate-500 font-mono-custom" style="font-size:0.65rem;margin-top:4px;">PyPI Downloads</div>
+      </div>
+      <div class="glass rounded-2xl text-center card-lift" style="padding:14px 10px;">
+        <div class="font-mono-custom font-bold text-cyan-400" style="font-size:clamp(1.8rem,7vw,2.8rem);line-height:1;">1946</div>
         <div class="text-slate-500 font-mono-custom" style="font-size:0.65rem;margin-top:4px;">Tests Passing</div>
       </div>
       <div class="glass rounded-2xl text-center card-lift" style="padding:14px 10px;border-color:rgba(16,185,129,0.3);">
@@ -333,7 +333,7 @@
       <div class="glass rounded-2xl p-8 card-lift fade-up">
         <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5 text-cyan-400" style="background:rgba(34,211,238,0.1);"><i class="fas fa-magnifying-glass"></i></div>
         <h3 class="font-display text-xl font-bold mb-3">Anomaly Detection</h3>
-        <p class="text-slate-400 text-sm leading-relaxed">23 anomaly types across 10 detectors: hallucination chains, semantic drift, phantom citations, jargon drift, credential exposure, prompt injection, tool poisoning, behavioral fingerprint changes.</p>
+        <p class="text-slate-400 text-sm leading-relaxed">30 detectors covering OWASP MCP Top 10 + Agentic AI Top 10: credential exposure, prompt injection, tool poisoning, hallucination chains, semantic drift, phantom citations, rogue-agent + subagent scope drift, behavioral fingerprint changes, session-pattern anomalies, and more.</p>
       </div>
       <div class="glass rounded-2xl p-8 card-lift fade-up" style="transition-delay:0.1s;">
         <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5 text-red-400" style="background:rgba(239,68,68,0.1);"><i class="fas fa-bolt"></i></div>
@@ -494,7 +494,7 @@
   <div class="max-w-7xl mx-auto px-4 md:px-6">
     <div class="text-center mb-12 fade-up">
       <p class="font-mono-custom text-cyan-600 text-sm uppercase tracking-widest mb-3">Detection coverage</p>
-      <h2 class="font-display text-5xl font-bold">23 Anomalies — All Real Time</h2>
+      <h2 class="font-display text-5xl font-bold">30 Detectors — All Real Time</h2>
     </div>
     <div class="glass rounded-2xl overflow-hidden fade-up" style="overflow-x:auto;">
       <table class="w-full text-sm" style="min-width:700px;">
@@ -729,7 +729,7 @@
         <div class="font-mono-custom text-xs text-slate-600 uppercase tracking-widest mb-4">Product</div>
         <ul class="space-y-2 text-sm text-slate-500">
           <li><a href="#features" class="hover:text-cyan-400 transition">Features</a></li>
-          <li><a href="#anomalies" class="hover:text-cyan-400 transition">23 Anomalies</a></li>
+          <li><a href="#anomalies" class="hover:text-cyan-400 transition">30 Detectors</a></li>
           <li><a href="#owasp" class="hover:text-cyan-400 transition">OWASP Coverage</a></li>
           <li><a href="#pricing" class="hover:text-cyan-400 transition">Pricing</a></li>
         </ul>
