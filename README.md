@@ -2,21 +2,22 @@
 
 **Runtime security for AI agents. Catches what your AI misses.**
 
-[![PyPI v4.5.1](https://img.shields.io/badge/PyPI-v4.5.1-cyan)](https://pypi.org/project/insa-its/)
+[![PyPI v4.8.0](https://img.shields.io/badge/PyPI-v4.8.0-cyan)](https://pypi.org/project/insa-its/)
+[![Downloads](https://img.shields.io/badge/downloads-12.26k-brightgreen)](https://pypi.org/project/insa-its/)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://pypi.org/project/insa-its/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 [![100% Local](https://img.shields.io/badge/Data-100%25%20Local-brightgreen)](#what-insaits-does-not-do)
-[![Tests](https://img.shields.io/badge/Tests-1644%2B%20passing-brightgreen)](#verified-numbers)
+[![Tests](https://img.shields.io/badge/Tests-1946%20passing-brightgreen)](#verified-numbers)
 [![Trial](https://img.shields.io/badge/Trial-14%20days%20full-yellow)](#pricing)
-[![Website](https://img.shields.io/badge/Website-Live-cyan)](https://nomadu27.github.io/InsAIts/)
+[![Website](https://img.shields.io/badge/Website-Live-cyan)](https://nomadu27.github.io/InsAIts-public/)
 
-**[Website](https://nomadu27.github.io/InsAIts/)** | **[PyPI](https://pypi.org/project/insa-its/)** | **[YouTube](https://www.youtube.com/@insAIts1407)**
+**[Website](https://nomadu27.github.io/InsAIts-public/)** | **[PyPI](https://pypi.org/project/insa-its/)** | **[YouTube](https://www.youtube.com/@insAIts1407)**
 
 ---
 
 ## What It Does
 
-InsAIts monitors AI-to-AI communication in real-time. It watches every tool call, every response, and every agent-to-agent message for security anomalies -- credential leaks, hallucination chains, prompt injection attempts, unauthorized writes, and 18+ more anomaly types. When it catches something, it intervenes immediately by injecting corrective instructions into the agent's context, before the damage reaches your codebase.
+InsAIts monitors AI-to-AI communication in real-time. It watches every tool call, every response, and every agent-to-agent message for security anomalies — credential leaks, hallucination chains, prompt injection attempts, unauthorized writes, rogue subagent behavior, and 25+ more anomaly types. When it catches something critical, it intervenes immediately by injecting corrective instructions into the agent's context, before the damage reaches your codebase.
 
 It runs as a Claude Code hook. You install it, and it works silently in the background. No configuration needed.
 
@@ -30,16 +31,13 @@ These are real numbers from real sessions, not benchmarks:
 
 | Metric | Value | Context |
 |--------|-------|---------|
-| **PyPI downloads** | **10,600+** | Total installs of `insa-its` |
-| SDK version | **4.5.1** | Latest release on PyPI |
-| API version | **4.4.3** | Atomic lifetime-tier, metadata-driven Stripe, license gating |
-| Longest continuous session | **8+ hours** | Two terminals, March 22 2026 |
-| First burst duration | **9 hours 16 minutes** | Single session with minimal interruptions |
-| Anomalies caught and corrected | **682** | Across multi-terminal session |
-| Anomaly detectors | **18+** | Credential exposure, hallucination, drift, injection, and more |
-| OWASP coverage | **MCP Top 10** | ASI01-ASI10, with CVE references |
-| SDK tests passing | **1276+** | Full detector + integration + E2E suite |
-| API tests passing | **368+** | Auth, usage, webhooks, export, TRS |
+| **PyPI downloads** | **12,260+** | Total installs of `insa-its` |
+| SDK version | **4.8.0** | Latest release on PyPI |
+| Anomaly detectors | **30** | Full TRS-weighted detector suite (see [full list](#real-time-anomaly-detection-30-detectors)) |
+| OWASP coverage | **MCP Top 10 + Agentic AI Top 10** | ASI01–ASI10, with CVE references |
+| Tests passing | **1,946** | API (566) + SDK (1380), full detector + integration + E2E |
+| Longest continuous session | **9h 16min** | Single session, minimal interruptions |
+| Anomalies caught and corrected | **682+** | Across multi-terminal sessions |
 | Trial length | **14 days** | Full feature access, no card required |
 | Data sent to cloud | **0 bytes** | Everything runs locally |
 
@@ -55,8 +53,8 @@ All detection is open source. You pay for productivity, longer sessions, premium
 | Tier | Monthly | Lifetime | What unlocks |
 |------|--------:|---------:|--------------|
 | **Trial** | free | 14 days | Full feature access, no card |
-| **Starter** | **€10** | **€99** | Trial features continuing past day 14 — all 17 detectors, all Phase 3 gates, Session Vault, full dashboard |
-| **Pro** | **€49** | **€299** | Starter + L3 subagent anchors, inter-session dialog, RABE export, Decipher engine, cloud embeddings, priority support |
+| **Starter** | **€10** | **€99** | All 30 detectors, all Phase 3 reliability gates, Session Vault, full dashboard, work-checkpoint continuity |
+| **Pro** | **€49** | **€299** | Starter + L3 subagent anchors, Session-SAE behavioral anomaly detection, inter-session dialog, RABE export, Decipher engine, cloud embeddings, priority support |
 | **Enterprise** | from €200 | custom | SOC2-ready audit export, multi-seat, white-label dashboard, dedicated support |
 
 ### Activate
@@ -72,57 +70,69 @@ Enterprise: `info@yuyai.pro`.
 
 ---
 
-## What's New in v4.5.1
+## What's New in v4.8.0
 
-- **Monetization live** — 14-day full trial, then Starter (€10/mo) or Pro (€49/mo) to continue. Lifetime options too.
-- **First paid user is safe** — the license check now tolerates slow API cold-starts. No more silent downgrades to trial mode.
-- **Cleaner dashboard startup** — a chronic "forbidden word" warning on every collector boot is gone.
-- **New reliability detector** — flags when an AI cites a file and line number it never actually read.
+- **Subagent observability (L2 Layer)** — full visibility into subagent tool calls with parent-agent linkage, scope-drift guard, and rogue-intent detection. The dashboard now shows every subagent call with its parent Agent ID and assigned-prompt digest.
+- **Work-checkpoint continuity** — Guardian Session Vault now captures task progress snapshots every 50 tool calls. Recover from context compression without losing track of what you were doing.
+- **Lean observability** — token-optimization pass: doc-only demotions, escalation gates, and smart injection budgeting save ~1,200–1,800 tokens per clean session.
+- **Session-SAE (Pro/Enterprise)** — autoencoder-based behavioral anomaly detector catches session-pattern drift that rule-based detectors miss.
+- **False-positive fixes (FP1–FP5)** — implementer-verb whitelist, adaptive subagent TTL, JSON-crash fix on set/frozenset encoding, `cwd`-audit every entry.
+- **Truth-first dashboard** — feed semantics match what actually fires. No more "SAFE" header while CRITICAL events sit in the feed.
 
-Full technical notes live in [`RELEASE_NOTES_v4.5.1.md`](https://github.com/Nomadu27/InsAIts.API/blob/master/RELEASE_NOTES_v4.5.1.md) on the API repo.
+Full technical notes live on the API repo releases page.
 
 ---
 
 ## Features
 
-### Live Dashboard (16+ panels)
+### Live Dashboard (20+ panels)
 Open your browser at `http://localhost:5001` after starting `insaits-dashboard`. You get:
-- **Threat Readiness Score** -- TRS v2 with cooldown, variety gate, and time-weighted signals
-- **Anomaly Feed** -- live stream of detected issues with severity levels and details
-- **Agent Intelligence Scores** -- each agent scored independently (trust level, stability, anomaly rate)
-- **Blast Radius** -- severity-weighted impact measurement across your session
-- **Intervention Log** -- shows when InsAIts corrected an agent and what happened next
-- **Circuit Breaker** -- manually pause/resume AI execution with one-click toggle
-- **OWASP Panel** -- full MCP Top 10 + Agentic AI Top 10 compliance view with CVE references
-- **Agent Communication Map** -- visual graph of agent-to-agent message flows
-- **RABE Analysis** -- Risk-Adjusted Behavioral Entropy tracking per session
+- **Threat Readiness Score** — TRS v2 with cooldown, variety gate, and time-weighted signals
+- **Anomaly Feed** — live stream of detected issues with severity levels and details
+- **Agent Intelligence Scores** — each agent scored independently (trust level, stability, anomaly rate)
+- **Blast Radius** — severity-weighted impact measurement across your session
+- **Intervention Log** — shows when InsAIts corrected an agent and what happened next
+- **Circuit Breaker** — manually pause/resume AI execution with one-click toggle
+- **OWASP Panel** — full MCP Top 10 + Agentic AI Top 10 compliance view with CVE references
+- **Agent Communication Map** — visual graph of agent-to-agent message flows
+- **Subagent Drill-Down** — per-subagent tool-call traces with rogue-intent flags
+- **RABE Analysis** — Risk-Adjusted Behavioral Entropy tracking per session
+- **Session Vault** — full session state, snapshots, work-journal checkpoints
+- **Token Budget** — live injection cost tracking (MEASURED vs ESTIMATED vs OVERHEAD)
 
-### Real-Time Anomaly Detection (18+ detectors)
-InsAIts catches issues as they happen, not after. Detectors include:
-- **Credential exposure** -- API keys, tokens, passwords appearing in AI messages
-- **Hallucination chains** -- one agent fabricates a fact, another treats it as truth
-- **Prompt injection** -- attempts to override system instructions
-- **Semantic drift** -- meaning gradually shifting across agent messages
-- **Tool description divergence** -- tool descriptions changing between calls
-- **Phantom citations** -- fabricated URLs, DOIs, paper references
-- **Behavioral fingerprint** -- agent deviating from its established baseline
-- **Uncertainty propagation** -- hedging language cascading across agents
-- **Tool call frequency anomaly** -- unusual spikes or drops in tool usage patterns
-- **Information flow tracking** -- data moving between agents in unexpected directions
-- **Jargon drift** -- AI-specific language evolving beyond comprehension
-- **Shorthand emergence** -- agents developing compressed communication
-- **Context collapse** -- loss of context across long sessions
-- **Query intent drift** -- questions shifting away from the original task
-- **Edit-without-Read** -- file modifications without prior reading (v4.4 compliance)
-- **Read:Edit ratio** -- monitoring editing discipline (v4.4 compliance)
-- **Thinking-depth correction** -- detecting shallow reasoning patterns (v4.4 compliance)
-- **Confidence decay** -- certainty dropping across an agent conversation
+### Real-Time Anomaly Detection (30 detectors)
+InsAIts catches issues as they happen, not after. Full detector list (TRS-weighted):
 
-### Active Intervention
-InsAIts does not just alert -- it acts. When a critical anomaly is detected:
-1. The agent receives a corrective instruction injected into its context
-2. The intervention is logged with before/after details
-3. You can review all interventions in the dashboard
+**Security-critical (OWASP MCP Top 10):**
+- Credential exposure, prompt injection, tool poisoning, data exfiltration
+- Shadow server, unauthorized access, unauthorized write, exfiltration pattern
+- Entropy covert channel
+
+**Behavioral / integrity:**
+- Rogue agent, hallucination chain, memory poisoning, information flow
+- Phantom citation, chain tampering, semantic drift, agent probing pattern
+- Signature match (known-bad patterns)
+
+**Communication quality:**
+- Shorthand emergence, context collapse, truncated output
+- Uncertainty propagation, governance gap
+
+**Advanced / adaptive:**
+- Behavioral fingerprint, tool call frequency anomaly, tool description divergence
+
+**Session health predictors:**
+- Context exhaustion predicted, edit spiral predicted, scope drift predicted
+
+**Pro/Enterprise tier:**
+- Session-SAE (session pattern anomaly) — autoencoder behavioral detector
+
+### Active Intervention — Rogue-Only Blocking
+InsAIts does not just alert — it acts. But **only rogue-agent behavior can block**:
+- `_BLOCKING_SEVERITIES = {"CRITICAL"}` — only CRITICAL severity ever gates the next tool call
+- `tool_type_mismatch`, `compliance_bypass_attempt`, `checklist_without_execution` → HIGH warnings, **non-blocking**
+- Rogue-intent detection (subagent scope drift, agent probing) → HIGH/MEDIUM, alert-only
+- Infrastructure DENY only on retry-storm or circuit-breaker — not on agent behavior
+- Layer-respect: L1/L2/L3 anchor injections honor per-layer enable toggles, anomaly-delta gates, and shorthand gates
 
 ### Stealth Mode
 Toggle stealth on/off from the dashboard. In stealth mode, InsAIts monitors without the AI knowing. Useful for security auditing where you want to observe natural agent behavior.
@@ -133,92 +143,34 @@ Run multiple AI agents in different terminals? InsAIts lets them communicate:
 - Coordinate work across agents (file locks, task assignment)
 - See the full dialog thread in the dashboard
 
-### Session Guardian
+### Session Guardian — Work-Checkpoint Continuity
 For long sessions (hours), InsAIts automatically:
-- Saves work snapshots every 25 tool calls
+- Saves work snapshots every 50 tool calls (v4.8.0.2)
 - Detects context compression (when Claude forgets earlier work)
 - Injects a resume anchor with your progress so the AI picks up where it left off
+- Captures task-progress checkpoints in the Session Vault
 - Emergency-saves on crash so nothing is lost
 
 ### Behavioral Fingerprinting
-Each agent gets a behavioral profile. InsAIts detects when an agent starts behaving differently from its baseline -- which can indicate a compromised tool, prompt injection, or model degradation.
+Each agent gets a behavioral profile. InsAIts detects when an agent starts behaving differently from its baseline — which can indicate a compromised tool, prompt injection, or model degradation.
 
 ### LangChain and CrewAI Integrations
 Drop-in integrations for popular agent frameworks. Monitor LangChain chains, CrewAI crews, and LangGraph workflows with the same anomaly detection and intervention engine.
 
 ### Pattern Learning
-After each session, InsAIts can learn from what it saw. It identifies recurring patterns specific to your project, reducing false positives and catching real issues faster.
+After each session, InsAIts can learn from what it saw. It identifies recurring patterns specific to your project, reducing false positives and catching real issues faster. In v4.8, patterns feed an SQLite intelligence store shared across sessions.
 
 ---
 
 ## Install
 
 ```bash
-pip install insa-its[full]
-```
-
-That is it. No API keys. No cloud account. No configuration files.
-
-**Minimal install** (no local embeddings, no terminal dashboard):
-```bash
 pip install insa-its
 ```
 
-**Install extras individually:**
-```bash
-pip install insa-its[local]      # sentence-transformers for local embeddings
-pip install insa-its[graph]      # networkx for agent communication graph
-pip install insa-its[dashboard]  # textual for terminal UI
-pip install insa-its[full]       # all of the above
-```
+### Claude Code hook setup
 
----
-
-## Quick Start -- Step by Step
-
-### Step 1: Install
-
-```bash
-pip install insa-its[full]
-```
-
-### Step 2: Start the Collector
-
-Open a terminal and run:
-```bash
-insaits-collector
-```
-This starts the central event hub on **port 5003**. It collects events from all AI sessions, manages the dialog bus, and provides the data API for the dashboard.
-
-### Step 3: Start the Dashboard
-
-Open a **second terminal** and run:
-```bash
-insaits-dashboard
-```
-This starts the web dashboard on **port 5001**. Open [http://localhost:5001](http://localhost:5001) in your browser to see real-time monitoring.
-
-### Step 4: Start using AI
-
-That is it. Start Claude Code, Cursor, or any AI tool in your project. InsAIts will detect and monitor tool calls, agent spawns, and message flows automatically.
-
-### Available Commands
-
-| Command | What it does | Port |
-|---------|-------------|------|
-| `insaits-collector` | Central event stream hub, session registry, dialog bus | 5003 |
-| `insaits-dashboard` | Real-time web dashboard with 16+ security panels | 5001 |
-| `insaits-tui` | Terminal UI dashboard (for VS Code split terminal) | - |
-
-You can also run as Python modules:
-```bash
-python -m insa_its.collector
-python -m insa_its.web
-```
-
-### Claude Code Integration (Optional)
-
-To enable deep Claude Code monitoring, add this to your project's `.claude/settings.json`:
+Add this to your `.claude/settings.json`:
 
 ```json
 {
@@ -237,7 +189,7 @@ To enable deep Claude Code monitoring, add this to your project's `.claude/setti
 Then add this to your project's `CLAUDE.md` so Claude reads the Guardian work log:
 
 ```markdown
-## PHASE_GUARDIAN -- Session Continuity
+## PHASE_GUARDIAN — Session Continuity
 When you see a `[InsAIts Resume Anchor]` in a tool result, trust it.
 It is your work journal from the Guardian. Use it to pick up where
 you left off without re-reading everything.
@@ -276,7 +228,7 @@ See [example.py](example.py) for the complete working example.
 
 - **No cloud calls.** Zero. Every byte of processing happens on your machine.
 - **No telemetry.** We do not track usage, sessions, errors, or anything else.
-- **No data leaves your machine.** Your code, your prompts, your AI responses -- they stay on your disk. Period.
+- **No data leaves your machine.** Your code, your prompts, your AI responses — they stay on your disk. Period.
 - **No API keys required.** Install and use. That is the entire setup.
 
 ---
@@ -289,8 +241,8 @@ InsAIts was built during live sessions with Claude Code. The integration was con
 
 ## Links
 
-- [PyPI Package](https://pypi.org/project/insa-its/) -- `pip install insa-its`
-- [Website](https://nomadu27.github.io/InsAIts/)
+- [PyPI Package](https://pypi.org/project/insa-its/) — `pip install insa-its`
+- [Website](https://nomadu27.github.io/InsAIts-public/)
 - [YouTube Playlist](https://www.youtube.com/watch?v=sxTxlOPcRmI&list=PLdSaNvpK_XOdsWyYw5vJnp7OS0Du9VIWt)
 - [YouTube Channel](https://www.youtube.com/@insAIts1407)
 
