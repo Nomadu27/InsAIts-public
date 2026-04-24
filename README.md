@@ -42,7 +42,7 @@ These are real numbers from real sessions, not benchmarks:
 | Data sent to cloud | **0 bytes** | Everything runs locally |
 
 ### Ecosystem adoption
-InsAIts is the security core of the **AgentShield** runtime, a fork of Anthropic's Claude Code ecosystem maintained by the community. AgentShield is our `feat/insaits-security-hook` branch of `everything-claude-code` — same codebase, rebranded downstream. If you use AgentShield, you're running InsAIts.
+InsAIts is the security core of the **AgentShield** runtime, a fork of Everything Claude Code ecosystem,. AgentShield is our `feat/insaits-security-hook` branch of `everything-claude-code` — same codebase, rebranded downstream. If you use AgentShield, you're running InsAIts.
 
 ---
 
@@ -165,7 +165,7 @@ After each session, InsAIts can learn from what it saw. It identifies recurring 
 ## Install
 
 ```bash
-pip install insa-its
+pip install insa-its[full]
 ```
 
 ### Claude Code hook setup
