@@ -3,7 +3,7 @@
 **Runtime security for AI agents. Catches what your AI misses.**
 
 [![PyPI v4.8.0](https://img.shields.io/badge/PyPI-v4.8.0-cyan)](https://pypi.org/project/insa-its/)
-[![Downloads](https://img.shields.io/badge/downloads-12.26k-brightgreen)](https://pypi.org/project/insa-its/)
+[![Downloads](https://img.shields.io/badge/downloads-13.45k-brightgreen)](https://pypi.org/project/insa-its/)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://pypi.org/project/insa-its/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 [![100% Local](https://img.shields.io/badge/Data-100%25%20Local-brightgreen)](#what-insaits-does-not-do)
