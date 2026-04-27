@@ -3,7 +3,7 @@
 **Runtime security for AI agents. Catches what your AI misses.**
 
 [![PyPI v4.8.0](https://img.shields.io/badge/PyPI-v4.8.0-cyan)](https://pypi.org/project/insa-its/)
-[![Downloads](https://img.shields.io/badge/downloads-13.45k-brightgreen)](https://pypi.org/project/insa-its/)
+[![Downloads](https://img.shields.io/badge/downloads-13.60k-brightgreen)](https://pypi.org/project/insa-its/)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://pypi.org/project/insa-its/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 [![100% Local](https://img.shields.io/badge/Data-100%25%20Local-brightgreen)](#what-insaits-does-not-do)
@@ -31,7 +31,7 @@ These are real numbers from real sessions, not benchmarks:
 
 | Metric | Value | Context |
 |--------|-------|---------|
-| **PyPI downloads** | **12,260+** | Total installs of `insa-its` |
+| **PyPI downloads** | **13,600+** | Total installs of `insa-its` |
 | SDK version | **4.8.0** | Latest release on PyPI |
 | Anomaly detectors | **30** | Full TRS-weighted detector suite (see [full list](#real-time-anomaly-detection-30-detectors)) |
 | OWASP coverage | **MCP Top 10 + Agentic AI Top 10** | ASI01–ASI10, with CVE references |
