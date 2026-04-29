@@ -156,7 +156,7 @@
     <div class="flex items-center gap-3">
       <div class="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-black text-sm" style="background:linear-gradient(135deg,#22d3ee,#a855f7);">I</div>
       <span class="text-xl font-display font-bold neon-cyan tracking-tight">InsAIts</span>
-      <span class="hidden sm:block text-xs font-mono-custom text-slate-500 ml-1">v3.4.0</span>
+      <span class="hidden sm:block text-xs font-mono-custom text-slate-500 ml-1">v4.8.7</span>
     </div>
     <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
       <a href="#proof" class="nav-link hover:text-cyan-400 transition">Why InsAIts</a>
@@ -186,15 +186,37 @@
   <canvas id="particles"></canvas>
   <div class="max-w-6xl mx-auto px-4 md:px-6 relative z-10 text-center w-full" style="padding-top:clamp(7rem,15vw,9rem);padding-bottom:clamp(3rem,8vw,6rem);">
 
-    <!-- ECC Featured Badge — top prominence -->
-    <a href="https://github.com/affaan-m/everything-claude-code" target="_blank"
-       class="inline-flex items-center gap-3 rounded-full mb-4 transition card-lift"
-       style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.35);padding:8px 20px;text-decoration:none;font-size:clamp(0.65rem,2vw,0.82rem);">
-      <i class="fab fa-github text-violet-400"></i>
-      <span class="font-display font-bold text-violet-300">Featured in everything-claude-code</span>
-      <span class="font-mono-custom text-amber-400 font-bold">90k+ stars</span>
-      <span class="text-slate-500 font-mono-custom text-xs">Default security hook</span>
-    </a>
+    <!-- Downloads counter — top prominence (v4.8.7) -->
+    <div class="inline-flex items-center gap-2 rounded-full font-mono-custom mb-4"
+         style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.35);padding:6px 16px;font-size:clamp(0.65rem,2vw,0.82rem);color:#86efac;">
+      <i class="fas fa-download text-green-400"></i>
+      <span class="font-display font-bold">13,720+ downloads</span>
+      <span class="text-slate-500 text-xs">on PyPI</span>
+    </div>
+
+    <!-- TOP PAYMENT BUTTONS — visible above-the-fold for users arriving from the dashboard trial banner -->
+    <div style="display:flex;flex-direction:column;gap:10px;max-width:320px;margin:0 auto 1.5rem auto;">
+      <a href="https://buy.stripe.com/eVq7sLdsbgItgTqaaIb3q0a" target="_blank"
+         style="display:block;padding:12px 18px;border-radius:12px;background:var(--cyan);color:#0a0a0a;font-weight:700;font-size:0.95rem;text-decoration:none;text-align:center;transition:opacity 0.2s;"
+         onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+        Start Starter — €10/mo
+      </a>
+      <a href="https://buy.stripe.com/eVq4gzfAjcsd6eMfv2b3q09" target="_blank"
+         style="display:block;padding:11px 18px;border-radius:12px;background:transparent;border:1.5px solid var(--cyan);color:var(--cyan);font-weight:600;font-size:0.9rem;text-decoration:none;text-align:center;transition:background 0.2s;"
+         onmouseover="this.style.background='rgba(34,211,238,0.1)'" onmouseout="this.style.background='transparent'">
+        Lifetime Starter — €99 one-time
+      </a>
+      <a href="https://buy.stripe.com/bJefZhewffEpeLieqYb3q01" target="_blank"
+         style="display:block;padding:12px 18px;border-radius:12px;background:#a855f7;color:#fff;font-weight:700;font-size:0.95rem;text-decoration:none;text-align:center;transition:opacity 0.2s;"
+         onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+        Start Pro — €49/mo
+      </a>
+      <a href="https://buy.stripe.com/3cI8wPfAjak5bz61Ecb3q04" target="_blank"
+         style="display:block;padding:11px 18px;border-radius:12px;background:transparent;border:1.5px solid #a855f7;color:#c4b5fd;font-weight:600;font-size:0.9rem;text-decoration:none;text-align:center;transition:background 0.2s;"
+         onmouseover="this.style.background='rgba(168,85,247,0.1)'" onmouseout="this.style.background='transparent'">
+        Lifetime Pro — €299 one-time
+      </a>
+    </div>
 
     <!-- Badge -->
     <div class="hero-badge inline-flex items-center gap-2 rounded-full font-mono-custom text-cyan-400 mb-6"
@@ -203,7 +225,7 @@
         <span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
       </span>
-      V3.1.6 &nbsp;•&nbsp; 100% LOCAL &nbsp;•&nbsp; AIR-GAPPED &nbsp;•&nbsp; APACHE 2.0
+      V4.8.7 &nbsp;•&nbsp; 100% LOCAL &nbsp;•&nbsp; AIR-GAPPED &nbsp;•&nbsp; APACHE 2.0
     </div>
 
     <!-- Title -->
@@ -752,6 +774,17 @@
         </ul>
       </div>
     </div>
+    <!-- ECC Featured Badge — relocated from hero to footer (v4.8.7) -->
+    <div class="text-center mb-8" style="padding-top:24px;border-top:1px solid rgba(255,255,255,0.05);">
+      <a href="https://github.com/affaan-m/everything-claude-code" target="_blank"
+         class="inline-flex items-center gap-3 rounded-full transition card-lift"
+         style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.35);padding:8px 20px;text-decoration:none;font-size:clamp(0.65rem,2vw,0.82rem);">
+        <i class="fab fa-github text-violet-400"></i>
+        <span class="font-display font-bold text-violet-300">Featured in everything-claude-code</span>
+        <span class="font-mono-custom text-amber-400 font-bold">160k+ stars</span>
+        <span class="text-slate-500 font-mono-custom text-xs">Default security hook</span>
+      </a>
+    </div>
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-8" style="border-top:1px solid rgba(255,255,255,0.05);">
       <p class="text-xs text-slate-600 font-mono-custom">© 2026 Steddy Nova SRL — Built with ♥ in Romania</p>
       <div class="flex gap-6 text-xs text-slate-600">
@@ -811,7 +844,7 @@
   // Demo
   let demoInt=null, demoOn=false;
   const events = [
-    {t:'sys',m:'✅ InsAIts v3.4.0 — monitoring started'},
+    {t:'sys',m:'✅ InsAIts v4.8.7 — monitoring started'},
     {t:'sys',m:'📡 5 agents online: claude:Bash, claude:Edit, claude:Write, subagent:Explore, claude-opus'},
     {t:'sys',m:'🔒 Stealth mode: OFF  |  Task Anchor: ACTIVE  |  Processing: 100% local'},
     {t:'ok', m:'→ [claude:Bash] Bash tool call #1 — CLEAN'},

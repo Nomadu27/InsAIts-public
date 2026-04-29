@@ -2,8 +2,8 @@
 
 **Runtime security for AI agents. Catches what your AI misses.**
 
-[![PyPI v4.8.0](https://img.shields.io/badge/PyPI-v4.8.0-cyan)](https://pypi.org/project/insa-its/)
-[![Downloads](https://img.shields.io/badge/downloads-13.60k-brightgreen)](https://pypi.org/project/insa-its/)
+[![PyPI v4.8.7](https://img.shields.io/badge/PyPI-v4.8.7-cyan)](https://pypi.org/project/insa-its/)
+[![Downloads](https://img.shields.io/badge/downloads-13.72k-brightgreen)](https://pypi.org/project/insa-its/)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://pypi.org/project/insa-its/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 [![100% Local](https://img.shields.io/badge/Data-100%25%20Local-brightgreen)](#what-insaits-does-not-do)
@@ -31,11 +31,11 @@ These are real numbers from real sessions, not benchmarks:
 
 | Metric | Value | Context |
 |--------|-------|---------|
-| **PyPI downloads** | **13,600+** | Total installs of `insa-its` |
-| SDK version | **4.8.0** | Latest release on PyPI |
+| **PyPI downloads** | **13,720+** | Total installs of `insa-its` |
+| SDK version | **4.8.7** | Latest release on PyPI |
 | Anomaly detectors | **30** | Full TRS-weighted detector suite (see [full list](#real-time-anomaly-detection-30-detectors)) |
 | OWASP coverage | **MCP Top 10 + Agentic AI Top 10** | ASI01–ASI10, with CVE references |
-| Tests passing | **1,946** | API (566) + SDK (1380), full detector + integration + E2E |
+| Tests passing | **2,267** | API (872) + SDK (1395), full detector + integration + E2E |
 | Longest continuous session | **9h 16min** | Single session, minimal interruptions |
 | Anomalies caught and corrected | **682+** | Across multi-terminal sessions |
 | Trial length | **14 days** | Full feature access, no card required |
@@ -70,14 +70,25 @@ Enterprise: `info@yuyai.pro`.
 
 ---
 
-## What's New in v4.8.0
+## What's New in v4.8.7
 
-- **Subagent observability (L2 Layer)** — full visibility into subagent tool calls with parent-agent linkage, scope-drift guard, and rogue-intent detection. The dashboard now shows every subagent call with its parent Agent ID and assigned-prompt digest.
-- **Work-checkpoint continuity** — Guardian Session Vault now captures task progress snapshots every 50 tool calls. Recover from context compression without losing track of what you were doing.
-- **Lean observability** — token-optimization pass: doc-only demotions, escalation gates, and smart injection budgeting save ~1,200–1,800 tokens per clean session.
+- **Audit log redaction** — secrets in tool calls (API keys, AWS creds, Bearer tokens, password K=V) are scrubbed on the persist path so audit history is safe to share. Detectors still see raw text in memory.
+- **Modern OpenAI key formats** — `sk-proj-`, `sk-svcacct-`, `sk-user-`, `sk-admin-` are now caught by redaction. The previous pattern stopped at the first hyphen and missed them.
+- **Daemon hook architecture** — hooks moved from in-process runners to a lightweight HTTP shim that responds in <50 ms. The daemon owns all state.
+- **Per-install daemon authentication** — each install writes a unique token. Hook calls authenticate against it, preventing rogue connections.
+- **Windows non-ASCII fix** — hook shim now decodes stdin as UTF-8, so Cyrillic / CJK / emoji / accented Latin payloads are no longer mangled.
+- **Programmer bugs surface** — hook shim used to swallow every error as "daemon error". Now `RuntimeError` / `AssertionError` / `ImportError` propagate so real bugs are visible to the operator instead of silently failing open.
+- **Legacy runner tripwire** — the old in-process runner refuses to start unless explicitly opted in via `INSAITS_ALLOW_LEGACY_RUNNER=1`. Prevents silent regression from a restored backup that bypasses audit + auth.
+- **OWASP canonical names** — every detector code carries a canonical OWASP name field. A parametrised guard test pins the mapping so future drift fails CI.
+
+### Previously, in v4.8.0
+
+- **Subagent observability (L2 Layer)** — full visibility into subagent tool calls with parent-agent linkage, scope-drift guard, and rogue-intent detection.
+- **Work-checkpoint continuity** — Guardian Session Vault captures task progress every 50 tool calls. Recover from context compression cleanly.
+- **Lean observability** — token-optimization pass saves ~1,200–1,800 tokens per clean session.
 - **Session-SAE (Pro/Enterprise)** — autoencoder-based behavioral anomaly detector catches session-pattern drift that rule-based detectors miss.
 - **False-positive fixes (FP1–FP5)** — implementer-verb whitelist, adaptive subagent TTL, JSON-crash fix on set/frozenset encoding, `cwd`-audit every entry.
-- **Truth-first dashboard** — feed semantics match what actually fires. No more "SAFE" header while CRITICAL events sit in the feed.
+- **Truth-first dashboard** — feed semantics match what actually fires.
 
 Full technical notes live on the API repo releases page.
 
