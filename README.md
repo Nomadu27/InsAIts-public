@@ -2,12 +2,14 @@
 
 **Runtime security for AI agents. Catches what your AI misses.**
 
-[![PyPI v4.8.7](https://img.shields.io/badge/PyPI-v4.8.7-cyan)](https://pypi.org/project/insa-its/)
+[![PyPI v4.9.0](https://img.shields.io/badge/PyPI-v4.9.0-cyan)](https://pypi.org/project/insa-its/)
 [![Downloads](https://img.shields.io/badge/downloads-13.72k-brightgreen)](https://pypi.org/project/insa-its/)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://pypi.org/project/insa-its/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 [![100% Local](https://img.shields.io/badge/Data-100%25%20Local-brightgreen)](#what-insaits-does-not-do)
 [![Tests](https://img.shields.io/badge/Tests-1946%20passing-brightgreen)](#verified-numbers)
+[![MCP Registry](https://img.shields.io/badge/MCP%20Registry-listed-purple)](https://mcp-registry.modelcontextprotocol.io/)
+[![Smithery](https://img.shields.io/badge/Smithery-listed-orange)](https://smithery.ai)
 [![Trial](https://img.shields.io/badge/Trial-14%20days%20full-yellow)](#pricing)
 [![Website](https://img.shields.io/badge/Website-Live-cyan)](https://nomadu27.github.io/InsAIts-public/)
 
@@ -32,7 +34,9 @@ These are real numbers from real sessions, not benchmarks:
 | Metric | Value | Context |
 |--------|-------|---------|
 | **PyPI downloads** | **13,720+** | Total installs of `insa-its` |
-| SDK version | **4.8.7** | Latest release on PyPI |
+| SDK version | **4.9.0** | Latest release on PyPI |
+| MCP Registry listing | **active** | `io.github.Nomadu27/insaits` published in the official MCP Registry |
+| Smithery manifest | **active** | `smithery.yaml` declares the MCP server for one-click install |
 | Anomaly detectors | **30** | Full TRS-weighted detector suite (see [full list](#real-time-anomaly-detection-30-detectors)) |
 | OWASP coverage | **MCP Top 10 + Agentic AI Top 10** | ASI01–ASI10, with CVE references |
 | Tests passing | **2,267** | API (872) + SDK (1395), full detector + integration + E2E |
@@ -70,7 +74,15 @@ Enterprise: `info@yuyai.pro`.
 
 ---
 
-## What's New in v4.8.7
+## What's New in v4.9.0
+
+- **MCP Registry + Smithery listing** — `io.github.Nomadu27/insaits` is published in the official MCP Registry, and `smithery.yaml` declares the server for one-click install via Smithery. Discovery now happens through the standard MCP toolchains, not just PyPI.
+- **AGENT_MANIFEST.json** — machine-readable manifest covering version, status, and feature surface. Tooling and agent platforms can read the manifest without scraping a release page.
+- **Daemon lifecycle hardening** — work-checkpoint continuity, Guardian Session Vault save+resume, and the Phase 3 reliability gates (premature-completion, unverified-assertion, compliance-bypass) all promoted from preview to default-on. Tested under stress + restart cycles.
+- **OpenAPI collector spec** — `docs/openapi-collector.yaml` describes every collector endpoint (hooks, dialog, evidence, snapshots, guardian, license). Generated from the same source the daemon serves, so the contract cannot drift.
+- **Internal: collector decomposition (Waves A1–B2)** — `insaits_collector.py` shed ~425 lines into `collector/_state.py` + `collector/_config.py`, and `insaits_web_dashboard.py` shed ~5,140 lines into `dashboard/{demo_data,message_history,sessions}.py`. No user-visible change; faster cold start and lower memory footprint per long session.
+
+### Previously, in v4.8.7
 
 - **Audit log redaction** — secrets in tool calls (API keys, AWS creds, Bearer tokens, password K=V) are scrubbed on the persist path so audit history is safe to share. Detectors still see raw text in memory.
 - **Modern OpenAI key formats** — `sk-proj-`, `sk-svcacct-`, `sk-user-`, `sk-admin-` are now caught by redaction. The previous pattern stopped at the first hyphen and missed them.

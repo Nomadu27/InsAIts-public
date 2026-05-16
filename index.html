@@ -156,7 +156,7 @@
     <div class="flex items-center gap-3">
       <div class="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-black text-sm" style="background:linear-gradient(135deg,#22d3ee,#a855f7);">I</div>
       <span class="text-xl font-display font-bold neon-cyan tracking-tight">InsAIts</span>
-      <span class="hidden sm:block text-xs font-mono-custom text-slate-500 ml-1">v4.8.7</span>
+      <span class="hidden sm:block text-xs font-mono-custom text-slate-500 ml-1">v4.9.0</span>
     </div>
     <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
       <a href="#proof" class="nav-link hover:text-cyan-400 transition">Why InsAIts</a>
@@ -186,12 +186,23 @@
   <canvas id="particles"></canvas>
   <div class="max-w-6xl mx-auto px-4 md:px-6 relative z-10 text-center w-full" style="padding-top:clamp(7rem,15vw,9rem);padding-bottom:clamp(3rem,8vw,6rem);">
 
-    <!-- Downloads counter — top prominence (v4.8.7) -->
+    <!-- Downloads counter — top prominence (v4.9.0) -->
     <div class="inline-flex items-center gap-2 rounded-full font-mono-custom mb-4"
          style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.35);padding:6px 16px;font-size:clamp(0.65rem,2vw,0.82rem);color:#86efac;">
       <i class="fas fa-download text-green-400"></i>
       <span class="font-display font-bold">13,720+ downloads</span>
       <span class="text-slate-500 text-xs">on PyPI</span>
+    </div>
+    <!-- MCP Registry + Smithery listing badges — v4.9.0 -->
+    <div class="inline-flex flex-wrap items-center justify-center gap-2 font-mono-custom mb-4" style="font-size:clamp(0.6rem,1.7vw,0.72rem);">
+      <span style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.35);padding:5px 12px;border-radius:9999px;color:#d8b4fe;">
+        <i class="fas fa-check-circle text-purple-400"></i>
+        MCP Registry listed
+      </span>
+      <span style="background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.35);padding:5px 12px;border-radius:9999px;color:#fdba74;">
+        <i class="fas fa-check-circle text-orange-400"></i>
+        Smithery one-click install
+      </span>
     </div>
 
     <!-- TOP PAYMENT BUTTONS — visible above-the-fold for users arriving from the dashboard trial banner -->
@@ -774,7 +785,7 @@
         </ul>
       </div>
     </div>
-    <!-- ECC Featured Badge — relocated from hero to footer (v4.8.7) -->
+    <!-- ECC Featured Badge — relocated from hero to footer (v4.9.0) -->
     <div class="text-center mb-8" style="padding-top:24px;border-top:1px solid rgba(255,255,255,0.05);">
       <a href="https://github.com/affaan-m/everything-claude-code" target="_blank"
          class="inline-flex items-center gap-3 rounded-full transition card-lift"
@@ -844,7 +855,7 @@
   // Demo
   let demoInt=null, demoOn=false;
   const events = [
-    {t:'sys',m:'✅ InsAIts v4.8.7 — monitoring started'},
+    {t:'sys',m:'✅ InsAIts v4.9.0 — monitoring started'},
     {t:'sys',m:'📡 5 agents online: claude:Bash, claude:Edit, claude:Write, subagent:Explore, claude-opus'},
     {t:'sys',m:'🔒 Stealth mode: OFF  |  Task Anchor: ACTIVE  |  Processing: 100% local'},
     {t:'ok', m:'→ [claude:Bash] Bash tool call #1 — CLEAN'},
