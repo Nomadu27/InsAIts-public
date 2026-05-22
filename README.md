@@ -2,8 +2,8 @@
 
 **Runtime security for AI agents. Catches what your AI misses.**
 
-[![PyPI v4.9.0](https://img.shields.io/badge/PyPI-v4.9.0-cyan)](https://pypi.org/project/insa-its/)
-[![Downloads](https://img.shields.io/badge/downloads-13.72k-brightgreen)](https://pypi.org/project/insa-its/)
+[![PyPI v4.9.1](https://img.shields.io/badge/PyPI-v4.9.1-cyan)](https://pypi.org/project/insa-its/)
+[![Downloads](https://img.shields.io/badge/downloads-16.95k-brightgreen)](https://pypi.org/project/insa-its/)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://pypi.org/project/insa-its/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 [![100% Local](https://img.shields.io/badge/Data-100%25%20Local-brightgreen)](#what-insaits-does-not-do)
@@ -33,8 +33,8 @@ These are real numbers from real sessions, not benchmarks:
 
 | Metric | Value | Context |
 |--------|-------|---------|
-| **PyPI downloads** | **13,720+** | Total installs of `insa-its` |
-| SDK version | **4.9.0** | Latest release on PyPI |
+| **PyPI downloads** | **16,946+** | Total installs of `insa-its` |
+| SDK version | **4.9.1** | Latest release on PyPI |
 | MCP Registry listing | **active** | `io.github.Nomadu27/insaits` published in the official MCP Registry |
 | Smithery manifest | **active** | `smithery.yaml` declares the MCP server for one-click install |
 | Anomaly detectors | **30** | Full TRS-weighted detector suite (see [full list](#real-time-anomaly-detection-30-detectors)) |
@@ -74,13 +74,20 @@ Enterprise: `info@yuyai.pro`.
 
 ---
 
-## What's New in v4.9.0
+## What's New in v4.9.1
+
+- **PyPI wheel completeness** — fix `setup.py` so non-Python data files (manifests, schemas, anchor assets) ship inside the wheel instead of being skipped by setuptools. Resolves a class of "works locally, fails on `pip install`" reports.
+- **Collector decomposition complete (Waves B1–B9)** — `insaits_collector.py` is now a coordinator over nine focused modules: `collector/_config.py`, `_state.py`, `_security.py`, `_sdk_loaders.py`, `_evidence.py`, `_events.py`, `_detectors.py`, `_hook_config.py`, `_audit_writer.py`. The monolith dropped by several thousand lines; surface and behavior are unchanged.
+- **Dashboard decomposition (Waves A1–A4)** — HTML, demo data, message history, and session routing extracted into the `dashboard/` package. Cold start is faster and a long session keeps a lower memory footprint.
+- **Detector FP fix — unverified_source_claim on file writes** — file bodies passed to `Write` / `Edit` / `MultiEdit` no longer trigger the "unverified source claim" detector, which was firing on code that simply contained quoted strings about authors or sources. False-positive rate dropped sharply for normal editing workflows.
+- **Test-suite hygiene** — autouse audit-sidecar redirect closes a pollution-invariant leak that was masking real failures across suites; sgtest-/m7- audit isolation tightened; SAE perf cap relaxed for slow CI.
+
+### Previously, in v4.9.0
 
 - **MCP Registry + Smithery listing** — `io.github.Nomadu27/insaits` is published in the official MCP Registry, and `smithery.yaml` declares the server for one-click install via Smithery. Discovery now happens through the standard MCP toolchains, not just PyPI.
 - **AGENT_MANIFEST.json** — machine-readable manifest covering version, status, and feature surface. Tooling and agent platforms can read the manifest without scraping a release page.
 - **Daemon lifecycle hardening** — work-checkpoint continuity, Guardian Session Vault save+resume, and the Phase 3 reliability gates (premature-completion, unverified-assertion, compliance-bypass) all promoted from preview to default-on. Tested under stress + restart cycles.
 - **OpenAPI collector spec** — `docs/openapi-collector.yaml` describes every collector endpoint (hooks, dialog, evidence, snapshots, guardian, license). Generated from the same source the daemon serves, so the contract cannot drift.
-- **Internal: collector decomposition (Waves A1–B2)** — `insaits_collector.py` shed ~425 lines into `collector/_state.py` + `collector/_config.py`, and `insaits_web_dashboard.py` shed ~5,140 lines into `dashboard/{demo_data,message_history,sessions}.py`. No user-visible change; faster cold start and lower memory footprint per long session.
 
 ### Previously, in v4.8.7
 
