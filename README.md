@@ -2,8 +2,9 @@
 
 **Runtime security for AI agents. Catches what your AI misses.**
 
-[![PyPI v4.9.1](https://img.shields.io/badge/PyPI-v4.9.1-cyan)](https://pypi.org/project/insa-its/)
+[![PyPI v4.9.2](https://img.shields.io/badge/PyPI-v4.9.2-cyan)](https://pypi.org/project/insa-its/)
 [![Downloads](https://img.shields.io/badge/downloads-16.95k-brightgreen)](https://pypi.org/project/insa-its/)
+[![FREE while stabilizing](https://img.shields.io/badge/v4.9.2-FREE%20while%20stabilizing-violet)](#-v492--free-while-we-stabilize)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://pypi.org/project/insa-its/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 [![100% Local](https://img.shields.io/badge/Data-100%25%20Local-brightgreen)](#what-insaits-does-not-do)
@@ -14,6 +15,11 @@
 [![Website](https://img.shields.io/badge/Website-Live-cyan)](https://nomadu27.github.io/InsAIts-public/)
 
 **[Website](https://nomadu27.github.io/InsAIts-public/)** | **[PyPI](https://pypi.org/project/insa-its/)** | **[YouTube](https://www.youtube.com/@insAIts1407)**
+
+---
+
+> ### 🛠 v4.9.2 — Free while we stabilize
+> **Every tier is unlocked while we finish polishing the tool.** We're hardening detector calibration, smoothing the dashboard, and burning down the v4.9 stability backlog — and we don't want pricing to gate users while the product is still settling. `pip install -U insa-its` gives you the full Pro feature set today: all 30 detectors, every Phase 3 reliability gate, Session Vault, RABE export, Session-SAE, decipher engine. No card, no key, no env var. Paid tiers return once we mark the tool 100% stable.
 
 ---
 
@@ -34,7 +40,7 @@ These are real numbers from real sessions, not benchmarks:
 | Metric | Value | Context |
 |--------|-------|---------|
 | **PyPI downloads** | **16,946+** | Total installs of `insa-its` |
-| SDK version | **4.9.1** | Latest release on PyPI |
+| SDK version | **4.9.2** | Latest release on PyPI — every tier free while we stabilize |
 | MCP Registry listing | **active** | `io.github.Nomadu27/insaits` published in the official MCP Registry |
 | Smithery manifest | **active** | `smithery.yaml` declares the MCP server for one-click install |
 | Anomaly detectors | **30** | Full TRS-weighted detector suite (see [full list](#real-time-anomaly-detection-30-detectors)) |
@@ -52,7 +58,7 @@ InsAIts is the security core of the **AgentShield** runtime, a fork of Everythin
 
 ## Pricing
 
-All detection is open source. You pay for productivity, longer sessions, premium detectors, and team features.
+> **v4.9.2: every tier listed below is unlocked for free while we stabilize the tool.** No card, no key, no env var — `pip install -U insa-its` and the full Pro feature set is active. The table below is what the regular plans look like; paid tiers return once we mark the tool 100% stable.
 
 | Tier | Monthly | Lifetime | What unlocks |
 |------|--------:|---------:|--------------|
@@ -61,20 +67,26 @@ All detection is open source. You pay for productivity, longer sessions, premium
 | **Pro** | **€49** | **€299** | Starter + L3 subagent anchors, Session-SAE behavioral anomaly detection, inter-session dialog, RABE export, Decipher engine, cloud embeddings, priority support |
 | **Enterprise** | from €200 | custom | SOC2-ready audit export, multi-seat, white-label dashboard, dedicated support |
 
-### Activate
+### Support the project
+
+Stripe links remain live for anyone who wants to support development while we stabilize — every contribution funds the next detector batch and the open-source roadmap:
 
 - [**Starter €10/month**](https://buy.stripe.com/eVq7sLdsbgItgTqaaIb3q0a)
 - [**Pro €49/month**](https://buy.stripe.com/bJefZhewffEpeLieqYb3q01)
 - [**Starter Lifetime €99**](https://buy.stripe.com/eVq4gzfAjcsd6eMfv2b3q09)
 - [**Pro Lifetime €299**](https://buy.stripe.com/3cI8wPfAjak5bz61Ecb3q04)
 
-After payment, your key arrives by email. Set `INSAITS_LICENSE_KEY` before starting the collector. **Passive mode** (expired trial, no key): detection still runs, anomalies still appear on the dashboard — injection/intervention is what unlocks when you activate.
-
 Enterprise: `info@yuyai.pro`.
 
 ---
 
-## What's New in v4.9.1
+## What's New in v4.9.2 — Free while we stabilize
+
+- **🛠 Every tier unlocked while we polish the tool.** We're hardening detector calibration, smoothing the dashboard, and burning down the v4.9 stability backlog — and we don't want pricing to gate users while the product is still settling. A single module-level flag (`_FREE_PROMO_ACTIVE = True` in `insa_its.license.trial_clock`) short-circuits both gates: `get_license_state()` returns `licensed/pro`, and `require_valid_license()` returns a synthetic pro doc with `source="free_promo"`. No trial layers, no network calls to the API, no env-var requirement. Detection, injection, intervention, RABE export, Session-SAE — all on for everyone. Paid tiers return when we mark the tool 100% stable.
+- **License-gate test invariant preserved.** All six existing gating tests still cover `LicenseMissingError` / `LicenseExpiredError` / `LicenseFeatureMissingError` paths by monkeypatching the flag to `False`. A new `test_free_promo_bypasses_gate` pins the bypass behaviour.
+- **Full SDK suite green.** 1401 passed / 2 skipped on the v4.9.2 build.
+
+### Previously, in v4.9.1
 
 - **PyPI wheel completeness** — fix `setup.py` so non-Python data files (manifests, schemas, anchor assets) ship inside the wheel instead of being skipped by setuptools. Resolves a class of "works locally, fails on `pip install`" reports.
 - **Collector decomposition complete (Waves B1–B9)** — `insaits_collector.py` is now a coordinator over nine focused modules: `collector/_config.py`, `_state.py`, `_security.py`, `_sdk_loaders.py`, `_evidence.py`, `_events.py`, `_detectors.py`, `_hook_config.py`, `_audit_writer.py`. The monolith dropped by several thousand lines; surface and behavior are unchanged.

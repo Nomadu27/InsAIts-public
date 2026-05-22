@@ -156,7 +156,7 @@
     <div class="flex items-center gap-3">
       <div class="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-black text-sm" style="background:linear-gradient(135deg,#22d3ee,#a855f7);">I</div>
       <span class="text-xl font-display font-bold neon-cyan tracking-tight">InsAIts</span>
-      <span class="hidden sm:block text-xs font-mono-custom text-slate-500 ml-1">v4.9.1</span>
+      <span class="hidden sm:block text-xs font-mono-custom text-slate-500 ml-1">v4.9.2 — FREE while we stabilize</span>
     </div>
     <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
       <a href="#proof" class="nav-link hover:text-cyan-400 transition">Why InsAIts</a>
@@ -186,14 +186,21 @@
   <canvas id="particles"></canvas>
   <div class="max-w-6xl mx-auto px-4 md:px-6 relative z-10 text-center w-full" style="padding-top:clamp(7rem,15vw,9rem);padding-bottom:clamp(3rem,8vw,6rem);">
 
-    <!-- Downloads counter — top prominence (v4.9.1) -->
+    <!-- Free-while-stabilizing banner — v4.9.2 -->
+    <div class="inline-flex flex-wrap items-center justify-center gap-2 rounded-2xl font-mono-custom mb-3"
+         style="background:rgba(168,85,247,0.10);border:1px solid rgba(168,85,247,0.45);padding:10px 18px;font-size:clamp(0.7rem,2.1vw,0.9rem);color:#d8b4fe;max-width:640px;">
+      <span style="font-size:1rem;">🛠</span>
+      <span class="font-display font-bold">v4.9.2 — FREE while we stabilize</span>
+      <span class="text-slate-400 text-xs">every tier unlocked · no card, no key · paid plans return at 100% stable</span>
+    </div>
+    <!-- Downloads counter — top prominence (v4.9.2) -->
     <div class="inline-flex items-center gap-2 rounded-full font-mono-custom mb-4"
          style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.35);padding:6px 16px;font-size:clamp(0.65rem,2vw,0.82rem);color:#86efac;">
       <i class="fas fa-download text-green-400"></i>
       <span class="font-display font-bold">16,946+ downloads</span>
       <span class="text-slate-500 text-xs">on PyPI</span>
     </div>
-    <!-- MCP Registry + Smithery listing badges — v4.9.1 -->
+    <!-- MCP Registry + Smithery listing badges — v4.9.2 -->
     <div class="inline-flex flex-wrap items-center justify-center gap-2 font-mono-custom mb-4" style="font-size:clamp(0.6rem,1.7vw,0.72rem);">
       <span style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.35);padding:5px 12px;border-radius:9999px;color:#d8b4fe;">
         <i class="fas fa-check-circle text-purple-400"></i>
@@ -236,7 +243,7 @@
         <span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
       </span>
-      V4.9.1 &nbsp;•&nbsp; 100% LOCAL &nbsp;•&nbsp; AIR-GAPPED &nbsp;•&nbsp; APACHE 2.0
+      V4.9.2 &nbsp;•&nbsp; FREE WHILE STABILIZING &nbsp;•&nbsp; 100% LOCAL &nbsp;•&nbsp; APACHE 2.0
     </div>
 
     <!-- Title -->
@@ -594,10 +601,10 @@
 <!-- PRICING -->
 <section id="pricing" class="py-24" style="background:var(--bg2);">
   <div class="max-w-6xl mx-auto px-4 md:px-6">
-    <div class="text-center mb-16 fade-up">
-      <p class="font-mono-custom text-cyan-600 text-sm uppercase tracking-widest mb-3">Simple pricing</p>
-      <h2 class="font-display text-5xl font-bold mb-4">Start free. Scale when ready.</h2>
-      <p class="text-slate-500">All detection features are open source. Pay for productivity and team features.</p>
+    <div class="text-center mb-12 fade-up">
+      <p class="font-mono-custom text-cyan-600 text-sm uppercase tracking-widest mb-3">Pricing</p>
+      <h2 class="font-display text-5xl font-bold mb-4">Free while we stabilize.</h2>
+      <p class="text-slate-400 max-w-2xl mx-auto">We're hardening detector calibration, smoothing the dashboard, and burning down the v4.9 stability backlog. Until we mark the tool 100% stable, every tier below is unlocked for free with <span class="font-mono-custom text-cyan-400">pip install -U insa-its</span>. The plans below are what regular pricing looks like — Stripe links remain live for anyone who wants to support development while we polish.</p>
     </div>
     <div class="grid md:grid-cols-3 gap-6 fade-up">
       <!-- Free -->
@@ -785,7 +792,7 @@
         </ul>
       </div>
     </div>
-    <!-- ECC Featured Badge — relocated from hero to footer (v4.9.1) -->
+    <!-- ECC Featured Badge — relocated from hero to footer (v4.9.2) -->
     <div class="text-center mb-8" style="padding-top:24px;border-top:1px solid rgba(255,255,255,0.05);">
       <a href="https://github.com/affaan-m/everything-claude-code" target="_blank"
          class="inline-flex items-center gap-3 rounded-full transition card-lift"
@@ -855,7 +862,7 @@
   // Demo
   let demoInt=null, demoOn=false;
   const events = [
-    {t:'sys',m:'✅ InsAIts v4.9.1 — monitoring started'},
+    {t:'sys',m:'✅ InsAIts v4.9.2 — monitoring started (free while stabilizing)'},
     {t:'sys',m:'📡 5 agents online: claude:Bash, claude:Edit, claude:Write, subagent:Explore, claude-opus'},
     {t:'sys',m:'🔒 Stealth mode: OFF  |  Task Anchor: ACTIVE  |  Processing: 100% local'},
     {t:'ok', m:'→ [claude:Bash] Bash tool call #1 — CLEAN'},
