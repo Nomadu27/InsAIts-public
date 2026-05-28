@@ -156,7 +156,7 @@
     <div class="flex items-center gap-3">
       <div class="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-black text-sm" style="background:linear-gradient(135deg,#22d3ee,#a855f7);">I</div>
       <span class="text-xl font-display font-bold neon-cyan tracking-tight">InsAIts</span>
-      <span class="hidden sm:block text-xs font-mono-custom text-slate-500 ml-1">v4.9.5 — antichain certificate coming soon</span>
+      <span class="hidden sm:block text-xs font-mono-custom text-slate-500 ml-1">v4.9.3 live · v4.9.5 antichain coming</span>
     </div>
     <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
       <a href="#proof" class="nav-link hover:text-cyan-400 transition">Why InsAIts</a>
@@ -186,12 +186,18 @@
   <canvas id="particles"></canvas>
   <div class="max-w-6xl mx-auto px-4 md:px-6 relative z-10 text-center w-full" style="padding-top:clamp(7rem,15vw,9rem);padding-bottom:clamp(3rem,8vw,6rem);">
 
-    <!-- Antichain Certificate announcement banner — v4.9.5 -->
+    <!-- v4.9.3 release banner — payments + tier-mapping bugfix bundle, live on PyPI -->
+    <div class="inline-flex flex-wrap items-center justify-center gap-2 rounded-2xl font-mono-custom mb-2"
+         style="background:rgba(16,185,129,0.10);border:1px solid rgba(16,185,129,0.45);padding:8px 16px;font-size:clamp(0.65rem,2vw,0.85rem);color:#a7f3d0;max-width:720px;">
+      <span style="font-size:1rem;">✅</span>
+      <span class="font-display font-bold">v4.9.3 live on PyPI</span>
+      <span class="text-slate-400 text-xs">payments + Starter/Pro tier fixes · 14-day full trial · <code style="background:rgba(0,0,0,0.3);padding:1px 5px;border-radius:3px;font-size:0.85em">pip install -U insa-its</code></span>
+    </div>
     <!-- v4.9.5 announcement — Antichain Certificate (mathematically proven detector) — coming soon -->
     <div class="inline-flex flex-wrap items-center justify-center gap-2 rounded-2xl font-mono-custom mb-3"
          style="background:rgba(34,211,238,0.10);border:1px solid rgba(34,211,238,0.45);padding:10px 18px;font-size:clamp(0.7rem,2.1vw,0.9rem);color:#a5f3fc;max-width:720px;">
       <span style="font-size:1rem;">⚖</span>
-      <span class="font-display font-bold">Coming soon — Antichain Certificate (mathematically proven)</span>
+      <span class="font-display font-bold">Coming next — Antichain Certificate (mathematically proven)</span>
       <span class="text-slate-400 text-xs">sub-Markov Green function · arxiv paper forthcoming · the first rogue-agent detector with a proven bound, not a classifier</span>
     </div>
     <!-- Downloads counter — top prominence (v4.9.5) -->
@@ -244,7 +250,7 @@
         <span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
       </span>
-      V4.9.5 &nbsp;•&nbsp; ANTICHAIN CERTIFICATE COMING SOON &nbsp;•&nbsp; 100% LOCAL &nbsp;•&nbsp; APACHE 2.0
+      V4.9.3 ON PYPI &nbsp;•&nbsp; V4.9.5 ANTICHAIN COMING &nbsp;•&nbsp; 100% LOCAL &nbsp;•&nbsp; APACHE 2.0
     </div>
 
     <!-- Title -->
@@ -863,7 +869,7 @@
   // Demo
   let demoInt=null, demoOn=false;
   const events = [
-    {t:'sys',m:'✅ InsAIts v4.9.5 — monitoring started (antichain certificate coming soon)'},
+    {t:'sys',m:'✅ InsAIts v4.9.3 — monitoring started (antichain certificate coming in v4.9.5)'},
     {t:'sys',m:'📡 5 agents online: claude:Bash, claude:Edit, claude:Write, subagent:Explore, claude-opus'},
     {t:'sys',m:'🔒 Stealth mode: OFF  |  Task Anchor: ACTIVE  |  Processing: 100% local'},
     {t:'ok', m:'→ [claude:Bash] Bash tool call #1 — CLEAN'},
