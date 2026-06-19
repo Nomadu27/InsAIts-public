@@ -2,9 +2,8 @@
 
 **Runtime security for AI agents. Catches what your AI misses.**
 
-[![PyPI v4.9.2](https://img.shields.io/badge/PyPI-v4.9.2-cyan)](https://pypi.org/project/insa-its/)
-[![Downloads](https://img.shields.io/badge/downloads-16.95k-brightgreen)](https://pypi.org/project/insa-its/)
-[![FREE while stabilizing](https://img.shields.io/badge/v4.9.2-FREE%20while%20stabilizing-violet)](#-v492--free-while-we-stabilize)
+[![PyPI v4.9.4](https://img.shields.io/badge/PyPI-v4.9.4-cyan)](https://pypi.org/project/insa-its/)
+[![Downloads](https://img.shields.io/badge/downloads-19%2C450-brightgreen)](https://pypi.org/project/insa-its/)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://pypi.org/project/insa-its/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 [![100% Local](https://img.shields.io/badge/Data-100%25%20Local-brightgreen)](#what-insaits-does-not-do)
@@ -18,8 +17,8 @@
 
 ---
 
-> ### 🛠 v4.9.2 — Free while we stabilize
-> **Every tier is unlocked while we finish polishing the tool.** We're hardening detector calibration, smoothing the dashboard, and burning down the v4.9 stability backlog — and we don't want pricing to gate users while the product is still settling. `pip install -U insa-its` gives you the full Pro feature set today: all 30 detectors, every Phase 3 reliability gate, Session Vault, RABE export, Session-SAE, decipher engine. No card, no key, no env var. Paid tiers return once we mark the tool 100% stable.
+> ### 🚀 v4.9.4 — live on PyPI
+> **14-day full Pro trial, no card required.** `pip install -U insa-its` gives you the complete feature set for 14 days: all 30 detectors, every Phase 3 reliability gate, Session Vault, RABE export, Session-SAE, decipher engine. After the trial, [pick a tier](#pricing) — Starter €10/mo or Pro €49/mo. Detection always keeps running; a paid key unlocks active intervention.
 
 ---
 
@@ -39,8 +38,8 @@ These are real numbers from real sessions, not benchmarks:
 
 | Metric | Value | Context |
 |--------|-------|---------|
-| **PyPI downloads** | **16,946+** | Total installs of `insa-its` |
-| SDK version | **4.9.2** | Latest release on PyPI — every tier free while we stabilize |
+| **PyPI downloads** | **19,450+** | Total installs of `insa-its` |
+| SDK version | **4.9.4** | Latest release on PyPI — 14-day full Pro trial on install |
 | MCP Registry listing | **active** | `io.github.Nomadu27/insaits` published in the official MCP Registry |
 | Smithery manifest | **active** | `smithery.yaml` declares the MCP server for one-click install |
 | Anomaly detectors | **30** | Full TRS-weighted detector suite (see [full list](#real-time-anomaly-detection-30-detectors)) |
@@ -58,7 +57,7 @@ InsAIts is the security core of the **AgentShield** runtime, a fork of Everythin
 
 ## Pricing
 
-> **v4.9.2: every tier listed below is unlocked for free while we stabilize the tool.** No card, no key, no env var — `pip install -U insa-its` and the full Pro feature set is active. The table below is what the regular plans look like; paid tiers return once we mark the tool 100% stable.
+> **14-day full Pro trial on every install** — no card, no key, no env var. `pip install -U insa-its` and the full Pro feature set is active for 14 days. After that, pick a tier below; detection keeps running in passive mode even without a key.
 
 | Tier | Monthly | Lifetime | What unlocks |
 |------|--------:|---------:|--------------|
@@ -69,7 +68,7 @@ InsAIts is the security core of the **AgentShield** runtime, a fork of Everythin
 
 ### Support the project
 
-Stripe links remain live for anyone who wants to support development while we stabilize — every contribution funds the next detector batch and the open-source roadmap:
+Buy a tier, or support development directly — every contribution funds the next detector batch and the open-source roadmap:
 
 - [**Starter €10/month**](https://buy.stripe.com/eVq7sLdsbgItgTqaaIb3q0a)
 - [**Pro €49/month**](https://buy.stripe.com/bJefZhewffEpeLieqYb3q01)
@@ -80,11 +79,11 @@ Enterprise: `info@yuyai.pro`.
 
 ---
 
-## What's New in v4.9.2 — Free while we stabilize
+## What's New
 
-- **🛠 Every tier unlocked while we polish the tool.** We're hardening detector calibration, smoothing the dashboard, and burning down the v4.9 stability backlog — and we don't want pricing to gate users while the product is still settling. A single module-level flag (`_FREE_PROMO_ACTIVE = True` in `insa_its.license.trial_clock`) short-circuits both gates: `get_license_state()` returns `licensed/pro`, and `require_valid_license()` returns a synthetic pro doc with `source="free_promo"`. No trial layers, no network calls to the API, no env-var requirement. Detection, injection, intervention, RABE export, Session-SAE — all on for everyone. Paid tiers return when we mark the tool 100% stable.
-- **License-gate test invariant preserved.** All six existing gating tests still cover `LicenseMissingError` / `LicenseExpiredError` / `LicenseFeatureMissingError` paths by monkeypatching the flag to `False`. A new `test_free_promo_bypasses_gate` pins the bypass behaviour.
-- **Full SDK suite green.** 1401 passed / 2 skipped on the v4.9.2 build.
+- **💳 Payments live — 14-day full Pro trial on install.** Every `pip install` starts a 14-day trial with the complete feature set: all 30 detectors, every Phase 3 reliability gate, Session Vault, RABE export, Session-SAE, decipher engine. After the trial, Starter (€10/mo) or Pro (€49/mo) unlock active intervention; detection keeps running in passive mode regardless.
+- **Tier mapping + Stripe/Gumroad checkout** hardened end-to-end so the right plan unlocks the right features.
+- **Full SDK suite green** on the current build.
 
 ### Previously, in v4.9.1
 
