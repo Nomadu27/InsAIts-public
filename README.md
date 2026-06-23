@@ -1,9 +1,11 @@
+<p align="center"><img src="assets/insaits_logo.png" alt="InsAIts" width="120" /></p>
+
 # InsAIts
 
 **Runtime security for AI agents. Catches what your AI misses.**
 
 [![PyPI v4.9.4](https://img.shields.io/badge/PyPI-v4.9.4-cyan)](https://pypi.org/project/insa-its/)
-[![Downloads](https://img.shields.io/badge/downloads-19%2C450-brightgreen)](https://pypi.org/project/insa-its/)
+[![Downloads](https://img.shields.io/badge/downloads-20%2C120-brightgreen)](https://pypi.org/project/insa-its/)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://pypi.org/project/insa-its/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 [![100% Local](https://img.shields.io/badge/Data-100%25%20Local-brightgreen)](#what-insaits-does-not-do)
@@ -18,7 +20,7 @@
 ---
 
 > ### 🚀 v4.9.4 — live on PyPI
-> **14-day full Pro trial, no card required.** `pip install -U insa-its` gives you the complete feature set for 14 days: all 30 detectors, every Phase 3 reliability gate, Session Vault, RABE export, Session-SAE, decipher engine. After the trial, [pick a tier](#pricing) — Starter €10/mo or Pro €49/mo. Detection always keeps running; a paid key unlocks active intervention.
+> **14-day full Pro trial, no card required.** `pip install -U insa-its` gives you the complete feature set for 14 days: all 30 detectors, every Phase 3 reliability gate, Session Vault, RABE export, Session-SAE, decipher engine. After the trial, [pick a tier](#pricing) — Starter $10/mo or Pro $49/mo. Detection always keeps running; a paid key unlocks active intervention.
 
 ---
 
@@ -38,7 +40,7 @@ These are real numbers from real sessions, not benchmarks:
 
 | Metric | Value | Context |
 |--------|-------|---------|
-| **PyPI downloads** | **19,450+** | Total installs of `insa-its` |
+| **PyPI downloads** | **20,120+** | Total installs of `insa-its` |
 | SDK version | **4.9.4** | Latest release on PyPI — 14-day full Pro trial on install |
 | MCP Registry listing | **active** | `io.github.Nomadu27/insaits` published in the official MCP Registry |
 | Smithery manifest | **active** | `smithery.yaml` declares the MCP server for one-click install |
@@ -62,18 +64,18 @@ InsAIts is the security core of the **AgentShield** runtime, a fork of Everythin
 | Tier | Monthly | Lifetime | What unlocks |
 |------|--------:|---------:|--------------|
 | **Trial** | free | 14 days | Full feature access, no card |
-| **Starter** | **€10** | **€99** | All 30 detectors, all Phase 3 reliability gates, Session Vault, full dashboard, work-checkpoint continuity |
-| **Pro** | **€49** | **€299** | Starter + L3 subagent anchors, Session-SAE behavioral anomaly detection, inter-session dialog, RABE export, Decipher engine, cloud embeddings, priority support |
-| **Enterprise** | from €200 | custom | SOC2-ready audit export, multi-seat, white-label dashboard, dedicated support |
+| **Starter** | **$10** | **$99** | All 30 detectors, all Phase 3 reliability gates, Session Vault, full dashboard, work-checkpoint continuity |
+| **Pro** | **$49** | **$299** | Starter + L3 subagent anchors, Session-SAE behavioral anomaly detection, inter-session dialog, RABE export, Decipher engine, cloud embeddings, priority support |
+| **Enterprise** | from $200 | custom | SOC2-ready audit export, multi-seat, white-label dashboard, dedicated support |
 
 ### Support the project
 
 Buy a tier, or support development directly — every contribution funds the next detector batch and the open-source roadmap:
 
-- [**Starter €10/month**](https://buy.stripe.com/eVq7sLdsbgItgTqaaIb3q0a)
-- [**Pro €49/month**](https://buy.stripe.com/bJefZhewffEpeLieqYb3q01)
-- [**Starter Lifetime €99**](https://buy.stripe.com/eVq4gzfAjcsd6eMfv2b3q09)
-- [**Pro Lifetime €299**](https://buy.stripe.com/3cI8wPfAjak5bz61Ecb3q04)
+- [**Starter $10/month**](https://buy.stripe.com/eVq7sLdsbgItgTqaaIb3q0a)
+- [**Pro $49/month**](https://buy.stripe.com/bJefZhewffEpeLieqYb3q01)
+- [**Starter Lifetime $99**](https://buy.stripe.com/eVq4gzfAjcsd6eMfv2b3q09)
+- [**Pro Lifetime $299**](https://buy.stripe.com/3cI8wPfAjak5bz61Ecb3q04)
 
 Enterprise: `info@yuyai.pro`.
 
@@ -81,7 +83,7 @@ Enterprise: `info@yuyai.pro`.
 
 ## What's New
 
-- **💳 Payments live — 14-day full Pro trial on install.** Every `pip install` starts a 14-day trial with the complete feature set: all 30 detectors, every Phase 3 reliability gate, Session Vault, RABE export, Session-SAE, decipher engine. After the trial, Starter (€10/mo) or Pro (€49/mo) unlock active intervention; detection keeps running in passive mode regardless.
+- **💳 Payments live — 14-day full Pro trial on install.** Every `pip install` starts a 14-day trial with the complete feature set: all 30 detectors, every Phase 3 reliability gate, Session Vault, RABE export, Session-SAE, decipher engine. After the trial, Starter ($10/mo) or Pro ($49/mo) unlock active intervention; detection keeps running in passive mode regardless.
 - **Tier mapping + Stripe/Gumroad checkout** hardened end-to-end so the right plan unlocks the right features.
 - **Full SDK suite green** on the current build.
 
@@ -295,4 +297,6 @@ InsAIts is developed by **Steddy Nova SRL / YuyAI**. The source code is in a pri
 
 Contact: info@yuyai.pro
 
-Licensed under [Apache 2.0](LICENSE).
+Licensed under [Apache 2.0](LICENSE) (open-core SDK; the collector, dashboard, and paid-tier detectors are proprietary and licensed separately).
+
+© 2026 Bogdan Cristian / Steddy Nova SRL. All Rights Reserved.
