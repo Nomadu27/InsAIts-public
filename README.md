@@ -53,7 +53,7 @@ These are real numbers from real sessions, not benchmarks:
 | Data sent to cloud | **0 bytes** | Everything runs locally |
 
 ### Ecosystem adoption
-InsAIts is the security core of the **AgentShield** runtime, a fork of Everything Claude Code ecosystem,. AgentShield is our `feat/insaits-security-hook` branch of `everything-claude-code` — same codebase, rebranded downstream. If you use AgentShield, you're running InsAIts.
+InsAIts (security monitor, anomaly detection, active intervention and circuit breaker) was merged into [Everything Claude Code](https://github.com/affaan-m/everything-claude-code) via [PR #370](https://github.com/affaan-m/everything-claude-code/pull/370).
 
 ---
 
@@ -278,7 +278,7 @@ See [example.py](example.py) for the complete working example.
 
 ## Attribution
 
-InsAIts was built during live sessions with Claude Code. The integration was contributed to the [everything-claude-code](https://github.com/anthropics/everything-claude-code) repository as [PR #370](https://github.com/anthropics/everything-claude-code/pull/370), confirmed by Affaan (Anthropic).
+InsAIts was built during live sessions with Claude Code. The integration was contributed to the [everything-claude-code](https://github.com/affaan-m/everything-claude-code) repository as [PR #370](https://github.com/affaan-m/everything-claude-code/pull/370).
 
 ---
 
